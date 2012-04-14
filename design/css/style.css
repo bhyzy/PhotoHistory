@@ -427,7 +427,7 @@ h3.album-title {
 	color: hsl(60, 100%, 70%);
 	text-decoration: underline;
 }
-h1.page-title {
+h1.page-title, h1.album-title, .album-title a, h2.album-author {
 	color: #493E2B;
 }
 #content-center {
@@ -440,4 +440,51 @@ h1.page-title {
 }
 .help-block a:hover {
 	color: #333333;
+}
+.album-title a:hover {
+	color: #888888;
+	text-decoration: none;
+}
+.label a {
+	color: #eeeeee;
+}
+#album-header {
+	/* background: hsl(100,50%,90%); */
+	margin-bottom: 10px;
+}
+#album-viewer {
+	/* background: hsl(100,50%,90%); */
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+#album-footer {
+	/* background: hsl(100,50%,90%); */
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+#album-desc {
+	/* background: hsl(140,50%,90%); */
+	margin-bottom: 10px;
+}
+#album-rate {
+	/* background: hsl(140,50%,90%); */
+}
+#album-comments {
+	/* background: hsl(100,50%,90%); */
+	margin-top: 10px;
+}
+div.album-comment {
+	/* background: hsl(140,50%,90%); */
+	margin-top: 15px;
+	width: 500px;
+}
+h2.album-author {
+	font-size: 14px;
+}
+.input-xxlarge {
+  width: 430px;
+}
+#album-viewer img {
+	width: 100%;
 }
