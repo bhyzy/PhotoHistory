@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : EarthlingTwo  
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20090918
+-->
+<html lang="en">
+<head>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>PastExplorer - explore the past</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#">PastExplorer</a></h1>
+			<!-- <p>explore the past</p> -->
+		</div>
+		<div id="corner">
+			<div id="search-form">
+				<form class="well form-search">
+					<input type="text" class="input-long search-query">
+					<button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+				</form>
+			</div>
+			<div id="user-bar">
+			<div class="btn-group">
+				  <button class="btn"><i class="icon-user"></i> kasia1337</button>
+				  <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+				  <ul class="dropdown-menu">
+					<li><a href="#">Manage albums</a></li>
+					<li><a href="#">Upload photo</a></li>
+					<li><a href="#">Edit profile</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Sign-out</a></li>
+				  </ul>
+				</div> 
+	<!-- 			<p>
+					<a href="#">Create account</a> | <a href="#">Sign in</a>
+				</p> -->
+			</div>		
+		</div>
+	</div>
+	<!-- end #header -->
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="#"><i class="icon-home"></i> Home</a></li>
+			<li><a href="#"><i class="icon-folder-open icon-white"></i> Browse</a></li>
+			<li><a href="#"><i class="icon-star icon-white"></i> Charts</a></li>
+		</ul>
+	</div>
+	<!-- end #menu -->
+	<div id="page">
+		<div id="content">	
+			<div id="content-center">
+				<form class="form-horizontal" action="#" method="post">
+					<fieldset>
+					  <legend>Create new album</legend>
+					  <div class="control-group">
+						<label class="control-label" for="name">Name</label>
+						<div class="controls">
+						  <input type="text" class="input-xlarge" id="name">
+						</div>
+					  </div>
+					  <div class="control-group">
+						<label class="control-label" for="description">Description</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="description" rows="3" placeholder="Describe your album here... (optional)"></textarea>
+						</div>
+					  </div>
+					  <div class="control-group">
+						<label class="control-label" for="description">Category</label>
+						<div class="controls">
+							<select class="input-normal inline" id="category">
+								<option>People</option>
+								<option>Building</option>
+								<option>City</option>
+								<option>Landscape</option>
+								<option>Room</option>
+								<option>Other</option>
+							</select>
+						</div>
+					  </div>
+					  <div class="control-group">
+						<label class="control-label" for="description">Photo reminder</label>
+						<div class="controls">
+						  <label class="radio">
+							<input name="reminder" id="reminder" value="remindNo" checked="checked" type="radio">
+							Disabled
+						  </label>
+						  <label class="radio">
+							<input name="reminder" id="reminder" value="remindYes" type="radio">
+							Enabled - remind me to take a photo
+						  </label>
+						  <!-- to nizej widoczne tylko jesli wybrano ENABLED (reminder aktywny) -->
+						  <div class="well">
+							Remind me every 
+							<select class="input-small inline" id="interval">
+								<option>day</option>
+								<option>week</option>
+								<option>2 weeks</option>
+								<option>month</option>
+								<option>3 months</option>
+								<option>6 months</option>
+								<option>year</option>
+							</select>
+						  </div>
+						</div>
+					  </div>
+					  <div class="control-group">
+						<label class="control-label" for="description">Access rights</label>
+						<div class="controls">
+						  <label class="radio">
+							<input name="access" id="accessPublic" value="accessPublic" checked="checked" type="radio">
+							Public - everyone can view this album
+						  </label>
+						  <label class="radio">
+							<input name="access" id="accessPrivate" value="accessPrivate" type="radio">
+							Private - only me and perhaps some specific people can view this album
+						  </label>
+						  <!-- to nizej widoczne tylko jesli wybrano PRIVATE -->
+						  <div class="well">
+							  <label class="radio">
+								<input name="privateMode" id="privateMode" value="password" checked="checked" type="radio">
+								Protect by password
+							  </label>
+							  <!-- to nizej widoczne tylko jesli wybrano dostep przez haslo -->
+							  <input type="text" class="input-medium inline" id="password">
+							  <label class="radio">
+								<input name="privateMode" id="privateMode" value="users" type="radio">
+								Specify list of allowed users
+							  </label>
+							  <!-- to nizej widoczne tylko jesli wybrano dostep przez liste uztywkonikow -->
+							  <input type="text" class="input-xlarge inline" id="usersList">
+						  </div>
+					    </div>
+					  </div>
+					  <div class="control-group">
+						<label class="control-label" for="description">Comment rights</label>
+						<div class="controls">
+						  <label class="checkbox">
+							<input type="checkbox" id="allow" checked="checked">Allow comments</input>
+						  </label>
+						</div>
+					  </div>
+					  <div class="form-actions">
+						<button type="submit" class="btn btn-success">Create album</button>
+						<button class="btn">Cancel</button>
+					  </div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+</div>
+<div id="footer">
+	<p> (c) 2012 PastExplorer.com. Design by <a href="http://www.nodethirtythree.com">nodethirtythree</a>, <a href="http://www.freecsstemplates.org">Free CSS Templates</a> and PastExplorer.com.</p>
+</div>
+<!-- end #footer -->
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>

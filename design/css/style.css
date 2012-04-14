@@ -417,3 +417,27 @@ h3.album-title {
 .album-value {
 
 }
+#user-bar {
+	color: #ffffff;
+}
+#user-bar a {
+	color: #ffffff;
+}
+#user-bar a:hover {
+	color: hsl(60, 100%, 70%);
+	text-decoration: underline;
+}
+h1.page-title {
+	color: #493E2B;
+}
+#content-center {
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+.help-block a {
+	color: #777777;
+}
+.help-block a:hover {
+	color: #333333;
+}
