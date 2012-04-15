@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : EarthlingTwo  
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20090918
+-->
+<html lang="en">
+<head>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>PastExplorer - explore the past</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#">PastExplorer</a></h1>
+			<!-- <p>explore the past</p> -->
+		</div>
+		<div id="corner">
+			<div id="search-form">
+				<form class="well form-search">
+					<input type="text" class="input-long search-query">
+					<button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+				</form>
+			</div>
+			<div id="user-bar">
+			<div class="btn-group">
+				  <button class="btn"><i class="icon-user"></i> kasia1337</button>
+				  <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+				  <ul class="dropdown-menu">
+					<li><a href="#">Manage albums</a></li>
+					<li><a href="#">Upload photo</a></li>
+					<li><a href="#">Edit profile</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Sign-out</a></li>
+				  </ul>
+				</div> 
+	<!-- 			<p>
+					<a href="#">Create account</a> | <a href="#">Sign in</a>
+				</p> -->
+			</div>		
+		</div>
+	</div>
+	<!-- end #header -->
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="#"><i class="icon-home"></i> Home</a></li>
+			<li><a href="#"><i class="icon-folder-open icon-white"></i> Browse</a></li>
+			<li><a href="#"><i class="icon-star icon-white"></i> Charts</a></li>
+		</ul>
+	</div>
+	<!-- end #menu -->
+	<div id="page">
+		<div id="content">	
+			<h1 class="page-title">Manage album</h1>
+			<div id="manage-settings">
+				<div class="left"><h2 class="page-section">Settings</h2></div>
+				<div class="actions right">
+					<button class="btn btn-warning"><i class="icon-edit icon-white"></i> Change settings</button>
+					<button class="btn btn-danger"><i class="icon-remove icon-white"></i> Delete album</button>
+				</div>
+				<div style="clear: both;">&nbsp;</div>
+				<fieldset class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label">Name</label>
+						<div class="controls">
+							<div class="well well-small">Noah K. Everyday</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Description</label>
+						<div class="controls">
+							<div class="well well-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula.</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Category</label>
+						<div class="controls">
+							<div class="well well-small">People</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Photo reminder</label>
+						<div class="controls">
+							<div class="well well-small">Enabled - remind every 2 weeks</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Access rights</label>
+						<div class="controls">
+							<div class="well well-small">Public - everyone can view this album</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Comment rights</label>
+						<div class="controls">
+							<div class="well well-small">Enabled</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div id="manage-photos">
+				<div class="left"><h2 class="page-section">Photos</h2></div>
+				<form action="#" method="post">
+					<div class="actions right">
+						<button class="btn btn-success"><i class="icon-camera icon-white"></i> Add photo</button>
+						<button class="btn btn-danger"><i class="icon-remove icon-white"></i> Delete selected photos</button>						
+					</div>	
+					<div style="clear: both;">&nbsp;</div>
+					<div id="photos-list">
+						<div class="photo-entry">
+							<div class="photo-handle"><input type="checkbox" id="1"></div>
+							<div class="photo-thumb"><img src="tmp/photo1.jpg" class="photo" /></div>
+							<div class="photo-date">2012-04-13</div>
+							<div class="photo-desc">Ala ma kota filemona...</div>
+						</div>		
+						<div class="photo-entry">
+							<div class="photo-handle"><input type="checkbox" id="2"></div>
+							<div class="photo-thumb"><img src="tmp/photo1.jpg" class="photo" /></div>
+							<div class="photo-date">2012-04-13</div>
+							<div class="photo-desc">Ala ma kota filemona...</div>
+						</div>	
+						<div class="photo-entry">
+							<div class="photo-handle"><input type="checkbox" id="3"></div>
+							<div class="photo-thumb"><img src="tmp/photo1.jpg" class="photo" /></div>
+							<div class="photo-date">2012-04-13</div>
+							<div class="photo-desc">Ala ma kota filemona...</div>
+						</div>	
+						<div class="photo-entry">
+							<div class="photo-handle"><input type="checkbox" id="4"></div>
+							<div class="photo-thumb"><img src="tmp/photo1.jpg" class="photo" /></div>
+							<div class="photo-date">2012-04-13</div>
+							<div class="photo-desc">Ala ma kota filemona...</div>
+						</div>							
+					</div>
+				</form>
+			</div>
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+</div>
+<div id="footer">
+	<p> (c) 2012 PastExplorer.com. Design by <a href="http://www.nodethirtythree.com">nodethirtythree</a>, <a href="http://www.freecsstemplates.org">Free CSS Templates</a> and PastExplorer.com.</p>
+</div>
+<!-- end #footer -->
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>
