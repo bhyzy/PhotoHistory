@@ -1,0 +1,7 @@
+D:\PhotoHistory\PhotoHistory\bin\PhotoHistory.dll
+D:\PhotoHistory\PhotoHistory\bin\PhotoHistory.pdb
+D:\PhotoHistory\PhotoHistory\bin\EntityFramework.dll
+D:\PhotoHistory\PhotoHistory\bin\EntityFramework.xml
+D:\PhotoHistory\PhotoHistory\obj\Debug\ResolveAssemblyReference.cache
+D:\PhotoHistory\PhotoHistory\obj\Debug\PhotoHistory.dll
+D:\PhotoHistory\PhotoHistory\obj\Debug\PhotoHistory.pdb
