@@ -1,4 +1,4 @@
 *.suo
 *.pdb
-PhotoHistory/obj/*.*
-PhotoHistory/bin/*.*
+PhotoHistory/[Bb]in/
+PhotoHistory/[Oo]bj/
