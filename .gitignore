@@ -2,3 +2,7 @@
 *.pdb
 PhotoHistory/[Bb]in/
 PhotoHistory/[Oo]bj/
+PhotoHistory.Model/[Bb]in/
+PhotoHistory.Model/[Oo]bj/
+PhotoHistory.Data/[Bb]in/
+PhotoHistory.Data/[Oo]bj/

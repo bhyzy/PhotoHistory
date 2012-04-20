@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using PhotoHistory.Model;
+
+namespace PhotoHistory.Data
+{
+	public class UserRepository : DataRepository<User, Int32?>
+	{
+		public override void Create(User obj)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					session.Save( obj );
+					transaction.Commit();
+				}
+			}
+		}
+
+		public override User GetById(int? id)
+		{
+			using ( var session = GetSession() )
+			{
+				return session.CreateQuery( "from User where Id = :id" ).SetParameter( "id", id ).UniqueResult<User>();
+			}
+		}
+
+		public override void Update(User obj)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					session.CreateQuery( @"update User set 
+													Login = :login, 
+													Password = :pass,
+													Email = :email
+													where Id = :id" ).
+													SetParameter( "id", obj.Id ).
+													SetParameter( "login", obj.Login ).
+													SetParameter( "pass", obj.Password ).
+													SetParameter( "email", obj.Email ).
+													ExecuteUpdate();
+					transaction.Commit();
+				}
+			}
+		}
+
+		public override void Delete(User obj)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					session.CreateQuery( "delete from User where Id = :id" ).SetParameter( "id", obj.Id ).ExecuteUpdate();
+					transaction.Commit();
+				}
+			}
+		}
+	}
+}
