@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PhotoHistory.Model;
+using System.Diagnostics;
+using NHibernate;
 
 namespace PhotoHistory.Data
 {
@@ -34,16 +36,29 @@ namespace PhotoHistory.Data
 			{
 				using ( var transaction = session.BeginTransaction() )
 				{
-					session.CreateQuery( @"update User set 
+					IQuery query = session.CreateQuery( @"update User set 
 													Login = :login, 
 													Password = :pass,
-													Email = :email
+													Email = :email,
+													Active = :active,
+													DateOfBirth = :birth,
+													About = :about,
+													NotifyComment = :comment,
+													NotifyPhoto = :photo,
+													NotifySubscription = :subscr,
 													where Id = :id" ).
 													SetParameter( "id", obj.Id ).
 													SetParameter( "login", obj.Login ).
 													SetParameter( "pass", obj.Password ).
 													SetParameter( "email", obj.Email ).
-													ExecuteUpdate();
+													SetParameter( "active", obj.Active ).
+													SetParameter( "birth", obj.DateOfBirth ).
+													SetParameter( "about", obj.About ).
+													SetParameter( "comment", obj.NotifyComment ).
+													SetParameter( "photo", obj.NotifyPhoto ).
+													SetParameter( "subscr", obj.NotifySubscription );
+					Debug.WriteLine( query.QueryString );
+					query.ExecuteUpdate();
 					transaction.Commit();
 				}
 			}

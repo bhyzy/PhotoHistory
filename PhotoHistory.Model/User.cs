@@ -12,7 +12,7 @@ namespace PhotoHistory.Model
 		public virtual string Password { get; set; }
 		public virtual string Email { get; set; }
 		public virtual bool Active { get; set; }
-		public virtual DateTime DateOfBirth { get; set; }
+		public virtual DateTime? DateOfBirth { get; set; }
 		public virtual string About { get; set; }
 		public virtual bool NotifyComment { get; set; }
 		public virtual bool NotifyPhoto { get; set; }

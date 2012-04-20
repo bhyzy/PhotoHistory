@@ -1,0 +1,36 @@
+﻿@model PhotoHistory.Model.User
+
+<div id="content-center">
+	<form class="form-horizontal" action="/User/Create" method="post">
+		<fieldset>
+			<legend>Create account</legend>
+			<div class="control-group">
+			<label class="control-label" for="username">Username</label>
+			<div class="controls">
+				<input type="text" class="input-normal" id="username">
+			</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="username">Password</label>
+			<div class="controls">
+				<input type="password" class="input-normal" id="password">
+			</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="username">Confirm password</label>
+			<div class="controls">
+				<input type="password" class="input-normal" id="password2">
+			</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="username">E-mail address</label>
+			<div class="controls">
+				<input type="text" class="input-normal" id="email">
+			</div>
+			</div>
+			<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Register</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
