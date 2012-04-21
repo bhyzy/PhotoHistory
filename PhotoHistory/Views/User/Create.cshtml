@@ -4,44 +4,54 @@
     <form class="form-horizontal" action="/User/Create" method="post">
     <fieldset>
         <legend>Create account</legend>
-        <div class="control-group @if (Html.ValidationMessage( "Login" ) != null) { <text>error</text> }">
+        @if ( Model != null )
+        {
+            <div class="alert alert-error">
+                Some fields are invalid - please correct the errors.
+            </div>
+        }
+        <div class="control-group @if ( Html.ValidationMessage( "Login" ) != null )
+                                  { <text>error</text> }">
             <label class="control-label" for="username">
                 Username</label>
             <div class="controls">
-                <input type="text" class="input-normal" id="Login" name="Login" />
+                <input type="text" class="input-normal" id="Login" name="Login" value="@(Model != null ? Model.Login : "")" />
                 @if ( Html.ValidationMessage( "Login" ) != null )
                 {
                     <span class="help-inline">@Html.ValidationMessage( "Login" )</span>
                 }
             </div>
         </div>
-        <div class="control-group @if (Html.ValidationMessage( "Password" ) != null) { <text>error</text> }">
+        <div class="control-group @if ( Html.ValidationMessage( "Password" ) != null )
+                                  { <text>error</text> }">
             <label class="control-label" for="password">
                 Password</label>
             <div class="controls">
-                <input type="password" class="input-normal" id="Password" name="Password" />
+                <input type="password" class="input-normal" id="Password" name="Password" value="@(Model != null ? Model.Password : "")" />
                 @if ( Html.ValidationMessage( "Password" ) != null )
                 {
                     <span class="help-inline">@Html.ValidationMessage( "Password" )</span>
                 }
             </div>
         </div>
-        <div class="control-group @if (Html.ValidationMessage( "ConfirmedPassword" ) != null) { <text>error</text> }">
+        <div class="control-group @if ( Html.ValidationMessage( "ConfirmedPassword" ) != null )
+                                  { <text>error</text> }">
             <label class="control-label" for="password2">
                 Confirm password</label>
             <div class="controls">
-                <input type="password" class="input-normal" id="ConfirmedPassword" name="ConfirmedPassword" />
+                <input type="password" class="input-normal" id="ConfirmedPassword" name="ConfirmedPassword" value="@(Model != null ? Model.ConfirmedPassword : "")" />
                 @if ( Html.ValidationMessage( "ConfirmedPassword" ) != null )
                 {
                     <span class="help-inline">@Html.ValidationMessage( "ConfirmedPassword" )</span>
                 }
             </div>
         </div>
-        <div class="control-group @if (Html.ValidationMessage( "Email" ) != null) { <text>error</text> }">
+        <div class="control-group @if ( Html.ValidationMessage( "Email" ) != null )
+                                  { <text>error</text> }">
             <label class="control-label" for="email">
                 E-mail address</label>
             <div class="controls">
-                <input type="text" class="input-normal" id="Email" name="Email" />
+                <input type="text" class="input-normal" id="Email" name="Email" value="@(Model != null ? Model.Email : "")" />
                 @if ( Html.ValidationMessage( "Email" ) != null )
                 {
                     <span class="help-inline">@Html.ValidationMessage( "Email" )</span>
