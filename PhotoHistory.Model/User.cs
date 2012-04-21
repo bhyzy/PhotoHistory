@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace PhotoHistory.Model
 {
@@ -17,5 +18,20 @@ namespace PhotoHistory.Model
 		public virtual bool NotifyComment { get; set; }
 		public virtual bool NotifyPhoto { get; set; }
 		public virtual bool NotifySubscription { get; set; }
+	}
+
+	public class NewUser
+	{
+		[Required]
+		public virtual string Login { get; set; }
+
+		[Required]
+		public virtual string Password { get; set; }
+
+		[Required]
+		public virtual string ConfirmedPassword { get; set; }
+
+		[Required]
+		public virtual string Email { get; set; }
 	}
 }

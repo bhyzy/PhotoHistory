@@ -57,7 +57,6 @@ namespace PhotoHistory.Data
 													SetParameter( "comment", obj.NotifyComment ).
 													SetParameter( "photo", obj.NotifyPhoto ).
 													SetParameter( "subscr", obj.NotifySubscription );
-					Debug.WriteLine( query.QueryString );
 					query.ExecuteUpdate();
 					transaction.Commit();
 				}
@@ -73,6 +72,14 @@ namespace PhotoHistory.Data
 					session.CreateQuery( "delete from User where Id = :id" ).SetParameter( "id", obj.Id ).ExecuteUpdate();
 					transaction.Commit();
 				}
+			}
+		}
+
+		public User GetByUsername(string username)
+		{
+			using ( var session = GetSession() )
+			{
+				return session.CreateQuery( "from User where Login = :login" ).SetParameter( "login", username ).UniqueResult<User>();
 			}
 		}
 	}
