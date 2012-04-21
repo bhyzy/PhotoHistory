@@ -45,7 +45,7 @@ namespace PhotoHistory.Data
 													About = :about,
 													NotifyComment = :comment,
 													NotifyPhoto = :photo,
-													NotifySubscription = :subscr,
+													NotifySubscription = :subscr
 													where Id = :id" ).
 													SetParameter( "id", obj.Id ).
 													SetParameter( "login", obj.Login ).
