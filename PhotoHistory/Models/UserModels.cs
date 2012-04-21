@@ -25,7 +25,7 @@ namespace PhotoHistory.Models
 	{
 		[Required]
 		[StringLength( 100, MinimumLength = 3 )]
-		[UniqueUsername]
+		[UniqueUsername( ErrorMessage = "Specified username is already taken." )]
 		[Display( Name = "Username" )]
 		public virtual string Login { get; set; }
 
@@ -43,7 +43,8 @@ namespace PhotoHistory.Models
 		[Required]
 		[StringLength( 255 )]
 		[DataType( DataType.EmailAddress )]
-		[UniqueEmail]
+		[ValidateEmail( ErrorMessage = "Specified e-mail address is invalid." )]
+		[UniqueEmail(ErrorMessage="Specified e-mail address is already used by another account.")]
 		[Display( Name = "E-mail address" )]
 		public virtual string Email { get; set; }
 	}

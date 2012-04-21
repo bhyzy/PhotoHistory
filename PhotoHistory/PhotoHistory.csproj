@@ -76,7 +76,7 @@
   <ItemGroup>
     <Compile Include="Common\ActionFilters.cs" />
     <Compile Include="Common\Helpers.cs" />
-    <Compile Include="Common\UniqueAttributes.cs" />
+    <Compile Include="Common\ValidationAttributes.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -89,7 +89,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\UniqueAttribute.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
