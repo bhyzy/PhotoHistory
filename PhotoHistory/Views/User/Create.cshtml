@@ -1,87 +1,57 @@
-﻿@model PhotoHistory.Model.User
-           
-@{
-    Dictionary<string, bool> error = new Dictionary<string, bool>();
-    error["username"] = ViewBag.Errors != null && ViewBag.Errors.ContainsKey( "username" );
-    error["password"] = ViewBag.Errors != null && ViewBag.Errors.ContainsKey( "password" );
-    error["password2"] = ViewBag.Errors != null && ViewBag.Errors.ContainsKey( "password2" );
-    error["email"] = ViewBag.Errors != null && ViewBag.Errors.ContainsKey( "email" );
-}
+﻿@model PhotoHistory.Models.NewUserModel       
 
 <div id="content-center">
     <form class="form-horizontal" action="/User/Create" method="post">
     <fieldset>
         <legend>Create account</legend>
-        @if ( ViewBag.Errors != null )
-        {
-            if ( ViewBag.Errors.Count == 0 )
-            {
-                <div class="alert alert-success">
-                    Your account has been successfully created! Activate it by clicking the link in the e-mail we've just sent you.
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-error">
-                    Some fields are invalid - please correct the errors.
-                </div>
-            }
-        }
-        @if ( ViewBag.Errors == null || ViewBag.Errors.Count > 0 )
-        {
-            <div class="control-group @if ( error["username"] )
-                                      { <text>error</text> }">
-                <label class="control-label" for="username">
-                    Username</label>
-                <div class="controls">
-                    <input type="text" class="input-normal" id="username" name="username" />
-                    @if ( error["username"] )
-                    {
-                        <span class="help-inline">@ViewBag.Errors["username"]</span>
+        <div class="control-group @if (Html.ValidationMessage( "Login" ) != null) { <text>error</text> }">
+            <label class="control-label" for="username">
+                Username</label>
+            <div class="controls">
+                <input type="text" class="input-normal" id="Login" name="Login" />
+                @if ( Html.ValidationMessage( "Login" ) != null )
+                {
+                    <span class="help-inline">@Html.ValidationMessage( "Login" )</span>
                 }
-                </div>
             </div>
-            <div class="control-group @if ( error["password"] )
-                                      { <text>error</text> }">
-                <label class="control-label" for="password">
-                    Password</label>
-                <div class="controls">
-                    <input type="password" class="input-normal" id="password" name="password" />
-                    @if ( error["password"] )
-                    {
-                        <span class="help-inline">@ViewBag.Errors["password"]</span>
+        </div>
+        <div class="control-group @if (Html.ValidationMessage( "Password" ) != null) { <text>error</text> }">
+            <label class="control-label" for="password">
+                Password</label>
+            <div class="controls">
+                <input type="password" class="input-normal" id="Password" name="Password" />
+                @if ( Html.ValidationMessage( "Password" ) != null )
+                {
+                    <span class="help-inline">@Html.ValidationMessage( "Password" )</span>
                 }
-                </div>
             </div>
-            <div class="control-group @if ( error["password2"] )
-                                      { <text>error</text> }">
-                <label class="control-label" for="password2">
-                    Confirm password</label>
-                <div class="controls">
-                    <input type="password" class="input-normal" id="password2" name="password2" />
-                    @if ( error["password2"] )
-                    {
-                        <span class="help-inline">@ViewBag.Errors["password2"]</span>
+        </div>
+        <div class="control-group @if (Html.ValidationMessage( "ConfirmedPassword" ) != null) { <text>error</text> }">
+            <label class="control-label" for="password2">
+                Confirm password</label>
+            <div class="controls">
+                <input type="password" class="input-normal" id="ConfirmedPassword" name="ConfirmedPassword" />
+                @if ( Html.ValidationMessage( "ConfirmedPassword" ) != null )
+                {
+                    <span class="help-inline">@Html.ValidationMessage( "ConfirmedPassword" )</span>
                 }
-                </div>
             </div>
-            <div class="control-group @if ( error["email"] )
-                                      { <text>error</text> }">
-                <label class="control-label" for="email">
-                    E-mail address</label>
-                <div class="controls">
-                    <input type="text" class="input-normal" id="email" name="email" />
-                    @if ( error["email"] )
-                    {
-                        <span class="help-inline">@ViewBag.Errors["email"]</span>
+        </div>
+        <div class="control-group @if (Html.ValidationMessage( "Email" ) != null) { <text>error</text> }">
+            <label class="control-label" for="email">
+                E-mail address</label>
+            <div class="controls">
+                <input type="text" class="input-normal" id="Email" name="Email" />
+                @if ( Html.ValidationMessage( "Email" ) != null )
+                {
+                    <span class="help-inline">@Html.ValidationMessage( "Email" )</span>
                 }
-                </div>
             </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">
-                    Register</button>
-            </div> 
-        }
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Register</button>
+        </div> 
     </fieldset>
     </form>
 </div>

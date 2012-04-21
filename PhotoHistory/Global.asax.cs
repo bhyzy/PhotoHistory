@@ -15,6 +15,7 @@ namespace PhotoHistory
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
 			filters.Add( new HandleErrorAttribute() );
+			//filters.Add( new CultureInvariantFilterAttribute() );
 		}
 
 		public static void RegisterRoutes(RouteCollection routes)

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Mapping.ByCode.Conformist;
-using PhotoHistory.Model;
+using PhotoHistory.Models;
 using NHibernate.Mapping.ByCode;
 
 namespace PhotoHistory.Data
 {
-	public class UserMapping : ClassMapping<User>
+	public class UserMapping : ClassMapping<UserModel>
 	{
 		public UserMapping()
 		{

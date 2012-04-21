@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PhotoHistory.Data;
-using PhotoHistory.Model;
+using PhotoHistory.Models;
 
 namespace PhotoHistory.Controllers
 {
@@ -22,7 +22,7 @@ namespace PhotoHistory.Controllers
 		{
 			UserRepository userRepo = new UserRepository();
 
-			User user = new User()
+			UserModel user = new UserModel()
 			{
 				Login = "kasia1337",
 				Password = "tralala",
@@ -30,12 +30,12 @@ namespace PhotoHistory.Controllers
 			};
 			userRepo.Create( user );
 
-			User user2 = userRepo.GetById( user.Id );
+			UserModel user2 = userRepo.GetById( user.Id );
 			user2.Login = "Kasia666";
 			userRepo.Update( user2 );
 
 			userRepo.Delete( user2 );
-			User user3 = userRepo.GetById( user2.Id );
+			UserModel user3 = userRepo.GetById( user2.Id );
 
 			return View();
 		}
