@@ -1,0 +1,55 @@
+﻿@model PhotoHistory.Models.SignInUserModel  
+<div id="content-center">
+    <form class="form-horizontal" action="/User/SignIn" method="post">
+    <fieldset>
+        <legend>Sign in</legend>
+        @if ( Model != null )
+        {
+            <div class="alert alert-error">
+                @if ( ViewBag.InvalidCredentials != null && ViewBag.InvalidCredentials )
+                {
+                    <text>Specified username and/or password is incorrect.</text>
+                }
+                else
+                {
+                    <text>Some fields are invalid - please correct the errors.</text>
+                }
+            </div>
+        }
+        <div class="control-group @if ( Html.ValidationMessage( "Login" ) != null )
+                                  { <text>error</text> }">
+            <label class="control-label" for="username">
+                Username</label>
+            <div class="controls">
+                <input type="text" class="input-normal" id="Login" name="Login" value="@(Model != null ? Model.Login : "")">
+                @if ( Html.ValidationMessage( "Login" ) != null )
+                {
+                    <span class="help-inline">@Html.ValidationMessage( "Login" )</span>
+                }
+            </div>
+        </div>
+        <div class="control-group @if ( Html.ValidationMessage( "Password" ) != null )
+                                  { <text>error</text> }">
+            <label class="control-label" for="username">
+                Password</label>
+            <div class="controls">
+                <input type="password" class="input-normal" id="Password" name="Password" value="@(Model != null ? Model.Password : "")">
+                @if ( Html.ValidationMessage( "Password" ) != null )
+                {
+                    <span class="help-inline">@Html.ValidationMessage( "Password" )</span>
+                }
+                <p class="help-block">
+                    <a href="/User/ForgotPassword">Forgot your password?</a></p>
+            </div>
+        </div>
+        <div class="form-actions">
+            <label class="checkbox inline">
+                <input type="checkbox" id="Remember" name="Remember" @(Model != null && Model.Remember ? "checked=\"checked\"" : "")>Remember
+                    me</input>
+            </label>
+            <button type="submit" class="btn btn-primary">
+                Sign in</button>
+        </div>
+    </fieldset>
+    </form>
+</div>

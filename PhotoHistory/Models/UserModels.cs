@@ -48,4 +48,19 @@ namespace PhotoHistory.Models
 		[Display( Name = "E-mail address" )]
 		public virtual string Email { get; set; }
 	}
+
+	public class SignInUserModel
+	{
+		[Required]
+		[Display( Name = "Username" )]
+		public virtual string Login { get; set; }
+
+		[Required]
+		[DataType( DataType.Password )]
+		public virtual string Password { get; set; }
+
+		[Required]
+		[Display( Name = "Remember me" )]
+		public virtual bool Remember { get; set; }
+	}
 }
