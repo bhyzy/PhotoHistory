@@ -39,15 +39,18 @@ Released   : 20090918
                     @if ( HttpContext.Current.User.Identity.IsAuthenticated )
                     {
                         <div class="btn-group">
-                            <button class="btn">
-                                <i class="icon-user"></i>kasia1337</button>
+                            <a href="/User">
+                                <button class="btn">
+                                   <i class="icon-user"></i> @HttpContext.Current.User.Identity.Name
+                                </button>
+                            </a>
                             <button class="btn dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Manage albums</a></li>
-                                <li><a href="#">Upload photo</a></li>
-                                <li><a href="#">Edit profile</a></li>
+                                <li><a href="/Album/Manage">Manage albums</a></li>
+                                <li><a href="/Album/AddPhoto">Upload photo</a></li>
+                                <li><a href="/User/Edit">Edit profile</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/User/SignOut">Sign-out</a></li>
                             </ul>
@@ -56,8 +59,8 @@ Released   : 20090918
                     else
                     {
                         <p>
-                            <a href="@(Url.Action( "Create", "User" ))">Create account</a> | 
-                            <a href="@(Url.Action( "SignIn", "User" ))">Sign in</a>
+                            <a href="@(Url.Action( "Create", "User" ))" class="account">Create account</a> | 
+                            <a href="@(Url.Action( "SignIn", "User" ))" class="account">Sign in</a>
                         </p>
                     }
                 </div>

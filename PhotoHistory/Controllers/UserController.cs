@@ -48,7 +48,7 @@ namespace PhotoHistory.Controllers
 
 				try
 				{
-					Helpers.SendEmail( "empitness@gmail.com", "PastExplorer account activation",
+					Helpers.SendEmail( user.Email, "PastExplorer account activation",
 						string.Format( "Hello, click <a href=\"{0}\">here</a> to activate your PastExplorer account.", activationLink ) );
 				}
 				catch ( Exception )

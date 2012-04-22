@@ -420,10 +420,10 @@ h3.album-title {
 #user-bar {
 	color: #ffffff;
 }
-#user-bar a {
+#user-bar a.account {
 	color: #ffffff;
 }
-#user-bar a:hover {
+#user-bar a.account:hover {
 	color: hsl(60, 100%, 70%);
 	text-decoration: underline;
 }
