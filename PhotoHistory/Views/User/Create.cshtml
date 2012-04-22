@@ -7,7 +7,14 @@
         @if ( Model != null )
         {
             <div class="alert alert-error">
-                Some fields are invalid - please correct the errors.
+                @if ( ViewBag.ErrorMessage != null )
+                {
+                    @ViewBag.ErrorMessage
+                }
+                else
+                {
+                    <text>Some fields are invalid - please correct the errors.</text>
+                }
             </div>
         }
         <div class="control-group @if ( Html.ValidationMessage( "Login" ) != null )

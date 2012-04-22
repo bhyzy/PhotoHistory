@@ -40,7 +40,7 @@ namespace PhotoHistory.Data
 													Login = :login, 
 													Password = :pass,
 													Email = :email,
-													Active = :active,
+													ActivationCode = :code,
 													DateOfBirth = :birth,
 													About = :about,
 													NotifyComment = :comment,
@@ -51,7 +51,7 @@ namespace PhotoHistory.Data
 													SetParameter( "login", obj.Login ).
 													SetParameter( "pass", obj.Password ).
 													SetParameter( "email", obj.Email ).
-													SetParameter( "active", obj.Active ).
+													SetParameter( "code", obj.ActivationCode ).
 													SetParameter( "birth", obj.DateOfBirth ).
 													SetParameter( "about", obj.About ).
 													SetParameter( "comment", obj.NotifyComment ).
@@ -88,6 +88,23 @@ namespace PhotoHistory.Data
 			using ( var session = GetSession() )
 			{
 				return session.CreateQuery( "from UserModel where Email = :email" ).SetParameter( "email", email ).UniqueResult<UserModel>();
+			}
+		}
+
+		public void Activate(UserModel obj)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					IQuery query = session.CreateQuery( @"update UserModel set ActivationCode = null where Id = :id" ).SetParameter( "id", obj.Id );
+					if ( query.ExecuteUpdate() == 0 )
+					{
+						throw new Exception( 
+							string.Format( "Failed to activate user '{0}' ({1}) - user not found!", obj.Login, obj.Id ) );
+					}
+					transaction.Commit();
+				}
 			}
 		}
 	}

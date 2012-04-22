@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using System.Web.Helpers;
+using System.Net.Mail;
+using System.Net;
 
 namespace PhotoHistory
 {
@@ -13,7 +16,20 @@ namespace PhotoHistory
 			MD5 md5 = new MD5CryptoServiceProvider();
 			Byte[] originalBytes = ASCIIEncoding.Default.GetBytes( stringToHash );
 			Byte[] encodedBytes = md5.ComputeHash( originalBytes );
-			return BitConverter.ToString( encodedBytes );
+			return BitConverter.ToString( encodedBytes ).Replace( "-", "" );
+		}
+
+		public static void SendEmail(string to, string subject, string body)
+		{
+			WebMail.SmtpServer = "smtp.gmail.com";
+			WebMail.SmtpPort = 587;
+			WebMail.EnableSsl = true;
+			WebMail.UserName = "pastexplorer@gmail.com";
+			WebMail.Password = "pastexplorer666";
+			WebMail.From = "pastexplorer@gmail.com";
+			WebMail.SmtpUseDefaultCredentials = false;
+
+			WebMail.Send( to, subject, body, isBodyHtml: true );
 		}
 	}
 }

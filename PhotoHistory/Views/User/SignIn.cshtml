@@ -3,12 +3,13 @@
     <form class="form-horizontal" action="/User/SignIn" method="post">
     <fieldset>
         <legend>Sign in</legend>
+        @Html.ValidationSummary(false)
         @if ( Model != null )
         {
             <div class="alert alert-error">
-                @if ( ViewBag.InvalidCredentials != null && ViewBag.InvalidCredentials )
+                @if ( ViewBag.ErrorMessage != null )
                 {
-                    <text>Specified username and/or password is incorrect.</text>
+                    @ViewBag.ErrorMessage
                 }
                 else
                 {
@@ -44,7 +45,7 @@
         </div>
         <div class="form-actions">
             <label class="checkbox inline">
-                <input type="checkbox" id="Remember" name="Remember" @(Model != null && Model.Remember ? "checked=\"checked\"" : "")>Remember
+                <input type="checkbox" id="RememberMe" name="RememberMe" @(Model != null && Model.Remember ? "checked=\"checked\"" : "")>Remember
                     me</input>
             </label>
             <button type="submit" class="btn btn-primary">

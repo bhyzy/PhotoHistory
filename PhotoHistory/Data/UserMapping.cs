@@ -36,10 +36,9 @@ namespace PhotoHistory.Data
 				map.Length( 255 );
 				map.NotNullable( true );
 			} );
-			Property( x => x.Active, map =>
+			Property( x => x.ActivationCode, map =>
 			{
-				map.Column( "active" );
-				map.NotNullable( true );
+				map.Column( "activation_code" );
 			} );
 			Property( x => x.DateOfBirth, map =>
 			{
@@ -52,14 +51,17 @@ namespace PhotoHistory.Data
 			Property( x => x.NotifyComment, map =>
 			{
 				map.Column( "notify_comment" );
+				map.NotNullable( true );
 			} );
 			Property( x => x.NotifyPhoto, map =>
 			{
 				map.Column( "notify_photo" );
+				map.NotNullable( true );
 			} );
 			Property( x => x.NotifySubscription, map =>
 			{
 				map.Column( "notify_subscr" );
+				map.NotNullable( true );
 			} );
 		}
 
