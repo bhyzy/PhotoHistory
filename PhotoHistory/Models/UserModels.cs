@@ -44,7 +44,7 @@ namespace PhotoHistory.Models
 		[StringLength( 255 )]
 		[DataType( DataType.EmailAddress )]
 		[ValidateEmail( ErrorMessage = "Specified e-mail address is invalid." )]
-		[UniqueEmail(ErrorMessage="Specified e-mail address is already used by another account.")]
+		[UniqueEmail( ErrorMessage = "Specified e-mail address is already used by another account." )]
 		[Display( Name = "E-mail address" )]
 		public virtual string Email { get; set; }
 	}
@@ -61,5 +61,25 @@ namespace PhotoHistory.Models
 
 		[Display( Name = "Remember me" )]
 		public virtual bool Remember { get; set; }
+	}
+
+	public class UserSettingsModel
+	{
+		[DateYearInRange( 1900, 2012 )]
+		[Display( Name = "Date of birth" )]
+		public virtual DateTime? DateOfBirth { get; set; }
+
+		[StringLength( 1024 )]
+		[Display( Name = "About me" )]
+		public virtual string About { get; set; }
+
+		//[Required]
+		public virtual bool NotifyComment { get; set; }
+
+		//[Required]
+		public virtual bool NotifyPhoto { get; set; }
+
+		//[Required]
+		public virtual bool NotifySubscription { get; set; }
 	}
 }

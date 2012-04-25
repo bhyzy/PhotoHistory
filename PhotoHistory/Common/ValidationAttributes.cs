@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PhotoHistory.Data;
+using System;
+using System.Globalization;
 
 namespace PhotoHistory
 {
@@ -25,6 +27,25 @@ namespace PhotoHistory
 	{
 		public ValidateEmailAttribute() :
 			base( @"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$" ) { }
-	} 
+	}
+
+	public class DateYearInRangeAttribute : DataTypeAttribute
+	{
+		private int _min;
+		private int _max;
+
+		public DateYearInRangeAttribute(int min, int max) : base( DataType.Date ) 
+		{
+			_min = min;
+			_max = max;
+		}
+
+		public override bool IsValid(object value)
+		{
+			DateTime date = (DateTime)value;
+			return (date != null && date.Year >= _min && date.Year <= _max);
+		}
+	}
+
 }
 

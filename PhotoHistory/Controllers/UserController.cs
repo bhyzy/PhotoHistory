@@ -150,5 +150,42 @@ namespace PhotoHistory.Controllers
 		{
 			FormsAuthentication.SetAuthCookie( username, remember );
 		}
+
+		[Authorize]
+		public ActionResult Edit()
+		{
+			UserRepository users = new UserRepository();
+			UserModel user = users.GetByUsername( HttpContext.User.Identity.Name );
+
+			UserSettingsModel settings = new UserSettingsModel
+			{
+				DateOfBirth = user.DateOfBirth,
+				About = user.About,
+				NotifyComment = user.NotifyComment,
+				NotifyPhoto = user.NotifyPhoto,
+				NotifySubscription = user.NotifySubscription
+			};
+
+			return View( settings );
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult Edit(UserSettingsModel settings, FormCollection form)
+		{
+			settings.NotifyComment = (form["NotifyComment"] != null);
+			settings.NotifyPhoto = (form["NotifyPhoto"] != null);
+			settings.NotifySubscription = (form["NotifySubscription"] != null);
+
+			if ( ModelState.IsValid )
+			{
+				UserRepository users = new UserRepository();
+				users.ModifySettings( HttpContext.User.Identity.Name, settings );
+
+				return RedirectToAction( "Index", "Home" );
+			}
+
+			return View( settings );
+		}
 	}
 }

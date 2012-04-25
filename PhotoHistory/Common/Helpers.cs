@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Web.Helpers;
 using System.Net.Mail;
 using System.Net;
+using System.Web.Mvc;
 
 namespace PhotoHistory
 {
@@ -30,6 +31,28 @@ namespace PhotoHistory
 			WebMail.SmtpUseDefaultCredentials = false;
 
 			WebMail.Send( to, subject, body, isBodyHtml: true );
+		}
+
+		public static MvcHtmlString MyValidationMessage(this HtmlHelper helper, string fieldName)
+		{
+			MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage( helper, fieldName );
+			if ( validationMsg != null )
+			{
+				return new MvcHtmlString( string.Format( "<span class=\"help-inline\">{0}</span>", validationMsg.ToString() ) );
+			}
+
+			return new MvcHtmlString( string.Empty );
+		}
+
+		public static MvcHtmlString MyValidationMark(this HtmlHelper helper, string fieldName)
+		{
+			MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage( helper, fieldName );
+			if ( validationMsg != null )
+			{
+				return new MvcHtmlString( "error" );
+			}
+
+			return new MvcHtmlString( string.Empty );
 		}
 	}
 }

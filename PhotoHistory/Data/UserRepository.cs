@@ -100,8 +100,36 @@ namespace PhotoHistory.Data
 					IQuery query = session.CreateQuery( @"update UserModel set ActivationCode = null where Id = :id" ).SetParameter( "id", obj.Id );
 					if ( query.ExecuteUpdate() == 0 )
 					{
-						throw new Exception( 
-							string.Format( "Failed to activate user '{0}' ({1}) - user not found!", obj.Login, obj.Id ) );
+						throw new Exception(
+							string.Format( "Failed to activate user '{0}' ({1}) ;(", obj.Login, obj.Id ) );
+					}
+					transaction.Commit();
+				}
+			}
+		}
+
+		public void ModifySettings(string username, UserSettingsModel settings)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					IQuery query = session.CreateQuery( @"update UserModel set 
+													DateOfBirth = :birth,
+													About = :about,
+													NotifyComment = :comment,
+													NotifyPhoto = :photo,
+													NotifySubscription = :subscr
+													where Login = :login" ).
+													SetParameter( "login", username ).
+													SetParameter( "birth", settings.DateOfBirth ).
+													SetParameter( "about", settings.About ).
+													SetParameter( "comment", settings.NotifyComment ).
+													SetParameter( "photo", settings.NotifyPhoto ).
+													SetParameter( "subscr", settings.NotifySubscription );
+					if ( query.ExecuteUpdate() == 0 )
+					{
+						throw new Exception( string.Format( "Failed to modify settings of user '{0}' ;(", username ) );
 					}
 					transaction.Commit();
 				}

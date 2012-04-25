@@ -17,52 +17,36 @@
                 }
             </div>
         }
-        <div class="control-group @if ( Html.ValidationMessage( "Login" ) != null )
-                                  { <text>error</text> }">
+        <div class="control-group @Html.MyValidationMark( "Login" )">
             <label class="control-label" for="username">
                 Username</label>
             <div class="controls">
                 <input type="text" class="input-normal" id="Login" name="Login" value="@(Model != null ? Model.Login : "")" />
-                @if ( Html.ValidationMessage( "Login" ) != null )
-                {
-                    <span class="help-inline">@Html.ValidationMessage( "Login" )</span>
-                }
+                @Html.MyValidationMessage( "Login" )
             </div>
         </div>
-        <div class="control-group @if ( Html.ValidationMessage( "Password" ) != null )
-                                  { <text>error</text> }">
+        <div class="control-group @Html.MyValidationMark( "Password" )">
             <label class="control-label" for="password">
                 Password</label>
             <div class="controls">
                 <input type="password" class="input-normal" id="Password" name="Password" value="@(Model != null ? Model.Password : "")" />
-                @if ( Html.ValidationMessage( "Password" ) != null )
-                {
-                    <span class="help-inline">@Html.ValidationMessage( "Password" )</span>
-                }
+                @Html.MyValidationMessage( "Password" )
             </div>
         </div>
-        <div class="control-group @if ( Html.ValidationMessage( "ConfirmedPassword" ) != null )
-                                  { <text>error</text> }">
+        <div class="control-group @Html.MyValidationMark( "ConfirmedPassword" )">
             <label class="control-label" for="password2">
                 Confirm password</label>
             <div class="controls">
                 <input type="password" class="input-normal" id="ConfirmedPassword" name="ConfirmedPassword" value="@(Model != null ? Model.ConfirmedPassword : "")" />
-                @if ( Html.ValidationMessage( "ConfirmedPassword" ) != null )
-                {
-                    <span class="help-inline">@Html.ValidationMessage( "ConfirmedPassword" )</span>
-                }
+                @Html.MyValidationMessage( "ConfirmedPassword" )
             </div>
         </div>
-        <div class="control-group @if ( Html.ValidationMessage( "Email" ) != null )
-                                  { <text>error</text> }">
+        <div class="control-group @Html.MyValidationMark( "Email" )">
             <label class="control-label" for="email">
                 E-mail address</label>
             <div class="controls">
                 <input type="text" class="input-normal" id="Email" name="Email" value="@(Model != null ? Model.Email : "")" />
-                @if ( Html.ValidationMessage( "Email" ) != null )
-                {
-                    <span class="help-inline">@Html.ValidationMessage( "Email" )</span>
-                }
+                @Html.MyValidationMessage( "Email" )
             </div>
         </div>
         <div class="form-actions">

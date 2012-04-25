@@ -1,0 +1,89 @@
+﻿@model PhotoHistory.Models.UserSettingsModel
+<div id="content-center">
+    <form class="form-horizontal" action="#" method="post">
+    <fieldset>
+        <legend>Change account settings</legend>
+        @Html.ValidationSummary(false)
+        @if ( !ViewData.ModelState.IsValid )
+        {
+            <div class="alert alert-error">
+                @if ( ViewBag.ErrorMessage != null )
+                {
+                    @ViewBag.ErrorMessage
+                }
+                else
+                {
+                    <text>Some fields are invalid - please correct the errors.</text>
+                }
+            </div>
+        }
+        <div class="control-group">
+            <label class="control-label">
+                Account</label>
+            <div class="controls">
+                <button class="btn btn-small btn-warning" href="#">
+                    Change password</button>
+                <button class="btn btn-small btn-danger" href="#">
+                    Delete account</button>
+            </div>
+        </div>
+        <div class="control-group @Html.MyValidationMark( "DateOfBirth" )">
+            <label class="control-label" for="dateOfBirth">
+                Date of birth</label>
+            <div class="controls">
+                <input type="text" id="DateOfBirth" name="DateOfBirth" 
+                    value="@(Model != null && Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToShortDateString() : "")">
+                @Html.MyValidationMessage( "DateOfBirth" )
+            </div>
+        </div>
+        <div class="control-group @Html.MyValidationMark( "About" )">
+            <label class="control-label" for="about">
+                About me</label>
+            <div class="controls">
+                <textarea class="input-xlarge" id="About" name="About" rows="3" 
+                    placeholder="Enter here some information about you, e.g. your hobbies or location...">@(Model != null ? Model.About : "")</textarea>
+                @Html.MyValidationMessage( "About" )
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Notifications</label>
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" id="NotifyComment" name="NotifyComment" @(Model != null && Model.NotifyComment ? "checked=\"checked\"" : "")>
+                        Comment notification
+                    </input>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" id="NotifySubscription" name="NotifySubscription" @(Model != null && Model.NotifySubscription ? "checked=\"checked\"" : "")>
+                        Followed album update notification
+                    </input>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" id="NotifyPhoto" name="NotifyPhoto" @(Model != null && Model.NotifyPhoto ? "checked=\"checked\"" : "")>
+                        New photo reminder
+                    </input>
+                </label>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Confirm</button>
+            <button class="btn">
+                Cancel</button>
+        </div>
+    </fieldset>
+    </form>
+</div>
+
+@section jQuery {
+    <script>
+        $(function () {
+            $("#DateOfBirth").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2012"
+            });
+        });
+    </script>
+}
