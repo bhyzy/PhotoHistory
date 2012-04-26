@@ -2,6 +2,8 @@
 using PhotoHistory.Data;
 using System;
 using System.Globalization;
+using PhotoHistory.Models;
+using System.Web;
 
 namespace PhotoHistory
 {
@@ -50,6 +52,26 @@ namespace PhotoHistory
 
 			// jesli data nie zostala podana to uznajemy ja za poprawna - jest opcjonalna
 			return true;
+		}
+	}
+
+	public class MatchCurrentPasswordAttribute : ValidationAttribute
+	{
+		public override bool IsValid(object value)
+		{
+			if ( value != null )
+			{
+				string password = (string)value;
+
+				UserRepository userRepository = new UserRepository();
+				UserModel loggedUser = userRepository.GetByUsername( HttpContext.Current.User.Identity.Name );
+				if ( loggedUser == null )
+					throw new Exception( "Logged user entry couldn't be found" );
+
+				return loggedUser.Password == password.HashMD5();
+			}
+
+			return false;
 		}
 	}
 

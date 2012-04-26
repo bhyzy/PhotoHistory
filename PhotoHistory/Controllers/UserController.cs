@@ -181,5 +181,26 @@ namespace PhotoHistory.Controllers
 
 			return View( settings );
 		}
+
+		[Authorize]
+		public ActionResult ChangePassword()
+		{
+			return View();
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult ChangePassword(ChangeUserPasswordModel changePassword)
+		{
+			if ( ModelState.IsValid )
+			{
+				UserRepository users = new UserRepository();
+				users.ChangePassword( HttpContext.User.Identity.Name, changePassword.NewPassword );
+
+				return RedirectToAction( "Index", "Home" );
+			}
+
+			return View( changePassword );
+		}
 	}
 }

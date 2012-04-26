@@ -1,6 +1,7 @@
 ﻿@model PhotoHistory.Models.UserSettingsModel
+           
 <div id="content-center">
-    <form class="form-horizontal" action="#" method="post">
+    <form class="form-horizontal" action="/User/Edit" method="post">
     <fieldset>
         <legend>Change account settings</legend>
         @if ( !ViewData.ModelState.IsValid )
@@ -20,10 +21,8 @@
             <label class="control-label">
                 Account</label>
             <div class="controls">
-                <button class="btn btn-small btn-warning" href="#">
-                    Change password</button>
-                <button class="btn btn-small btn-danger" href="#">
-                    Delete account</button>
+                <a href="/User/ChangePassword"><button type="button" class="btn btn-small btn-warning">Change password</button></a>
+                <a href="/User/Delete"><button type="button" class="btn btn-small btn-danger">Delete account</button></a>
             </div>
         </div>
         <div class="control-group @Html.MyValidationMark( "DateOfBirth" )">

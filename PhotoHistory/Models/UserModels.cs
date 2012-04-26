@@ -82,4 +82,25 @@ namespace PhotoHistory.Models
 		//[Required]
 		public virtual bool NotifySubscription { get; set; }
 	}
+
+	public class ChangeUserPasswordModel
+	{
+		[Required]
+		[DataType( DataType.Password )]
+		[MatchCurrentPassword( ErrorMessage = "Specified password doesn't match your account's password" )]
+		[Display( Name = "Current password" )]
+		public virtual string CurrentPassword { get; set; }
+
+		[Required]
+		[StringLength( 100, MinimumLength = 3 )]
+		[DataType( DataType.Password )]
+		[Display( Name = "New password" )]
+		public virtual string NewPassword { get; set; }
+
+		[Required]
+		[Compare( "NewPassword" )]
+		[DataType( DataType.Password )]
+		[Display( Name = "Confirm new password" )]
+		public virtual string ConfirmedNewPassword { get; set; }
+	}
 }

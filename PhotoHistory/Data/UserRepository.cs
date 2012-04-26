@@ -135,5 +135,23 @@ namespace PhotoHistory.Data
 				}
 			}
 		}
+
+		public void ChangePassword(string username, string newPassword)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					IQuery query = session.CreateQuery( @"update UserModel set Password = :password where Login = :login" ).
+																	SetParameter( "login", username ).
+																	SetParameter( "password", newPassword.HashMD5() );
+					if ( query.ExecuteUpdate() == 0 )
+					{
+						throw new Exception( string.Format( "Failed to change password of user '{0}' ;(", username ) );
+					}
+					transaction.Commit();
+				}
+			}
+		}
 	}
 }
