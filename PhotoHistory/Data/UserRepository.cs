@@ -153,5 +153,23 @@ namespace PhotoHistory.Data
 				}
 			}
 		}
+
+		public void SetActivationCode(string username, string activationCode)
+		{
+			using ( var session = GetSession() )
+			{
+				using ( var transaction = session.BeginTransaction() )
+				{
+					IQuery query = session.CreateQuery( @"update UserModel set activation_code = :code where Login = :login" ).
+																	SetParameter( "login", username ).
+																	SetParameter( "code", activationCode );
+					if ( query.ExecuteUpdate() == 0 )
+					{
+						throw new Exception( string.Format( "Failed to set activation code for user '{0}' ;(", username ) );
+					}
+					transaction.Commit();
+				}
+			}
+		}
 	}
 }

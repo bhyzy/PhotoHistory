@@ -75,5 +75,21 @@ namespace PhotoHistory
 		}
 	}
 
+	public class ValidUsernameOrEmailAttribute : ValidationAttribute
+	{
+		public override bool IsValid(object value)
+		{
+			if ( value != null )
+			{
+				string account = (string)value;
+				UserRepository users = new UserRepository();
+				UserModel user = (users.GetByUsername( account ) ?? users.GetByEmail( account ));
+				return user != null && user.ActivationCode == null;
+			}
+
+			return false;
+		}
+	}
+
 }
 

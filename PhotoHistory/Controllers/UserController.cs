@@ -202,5 +202,69 @@ namespace PhotoHistory.Controllers
 
 			return View( changePassword );
 		}
+
+		public ActionResult RestorePassword(string user, string token)
+		{
+			if ( !string.IsNullOrEmpty( user ) && !string.IsNullOrEmpty( token ) )
+			{
+				UserRepository userRepository = new UserRepository();
+				UserModel requestedUser = userRepository.GetByUsername( user );
+				if ( requestedUser != null && requestedUser.ActivationCode == token )
+				{
+					try
+					{
+						//userRepository.Activate( inactiveUser );
+						;
+					}
+					catch ( Exception e )
+					{
+						return HttpNotFound( e.ToString() );
+					}
+
+					return RedirectToAction( "SignIn", "User" );
+				}
+
+				return HttpNotFound( string.Format( "User '{0}' not found or invalid token", user ) );
+			}
+
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult RestorePassword(RestoreUserPasswordModel restorePassword)
+		{
+			if ( ModelState.IsValid )
+			{
+				UserRepository users = new UserRepository();
+				UserModel user = (users.GetByUsername( restorePassword.Account ) ?? users.GetByEmail( restorePassword.Account ));
+				if ( user == null )
+				{
+					throw new Exception( string.Format( 
+						"Username or e-mail address '{0}' not found - it should be already validated!", restorePassword.Account ) );
+				}
+
+				string activationCode = (new Random().Next( 1000 )).ToString().HashMD5();
+				users.SetActivationCode( user.Login, activationCode );
+
+				Uri requestUrl = Url.RequestContext.HttpContext.Request.Url;
+				string activationLink = string.Format( "{0}://{1}{2}", requestUrl.Scheme, requestUrl.Authority,
+					Url.Action( "RestorePassword", "User", new { user = Url.Encode( user.Login ), token = activationCode } ) );
+
+				try
+				{
+					Helpers.SendEmail( user.Email, "PastExplorer password recovery",
+						string.Format( "Hello, click <a href=\"{0}\">here</a> to change your PastExplorer account password.", activationLink ) );
+				}
+				catch ( Exception )
+				{
+					ViewBag.ErrorMessage = "Failed to send password recovery e-mail message. Please try again later.";
+					return View( restorePassword );
+				}
+
+				return RedirectToAction( "Index", "Home" );
+			}
+
+			return View( restorePassword );
+		}
 	}
 }

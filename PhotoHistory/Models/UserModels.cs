@@ -103,4 +103,12 @@ namespace PhotoHistory.Models
 		[Display( Name = "Confirm new password" )]
 		public virtual string ConfirmedNewPassword { get; set; }
 	}
+
+	public class RestoreUserPasswordModel
+	{
+		[Required]
+		[ValidUsernameOrEmailAttribute( ErrorMessage = "Neither an username nor an e-mail address matching this could be found" )]
+		[Display( Name = "Account" )]
+		public virtual string Account { get; set; }
+	}
 }
