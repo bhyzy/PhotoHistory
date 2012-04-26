@@ -3,7 +3,6 @@
     <form class="form-horizontal" action="#" method="post">
     <fieldset>
         <legend>Change account settings</legend>
-        @Html.ValidationSummary(false)
         @if ( !ViewData.ModelState.IsValid )
         {
             <div class="alert alert-error">
@@ -50,19 +49,22 @@
                 Notifications</label>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" id="NotifyComment" name="NotifyComment" @(Model != null && Model.NotifyComment ? "checked=\"checked\"" : "")>
+                    <input type="checkbox" id="NotifyComment" name="NotifyComment" value="true" @(Model != null && Model.NotifyComment ? "checked=\"checked\"" : "")>
                         Comment notification
                     </input>
+                    <input type="hidden" id="NotifyComment" value="false" />
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" id="NotifySubscription" name="NotifySubscription" @(Model != null && Model.NotifySubscription ? "checked=\"checked\"" : "")>
+                    <input type="checkbox" id="NotifySubscription" name="NotifySubscription" value="true" @(Model != null && Model.NotifySubscription ? "checked=\"checked\"" : "")>
                         Followed album update notification
                     </input>
+                    <input type="hidden" id="NotifySubscription" value="false" />
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" id="NotifyPhoto" name="NotifyPhoto" @(Model != null && Model.NotifyPhoto ? "checked=\"checked\"" : "")>
+                    <input type="checkbox" id="NotifyPhoto" name="NotifyPhoto" value="true" @(Model != null && Model.NotifyPhoto ? "checked=\"checked\"" : "")>
                         New photo reminder
                     </input>
+                    <input type="hidden" id="NotifyPhoto" value="false" />
                 </label>
             </div>
         </div>

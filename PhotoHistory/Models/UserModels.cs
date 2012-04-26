@@ -65,7 +65,7 @@ namespace PhotoHistory.Models
 
 	public class UserSettingsModel
 	{
-		[DateYearInRange( 1900, 2012 )]
+		[DateYearInRange( 1900, 2012, ErrorMessage = "Year of birth is not in range 1900-2012" )]
 		[Display( Name = "Date of birth" )]
 		public virtual DateTime? DateOfBirth { get; set; }
 

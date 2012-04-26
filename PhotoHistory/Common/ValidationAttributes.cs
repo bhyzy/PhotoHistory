@@ -42,8 +42,14 @@ namespace PhotoHistory
 
 		public override bool IsValid(object value)
 		{
-			DateTime date = (DateTime)value;
-			return (date != null && date.Year >= _min && date.Year <= _max);
+			if ( value != null )
+			{
+				DateTime date = (DateTime)value;
+				return (date != null && date.Year >= _min && date.Year <= _max);
+			}
+
+			// jesli data nie zostala podana to uznajemy ja za poprawna - jest opcjonalna
+			return true;
 		}
 	}
 

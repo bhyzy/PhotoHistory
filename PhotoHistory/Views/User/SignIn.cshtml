@@ -36,8 +36,10 @@
         </div>
         <div class="form-actions">
             <label class="checkbox inline">
-                <input type="checkbox" id="RememberMe" name="RememberMe" @(Model != null && Model.Remember ? "checked=\"checked\"" : "")>Remember
-                    me</input>
+                <input type="checkbox" id="Remember" name="Remember" value="true" @(Model != null && Model.Remember ? "checked=\"checked\"" : "")>
+                    Remember me
+                </input>
+                <input type="hidden" id="Remember" value="false" />        
             </label>
             <button type="submit" class="btn btn-primary">
                 Sign in</button>

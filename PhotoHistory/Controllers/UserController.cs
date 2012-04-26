@@ -74,8 +74,6 @@ namespace PhotoHistory.Controllers
 		[HttpPost]
 		public ActionResult SignIn(SignInUserModel signUser, FormCollection form, string returnUrl)
 		{
-			signUser.Remember = ( form["RememberMe"] != null );
-
 			if ( ModelState.IsValid )
 			{
 				UserRepository userRepository = new UserRepository();
@@ -171,12 +169,8 @@ namespace PhotoHistory.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public ActionResult Edit(UserSettingsModel settings, FormCollection form)
+		public ActionResult Edit(UserSettingsModel settings)
 		{
-			settings.NotifyComment = (form["NotifyComment"] != null);
-			settings.NotifyPhoto = (form["NotifyPhoto"] != null);
-			settings.NotifySubscription = (form["NotifySubscription"] != null);
-
 			if ( ModelState.IsValid )
 			{
 				UserRepository users = new UserRepository();
