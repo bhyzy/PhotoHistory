@@ -127,7 +127,7 @@ namespace PhotoHistory.Controllers
 				{
 					try
 					{
-						userRepository.Activate( inactiveUser );
+						userRepository.Activate( user );
 					}
 					catch ( Exception e )
 					{
@@ -190,7 +190,7 @@ namespace PhotoHistory.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public ActionResult ChangePassword(ChangeUserPasswordModel changePassword)
+		public ActionResult ChangePassword(ChangeExistingUserPasswordModel changePassword)
 		{
 			if ( ModelState.IsValid )
 			{
@@ -203,30 +203,42 @@ namespace PhotoHistory.Controllers
 			return View( changePassword );
 		}
 
-		public ActionResult RestorePassword(string user, string token)
+		public ActionResult ResetPassword(string user, string token)
 		{
-			if ( !string.IsNullOrEmpty( user ) && !string.IsNullOrEmpty( token ) )
+			ResetUserPasswordModel changePassword = new ResetUserPasswordModel();
+			changePassword.Username = user;
+			changePassword.Token = token;
+
+			return View( changePassword );
+		}
+
+		[HttpPost]
+		public ActionResult ResetPassword(ResetUserPasswordModel changePassword)
+		{
+			if ( ModelState.IsValid )
 			{
-				UserRepository userRepository = new UserRepository();
-				UserModel requestedUser = userRepository.GetByUsername( user );
-				if ( requestedUser != null && requestedUser.ActivationCode == token )
+				UserRepository users = new UserRepository();
+				UserModel user = users.GetByUsername( changePassword.Username );
+
+				if ( user != null && user.ActivationCode != null && user.ActivationCode == changePassword.Token )
 				{
-					try
-					{
-						//userRepository.Activate( inactiveUser );
-						;
-					}
-					catch ( Exception e )
-					{
-						return HttpNotFound( e.ToString() );
-					}
+					users.ChangePassword( changePassword.Username, changePassword.NewPassword );
+					users.Activate( changePassword.Username );
 
-					return RedirectToAction( "SignIn", "User" );
+					return RedirectToAction( "Index", "Home" );
 				}
-
-				return HttpNotFound( string.Format( "User '{0}' not found or invalid token", user ) );
+				else
+				{
+					//ViewBag.ErrorMessage = "Invalid username/token pair.";
+					return HttpNotFound( "Invalid username/token pair." );
+				}
 			}
 
+			return View( changePassword );
+		}
+
+		public ActionResult RestorePassword()
+		{
 			return View();
 		}
 
@@ -248,7 +260,7 @@ namespace PhotoHistory.Controllers
 
 				Uri requestUrl = Url.RequestContext.HttpContext.Request.Url;
 				string activationLink = string.Format( "{0}://{1}{2}", requestUrl.Scheme, requestUrl.Authority,
-					Url.Action( "RestorePassword", "User", new { user = Url.Encode( user.Login ), token = activationCode } ) );
+					Url.Action( "ResetPassword", "User", new { user = Url.Encode( user.Login ), token = activationCode } ) );
 
 				try
 				{

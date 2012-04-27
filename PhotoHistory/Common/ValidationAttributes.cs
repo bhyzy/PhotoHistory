@@ -84,7 +84,7 @@ namespace PhotoHistory
 				string account = (string)value;
 				UserRepository users = new UserRepository();
 				UserModel user = (users.GetByUsername( account ) ?? users.GetByEmail( account ));
-				return user != null && user.ActivationCode == null;
+				return user != null/* && user.ActivationCode == null*/;
 			}
 
 			return false;

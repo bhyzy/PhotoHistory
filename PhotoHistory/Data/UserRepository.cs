@@ -91,17 +91,17 @@ namespace PhotoHistory.Data
 			}
 		}
 
-		public void Activate(UserModel obj)
+		public void Activate(string username)
 		{
 			using ( var session = GetSession() )
 			{
 				using ( var transaction = session.BeginTransaction() )
 				{
-					IQuery query = session.CreateQuery( @"update UserModel set ActivationCode = null where Id = :id" ).SetParameter( "id", obj.Id );
+					IQuery query = session.CreateQuery( @"update UserModel set ActivationCode = null where Login = :login" ).SetParameter( "login", username );
 					if ( query.ExecuteUpdate() == 0 )
 					{
 						throw new Exception(
-							string.Format( "Failed to activate user '{0}' ({1}) ;(", obj.Login, obj.Id ) );
+							string.Format( "Failed to activate user '{0}' ;(", username ) );
 					}
 					transaction.Commit();
 				}
