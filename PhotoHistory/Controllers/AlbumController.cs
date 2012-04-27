@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PhotoHistory.Data;
 using PhotoHistory.Models;
+using NHibernate;
 
 namespace PhotoHistory.Controllers
 {
@@ -45,10 +46,29 @@ namespace PhotoHistory.Controllers
 			return View();
 		}
 
+        
+        
+        
         public ActionResult Create()
         {
             return View();
         }
+
+        
+        [HttpPost]
+        public ActionResult Create(AlbumModel newAlbum)
+        {
+            if (ModelState.IsValid)
+            {
+                AlbumRepository albums = new AlbumRepository();                
+                albums.Create(newAlbum);
+
+                return View("Created", newAlbum);
+            }
+
+            return View(newAlbum);
+        }
+
 
     }
 }
