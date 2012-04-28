@@ -16,25 +16,27 @@
                 }
             </div>
         }
-        <div class="control-group">
+        <div class="control-group @Html.MyValidationMark( "Name" )">
             <label class="control-label" for="name">
                 Name</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" id="name">
+                <input type="text" class="input-xlarge" id="Name" name="Name" value="@(Model != null ? Model.Name: "")">
+                @Html.MyValidationMessage( "Name" )
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group @Html.MyValidationMark( "Description" )">
             <label class="control-label" for="description">
                 Description</label>
             <div class="controls">
-                <textarea class="input-xlarge" id="description" rows="3" placeholder="Describe your album here... (optional)"></textarea>
+                <textarea class="input-xlarge" id="Description" name="Description" value="@(Model != null ? Model.Description: "")" rows="3" placeholder="Describe your album here... (optional)"></textarea>
+                @Html.MyValidationMessage( "Description" )
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group @Html.MyValidationMark( "CategoryId" )">
             <label class="control-label" for="description">
                 Category</label>
             <div class="controls">
-                <select class="input-normal inline" id="category">
+                <select class="input-normal inline" id="CategoryId" name="CategoryId">
                     <option>People</option>
                     <option>Building</option>
                     <option>City</option>
@@ -42,6 +44,7 @@
                     <option>Room</option>
                     <option>Other</option>
                 </select>
+                @Html.MyValidationMessage( "CategoryId" )
             </div>
         </div>
         <div class="control-group">
@@ -71,16 +74,16 @@
                 </div>
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group" @Html.MyValidationMark( "Public" )>
             <label class="control-label" for="description">
                 Access rights</label>
             <div class="controls">
                 <label class="radio">
-                    <input name="access" id="accessPublic" value="accessPublic" checked="checked" type="radio">
+                    @Html.RadioButtonFor(model => Model.Public, true, new { @checked = "checked" })
                     Public - everyone can view this album
                 </label>
                 <label class="radio">
-                    <input name="access" id="accessPrivate" value="accessPrivate" type="radio">
+                    @Html.RadioButtonFor(model => Model.Public, false)
                     Private - only me and perhaps some specific people can view this album
                 </label>
                 <!-- to nizej widoczne tylko jesli wybrano PRIVATE -->
@@ -98,6 +101,7 @@
                     <!-- to nizej widoczne tylko jesli wybrano dostep przez liste uztywkonikow -->
                     <input type="text" class="input-xlarge inline" id="usersList">
                 </div>
+                @Html.MyValidationMessage( "Public" )
             </div>
         </div>
         <div class="control-group">
@@ -105,7 +109,8 @@
                 Comment rights</label>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" id="allow" checked="checked">Allow comments</input>
+                    Allow comments
+                    @Html.CheckBoxFor(model => Model.CommentsAllow, new { @checked = "checked" })                    
                 </label>
             </div>
         </div>

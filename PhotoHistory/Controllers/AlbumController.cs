@@ -51,6 +51,7 @@ namespace PhotoHistory.Controllers
         
         public ActionResult Create()
         {
+            
             return View();
         }
 

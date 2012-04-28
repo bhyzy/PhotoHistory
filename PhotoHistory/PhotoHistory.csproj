@@ -85,6 +85,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AlbumMapping.cs" />
     <Compile Include="Data\AlbumRepository.cs" />
+    <Compile Include="Data\CategoryMapping.cs" />
     <Compile Include="Data\DataRepository.cs" />
     <Compile Include="Data\SessionProvider.cs" />
     <Compile Include="Data\UserMapping.cs" />
@@ -93,6 +94,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AlbumModels.cs" />
+    <Compile Include="Models\CategoryModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
