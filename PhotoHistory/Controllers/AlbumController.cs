@@ -51,7 +51,7 @@ namespace PhotoHistory.Controllers
         
         public ActionResult Create()
         {
-            
+            CategoryModel.EnsureStartingData();            
             return View();
         }
 
