@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using PhotoHistory.Common;
 
 namespace PhotoHistory
 {
@@ -36,6 +37,7 @@ namespace PhotoHistory
 
 			RegisterGlobalFilters( GlobalFilters.Filters );
 			RegisterRoutes( RouteTable.Routes );
+            BuildInitializer.InitializeBuild();
 		}
 	}
 }
