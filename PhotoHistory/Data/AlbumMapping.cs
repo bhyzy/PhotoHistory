@@ -27,6 +27,12 @@ namespace PhotoHistory.Data
                 {
                     map.Column("user_id");
                 });
+            ManyToOne(x => x.Category, map =>
+            {
+                map.Column("category_id");
+            });
+
+            /*
             Property(x => x.UserId, map =>
                 {
                     map.Column("user_id");
@@ -37,6 +43,7 @@ namespace PhotoHistory.Data
                 map.Column("category_id");
                 map.NotNullable(true);
             });
+             */ 
             Property(x => x.Name, map =>
             {
                 map.Column("name");

@@ -51,7 +51,8 @@ namespace PhotoHistory.Controllers
         
         public ActionResult Create()
         {
-            CategoryModel.EnsureStartingData();            
+            CategoryModel.EnsureStartingData();
+            PrepareCategories();
             return View();
         }
 
@@ -59,6 +60,7 @@ namespace PhotoHistory.Controllers
         [HttpPost]
         public ActionResult Create(AlbumModel newAlbum)
         {
+            PrepareCategories();
             if (ModelState.IsValid)
             {
                 AlbumRepository albums = new AlbumRepository();                
@@ -67,9 +69,20 @@ namespace PhotoHistory.Controllers
                 return View("Created", newAlbum);
             }
 
+
             return View(newAlbum);
         }
 
+
+        // loads categories as a list
+        private void PrepareCategories()
+        {
+            using (var session = SessionProvider.SessionFactory.OpenSession())
+            {
+                ViewData["ListOfCategories"] = 
+                    new SelectList(session.QueryOver<CategoryModel>().List(), "Id", "Name");
+            }
+        }
 
     }
 }

@@ -9,11 +9,12 @@ namespace PhotoHistory.Models
     public class AlbumModel
     {
         public virtual int? Id { get; set; }
-        public virtual int UserId { get; set; }
+        //public virtual int UserId { get; set; }
         public virtual UserModel User { get; set; } // 'belongs to' association
 
         [Required]
-        public virtual int CategoryId { get; set; }
+        public virtual CategoryModel Category { get; set; }
+        //public virtual int CategoryId { get; set; }
 
         [Required]
         [StringLength(255, MinimumLength = 3)]

@@ -32,10 +32,11 @@
                 @Html.MyValidationMessage( "Description" )
             </div>
         </div>
-        <div class="control-group @Html.MyValidationMark( "CategoryId" )">
+        <div class="control-group @Html.MyValidationMark( "Category" )">
             <label class="control-label" for="description">
                 Category</label>
             <div class="controls">
+            <!--
                 <select class="input-normal inline" id="CategoryId" name="CategoryId">
                     <option>People</option>
                     <option>Building</option>
@@ -44,7 +45,9 @@
                     <option>Room</option>
                     <option>Other</option>
                 </select>
-                @Html.MyValidationMessage( "CategoryId" )
+                -->
+                @Html.DropDownListFor(model => model.Category.Id, (SelectList)ViewData["ListOfCategories"])
+                @Html.MyValidationMessage( "Category" )
             </div>
         </div>
         <div class="control-group">
