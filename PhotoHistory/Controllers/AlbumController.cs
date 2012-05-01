@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PhotoHistory.Data;
 using PhotoHistory.Models;
 using NHibernate;
+using System.Web.Security;
 
 namespace PhotoHistory.Controllers
 {
@@ -46,9 +47,9 @@ namespace PhotoHistory.Controllers
 			return View();
 		}
 
-        
-        
-        
+
+
+        [Authorize]
         public ActionResult Create()
         {
             CategoryModel.EnsureStartingData();
@@ -56,14 +57,20 @@ namespace PhotoHistory.Controllers
             return View();
         }
 
-        
+
+        [Authorize]
         [HttpPost]
         public ActionResult Create(AlbumModel newAlbum)
         {
             PrepareCategories();
             if (ModelState.IsValid)
-            {
-                AlbumRepository albums = new AlbumRepository();                
+            {                                
+                //assign a current user
+                UserRepository users = new UserRepository();
+                newAlbum.User = 
+                    users.GetByUsername(HttpContext.User.Identity.Name);
+
+                AlbumRepository albums = new AlbumRepository();
                 albums.Create(newAlbum);
 
                 return View("Created", newAlbum);
