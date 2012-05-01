@@ -26,10 +26,12 @@ namespace PhotoHistory.Data
             ManyToOne(x => x.User, map =>
                 {
                     map.Column("user_id");
+                    map.NotNullable(true);
                 });
             ManyToOne(x => x.Category, map =>
             {
                 map.Column("category_id");
+                map.NotNullable(true);
             });
 
             /*
@@ -72,7 +74,6 @@ namespace PhotoHistory.Data
             {
                 map.Column("password");
                 map.Length(255);
-                map.NotNullable(true);
             });
             Property(x => x.CommentsAllow, map =>
             {
