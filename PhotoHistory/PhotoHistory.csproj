@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Common\ActionFilters.cs" />
     <Compile Include="Common\BuildInitializer.cs" />
+    <Compile Include="Common\FileHelper.cs" />
     <Compile Include="Common\Helpers.cs" />
     <Compile Include="Common\ValidationAttributes.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
@@ -251,7 +252,7 @@
     <Content Include="Views\Album\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\ViewProfile.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

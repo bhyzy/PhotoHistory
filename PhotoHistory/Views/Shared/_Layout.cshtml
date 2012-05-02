@@ -56,7 +56,7 @@ Released   : 20090918
                     @if ( HttpContext.Current.User.Identity.IsAuthenticated )
                     {
                         <div class="btn-group">
-                            <a href="/User">
+                            <a href="/User/ViewProfile?userName=@HttpContext.Current.User.Identity.Name")>
                                 <button class="btn">
                                    <i class="icon-user"></i> @HttpContext.Current.User.Identity.Name
                                 </button>
