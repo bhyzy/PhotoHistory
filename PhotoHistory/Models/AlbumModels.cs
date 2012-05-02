@@ -34,5 +34,9 @@ namespace PhotoHistory.Models
 
 
 
+    public class AlbumProfileModel
+    {
 
+
+    }
 }

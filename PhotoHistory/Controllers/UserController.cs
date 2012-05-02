@@ -16,7 +16,34 @@ namespace PhotoHistory.Controllers
 
 		public ActionResult Index()
 		{
-			return View();
+            string userName = HttpContext.User.Identity.Name;
+            System.Diagnostics.Debug.WriteLine(String.Format("UserName {0}",userName));
+
+            UserRepository repo = new UserRepository();
+            UserModel user = repo.GetByUsername(userName);
+            UserProfileModel profile=null;
+            
+            if (user == null)
+                ViewBag.ErrorMessage = string.Format("Can't find user {0}", userName);
+            else
+            {
+                DateTime ? startTime = user.DateOfBirth;
+                
+                string age="";
+                if (startTime == null)
+                    age = "Unavailable";
+                else
+                    age = ""+Helpers.GetAge(startTime??DateTime.Today);
+                 profile = new UserProfileModel() 
+                 {   
+                     Name= user.Login, 
+                     About= user.About, 
+                     Age = age 
+                 };
+            
+            }
+            
+			return View(profile);
 		}
 
 		public ActionResult Create()

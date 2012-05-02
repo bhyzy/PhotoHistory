@@ -122,4 +122,16 @@ namespace PhotoHistory.Models
 		[Display( Name = "Account" )]
 		public virtual string Account { get; set; }
 	}
+
+    public class UserProfileModel
+    {   
+        [Required]
+        public virtual string Name { get; set; }
+        [Required]
+        public virtual string Age { get; set; }
+        [Required]
+        public virtual string About { get; set; }
+        [Required]
+        public virtual IEnumerable<AlbumProfileModel> Albums { get; set; }
+    }
 }

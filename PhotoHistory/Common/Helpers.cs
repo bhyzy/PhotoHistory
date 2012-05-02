@@ -54,5 +54,13 @@ namespace PhotoHistory
 
 			return new MvcHtmlString( string.Empty );
 		}
-	}
+
+        public static int GetAge(DateTime birthDate)
+        {
+            DateTime now = DateTime.Today;
+            int age = now.Year - birthDate.Year;
+            if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day)) age--;
+            return age;
+        }
+    }
 }
