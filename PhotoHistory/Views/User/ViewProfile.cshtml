@@ -1,0 +1,74 @@
+﻿@model PhotoHistory.Models.UserProfileModel
+           
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-error">
+        @if (ViewBag.ErrorMessage != null)
+        {
+                @ViewBag.ErrorMessage
+        }
+        else
+        {
+            <text>Sorry, something went wrong. A team of highly trained monkeys has been dispatched 
+            to deal with this situation.</text>
+        }
+        </div>
+    }
+    else
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-error">
+                @ViewBag.ErrorMessage
+        </div>
+    }
+    else
+    {
+			<div id="profile-header">
+				<h1 class="page-title">
+					<a href="#">@(Model != null ? Model.Name : "")</a>
+				</h1>
+			</div>
+			<div id="profile-content">
+				<div id="profile-description">
+					<p>Age: @(Model != null ? Model.Age : "")</p>
+					<p>About me: @(Model != null ? Model.About : "")</p>
+				</div>
+				<div id="profile-albums">
+					<h2 class="page-section">Albums</h2>
+					<div id="content-left">
+						<div class="album-thumb">
+							<a href="#">
+								<img src="/tmp/photo1.jpg" class="photo" />
+								<img src="/tmp/photo2.jpg" class="photo" />
+								<img src="/tmp/photo3.jpg" class="photo" />
+							<h3 class="album-title">Noah K. everyday</h3>
+							</a>
+							<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
+							<span class="album-label">Views: </span><span class="album-value">117 684</span>
+						</div>
+						<div class="album-thumb">
+							<a href="#">
+								<img src="/tmp/photo1.jpg" class="photo" />
+								<img src="/tmp/photo2.jpg" class="photo" />
+								<img src="/tmp/photo3.jpg" class="photo" />
+							<h3 class="album-title">Noah K. everyday</h3>
+							</a>
+							<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
+							<span class="album-label">Views: </span><span class="album-value">117 684</span>
+						</div>
+					</div>
+					<div id="content-right">
+						<div class="album-thumb">
+							<a href="#">
+								<img src="/tmp/photo1.jpg" class="photo" />
+								<img src="/tmp/photo2.jpg" class="photo" />
+								<img src="/tmp/photo3.jpg" class="photo" />
+							<h3 class="album-title">Noah K. everyday</h3>
+							</a>
+							<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
+							<span class="album-label">Views: </span><span class="album-value">117 684</span>
+						</div>
+					</div>
+				</div>
+			</div>
+    }

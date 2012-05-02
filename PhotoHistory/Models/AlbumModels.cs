@@ -36,7 +36,10 @@ namespace PhotoHistory.Models
 
     public class AlbumProfileModel
     {
-
+        public virtual string Name {get; set;}
+        public virtual string TimeSpan { get; set; }
+        public virtual int? Views { get; set; }
+        
 
     }
 }

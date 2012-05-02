@@ -54,8 +54,8 @@ namespace PhotoHistory.Common
                 Password = "qwe".HashMD5(),
                 Email = "qbajas@gmail.com",
                 ActivationCode = null,
-                DateOfBirth = null,
-                About = null,
+                DateOfBirth = new DateTime(1989,5,5),
+                About = " ksadjolkrewjof jlksajflkjrwelkfmslk ajfsaljm lkmaslfj lmflkajlos jmlwema jslafmawl",
                 NotifyComment = true,
                 NotifyPhoto = true,
                 NotifySubscription = true
@@ -68,8 +68,8 @@ namespace PhotoHistory.Common
                 Password = "qwe".HashMD5(),
                 Email = "pierogmichal@gmail.com",
                 ActivationCode = null,
-                DateOfBirth = null,
-                About = null,
+                DateOfBirth = new DateTime(1989, 10, 15),
+                About = "salrjwelkf jlksadjlkf jlkr jflajs ljoiwej ljal;fjal jlafnl lsfdaa;sl jofiewj laf",
                 NotifyComment = true,
                 NotifyPhoto = true,
                 NotifySubscription = true
@@ -82,8 +82,8 @@ namespace PhotoHistory.Common
                 Password = "qwe".HashMD5(),
                 Email = "hyzy.bartlomiej@gmail.com",
                 ActivationCode = null,
-                DateOfBirth = null,
-                About = null,
+                DateOfBirth = new DateTime(1989, 3, 1),
+                About = "klfasflsal ajlfdja lj flajsorweajoifj lsadjflwejoifjlsa lasdfl jlasjfl jlkasfdlewjlfas ",
                 NotifyComment = true,
                 NotifyPhoto = true,
                 NotifySubscription = true
