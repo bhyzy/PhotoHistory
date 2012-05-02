@@ -61,6 +61,10 @@ namespace PhotoHistory.Data
             {
                 map.Column("rating");
             });
+            Property(x => x.Views, map =>
+            {
+                map.Column("views");
+            });
             Property(x => x.NextNotification, map =>
             {
                 map.Column("next_notification");

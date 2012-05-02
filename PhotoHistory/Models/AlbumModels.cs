@@ -27,6 +27,7 @@ namespace PhotoHistory.Models
         public virtual string Description { get; set; }
 
         public virtual int Rating { get; set; }
+        public virtual int Views { get; set; }
         public virtual DateTime? NextNotification { get; set; }
         public virtual bool Public { get; set; }
         public virtual string Password { get; set; }
@@ -69,6 +70,8 @@ namespace PhotoHistory.Models
             return true;            
         }
 
+
+
     }
 
 
@@ -77,8 +80,9 @@ namespace PhotoHistory.Models
     {
         public virtual string Name {get; set;}
         public virtual string TimeSpan { get; set; }
-        public virtual int? Views { get; set; }
-        
+        public virtual int Views { get; set; }
+        public virtual IEnumerable<string> Thumbails { get; set; }
 
+        
     }
 }

@@ -74,6 +74,18 @@ namespace PhotoHistory.Controllers
                     Age = age
                 };
 
+                AlbumRepository albums= new AlbumRepository();
+                foreach (AlbumModel model in albums.GetByUser(user.Id) )
+                {
+                    AlbumProfileModel profileModel = new AlbumProfileModel()
+                    {
+                        Name = model.Name,
+                        Views = model.Views
+                    };
+                    
+
+                }
+
             }
 
             return View(profile);

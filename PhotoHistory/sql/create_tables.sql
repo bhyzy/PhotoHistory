@@ -37,6 +37,7 @@ CREATE TABLE Albums
 	name varchar(255) NOT NULL,
 	description text,
 	rating smallint,
+	views integer default 0,
 	next_notification timestamp,
 	public boolean NOT NULL,
 	password varchar(255),
@@ -54,8 +55,7 @@ CREATE TABLE Photos
 	photo_id serial primary key,
 	album_id integer NOT NULL REFERENCES Albums,
 	date_taken timestamp NOT NULL,
-	description text,
-	file_path text NOT NULL
+	description text
 );
 
 CREATE INDEX photo_album_idx on Photos (album_id);
