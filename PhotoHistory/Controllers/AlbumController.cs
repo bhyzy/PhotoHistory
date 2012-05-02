@@ -60,15 +60,28 @@ namespace PhotoHistory.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(AlbumModel newAlbum)
+        public ActionResult Create(AlbumModel newAlbum, string a, string b)
         {
             PrepareCategories();
+
+            //next notification 
+            if (Request["reminder"] == "remindYes")
+            {
+                System.DateTime today = System.DateTime.Now;
+                System.DateTime answer = today.AddDays(Int32.Parse(Request["NextNotificationDays"]));
+                newAlbum.NextNotification = answer;
+            }
+
             if (ModelState.IsValid)
             {                                
                 //assign a current user
                 UserRepository users = new UserRepository();
                 newAlbum.User = 
                     users.GetByUsername(HttpContext.User.Identity.Name);
+                
+                // password
+                if (newAlbum.Password != null)
+                    newAlbum.Password = newAlbum.Password.HashMD5();
 
                 AlbumRepository albums = new AlbumRepository();
                 albums.Create(newAlbum);
