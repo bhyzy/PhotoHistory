@@ -31,7 +31,7 @@
             <label class="control-label" for="description">
                 Description</label>
             <div class="controls">
-                <textarea class="input-xlarge" id="Description" name="Description" value="@(Model != null ? Model.Description: "")" rows="3" ></textarea>
+                <textarea class="input-xlarge" id="Description" name="Description" rows="3" >@(Model != null ? Model.Description: "")</textarea>
                 @Html.MyValidationMessage( "Description" )
             </div>
         </div>
@@ -53,7 +53,7 @@
                 @Html.MyValidationMessage( "Category" )
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group @Html.MyValidationMark( "NextNotification" )" >
             <label class="control-label" for="description">
                 Photo reminder</label>
             <div class="controls" id="reminder_change">
@@ -66,7 +66,7 @@
                     Enabled - remind me to take a photo
                 </label>
                 <!-- to nizej widoczne tylko jesli wybrano ENABLED (reminder aktywny) -->
-                <div class="well" style="@(Model != null && Model.NextNotification != null ? "" : "display:none;")" id="number_of_days">
+                <div class="well" style="@( Model != null && Model.NextNotification != null ? "" : "display:none;")" id="number_of_days"  >
                     Remind me every
                     @Html.TextBox("NextNotificationDays", Request["NextNotificationDays"])
                     days
@@ -74,7 +74,7 @@
                 @Html.MyValidationMessage( "NextNotification" )
             </div>
         </div>
-        <div class="control-group" @Html.MyValidationMark( "Public" )>
+        <div class="control-group @Html.MyValidationMark( "Public" )" >
             <label class="control-label" for="description">
                 Access rights</label>
             <div class="controls">
@@ -88,20 +88,25 @@
                 </label>
                 <!-- to nizej widoczne tylko jesli wybrano PRIVATE -->
                 <div class="well" id="access_control" style="@(Model != null && Model.Public == false ? "" : "display:none;")">
-                    <label class="radio">
-                        <input name="privateMode" id="privateMode" value="password" checked="checked" type="radio">
-                        Protect by password
-                    </label>
                     <!-- to nizej widoczne tylko jesli wybrano dostep przez haslo -->
-                    @Html.TextBoxFor(model => Model.Password)
-                    <label class="radio">
-                        <input name="privateMode" id="privateMode" value="users" type="radio">
-                        Specify list of allowed users
-                    </label>
+                    <div class="control-group @Html.MyValidationMark( "Password" )">                        
+                        <label class="radio">
+                            <input name="privateMode" value="password" @(Request["privateMode"]=="password" ? "checked=\"checked\"" : "")  type="radio">
+                            Protect by password
+                        </label>
+                        @Html.TextBoxFor(model => Model.Password)
+                        @Html.MyValidationMessage( "Password" )
+                    </div>
                     <!-- to nizej widoczne tylko jesli wybrano dostep przez liste uztywkonikow -->
-                    <input type="text" class="input-xlarge inline" id="usersList">
-                </div>
-                @Html.MyValidationMessage( "Public" )
+                    <div class="control-group @Html.MyValidationMark( "Users" )">                        
+                        <label class="radio">
+                            <input name="privateMode" value="users" @(Request["privateMode"]=="users" ? "checked=\"checked\"" : "") type="radio">                            
+                            Specify list of allowed users <br />(e.g. "Login1, Login2, Login3")
+                        </label>        
+                        @Html.TextBox("usersList", Request["usersList"])                                        
+                        @Html.MyValidationMessage( "Users" )
+                    </div>                    
+                </div>                
             </div>
         </div>
         <div class="control-group">

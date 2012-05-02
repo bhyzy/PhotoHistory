@@ -14,9 +14,9 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-            ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
-            CreateUsers();
-            CreateCategories();
+            //ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
+            //CreateUsers();
+            //CreateCategories();
         }
 
         private static void CreateCategories()

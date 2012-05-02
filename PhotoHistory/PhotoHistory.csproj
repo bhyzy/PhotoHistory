@@ -186,6 +186,7 @@
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <EmbeddedResource Include="sql\create_tables.sql" />
+    <None Include="Views\Album\Show.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

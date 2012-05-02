@@ -48,6 +48,14 @@ namespace PhotoHistory.Controllers
 		}
 
 
+        public ActionResult Show(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            return View(album);
+        }
+
+
 
         [Authorize]
         public ActionResult Create()
@@ -60,7 +68,7 @@ namespace PhotoHistory.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(AlbumModel newAlbum, string a, string b)
+        public ActionResult Create(AlbumModel newAlbum)
         {
             PrepareCategories();
 
@@ -68,27 +76,57 @@ namespace PhotoHistory.Controllers
             if (Request["reminder"] == "remindYes")
             {
                 System.DateTime today = System.DateTime.Now;
-                System.DateTime answer = today.AddDays(Int32.Parse(Request["NextNotificationDays"]));
-                newAlbum.NextNotification = answer;
+                try
+                {
+                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NextNotificationDays"])); 
+                    newAlbum.NextNotification = answer;
+                }
+                catch(Exception e){
+                    ModelState.AddModelError("NextNotification", "Number of days is incorrect");
+                }                
             }
-
+            // private access
+            UserModel[] userModels = null; //an array of trusted users
+            if (!newAlbum.Public)
+            {
+                switch (Request["privateMode"])
+                {
+                    case "password":
+                        if (newAlbum.Password != null)
+                            newAlbum.Password = newAlbum.Password.HashMD5();
+                        else
+                            ModelState.AddModelError("Password", "You didn't provide a password");
+                        break;
+                    case "users":
+                        if (Request["usersList"] == null)
+                        {
+                            ModelState.AddModelError("Users", "You didn't provide a user list");
+                            break;
+                        }
+                        string[] userLogins = Request["usersList"].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                        userModels = AlbumModel.FindUsersByLogins(userLogins);
+                        if (userModels == null)
+                            ModelState.AddModelError("Users", "At least one login you provided is incorrect.");
+                        break;
+                }
+            }
             if (ModelState.IsValid)
             {                                
                 //assign a current user
                 UserRepository users = new UserRepository();
                 newAlbum.User = 
                     users.GetByUsername(HttpContext.User.Identity.Name);
-                
-                // password
-                if (newAlbum.Password != null)
-                    newAlbum.Password = newAlbum.Password.HashMD5();
 
                 AlbumRepository albums = new AlbumRepository();
                 albums.Create(newAlbum);
 
-                return View("Created", newAlbum);
-            }
+                // if there are trusted users, add them
+                if (userModels != null)
+                    foreach (var user in userModels)
+                        newAlbum.CreateTrustedUser(user);
 
+                return RedirectToAction("Show", new { id = newAlbum.Id } );
+            }
 
             return View(newAlbum);
         }
