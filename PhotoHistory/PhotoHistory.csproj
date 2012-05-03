@@ -191,6 +191,7 @@
     <EmbeddedResource Include="sql\create_tables.sql" />
     <None Include="Views\Album\Show.cshtml" />
     <None Include="Views\Album\Manage.cshtml" />
+    <None Include="Views\Album\ManageAlbum.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -8,8 +8,10 @@
             <button class="btn btn-info">
                 <i class="icon-ok icon-white"></i>Follow</button>
             <!-- jesli jest wlascicielem: manage this album -->
+            <a href="@Url.Action("ManageAlbum", new { id = Model.Id })">
             <button class="btn btn-primary">
                 <i class="icon-edit icon-white"></i>Manage this album</button>
+                </a>
         </h1>
         <h2 class="album-author">
             by <a href="#">kasia1337</a></h2>

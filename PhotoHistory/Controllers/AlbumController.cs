@@ -63,6 +63,23 @@ namespace PhotoHistory.Controllers
             return View(user.Albums);
         }
 
+        [Authorize]
+        public ActionResult ManageAlbum(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            return View(album);
+        }
+
+
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            PrepareCategories();
+            return View("Create",album);
+        }
 
         [Authorize]
         public ActionResult Create()
