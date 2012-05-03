@@ -19,6 +19,15 @@ namespace PhotoHistory.Models
 		public virtual bool NotifyComment { get; set; }
 		public virtual bool NotifyPhoto { get; set; }
 		public virtual bool NotifySubscription { get; set; }
+
+        public virtual ICollection<AlbumModel> Albums { get; set; }
+        
+        /*
+        public UserModel()
+        {
+            Albums = new List<AlbumModel>();
+        }*/
+         
 	}
 
 	public class NewUserModel

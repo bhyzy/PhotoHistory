@@ -55,6 +55,13 @@ namespace PhotoHistory.Controllers
             return View(album);
         }
 
+        [Authorize]
+        public ActionResult Manage()
+        {
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
+            return View(user.Albums);
+        }
 
 
         [Authorize]

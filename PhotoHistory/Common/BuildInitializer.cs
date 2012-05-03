@@ -22,10 +22,10 @@ namespace PhotoHistory.Common
                 else
                     System.Diagnostics.Debug.WriteLine(model.Id + " " + model.Date.ToString());
             }*/
-           // ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
-           // CreateUsers();
-           // CreateCategories();
-           // CreateAlbums();
+            ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
+            CreateUsers();
+            CreateCategories();
+            CreateAlbums();
         }
 
         private static void CreateAlbums()

@@ -1,7 +1,4 @@
 ﻿@model PhotoHistory.Models.AlbumModel
-           
-
-
 <div id="content-center">
     <form class="form-horizontal" action="/Album/Create" method="post">
     <fieldset>
@@ -19,27 +16,27 @@
                 }
             </div>
         }
-        <div class="control-group @Html.MyValidationMark( "Name" )">
+        <div class="control-group @Html.MyValidationMark("Name")">
             <label class="control-label" for="name">
                 Name</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" id="Name" name="Name" value="@(Model != null ? Model.Name: "")">
-                @Html.MyValidationMessage( "Name" )
+                <input type="text" class="input-xlarge" id="Name" name="Name" value="@(Model != null ? Model.Name : "")">
+                @Html.MyValidationMessage("Name")
             </div>
         </div>
-        <div class="control-group @Html.MyValidationMark( "Description" )">
+        <div class="control-group @Html.MyValidationMark("Description")">
             <label class="control-label" for="description">
                 Description</label>
             <div class="controls">
-                <textarea class="input-xlarge" id="Description" name="Description" rows="3" >@(Model != null ? Model.Description: "")</textarea>
-                @Html.MyValidationMessage( "Description" )
+                <textarea class="input-xlarge" id="Description" name="Description" rows="3">@(Model != null ? Model.Description : "")</textarea>
+                @Html.MyValidationMessage("Description")
             </div>
         </div>
-        <div class="control-group @Html.MyValidationMark( "Category" )">
+        <div class="control-group @Html.MyValidationMark("Category")">
             <label class="control-label" for="description">
                 Category</label>
             <div class="controls">
-            <!--
+                <!--
                 <select class="input-normal inline" id="CategoryId" name="CategoryId">
                     <option>People</option>
                     <option>Building</option>
@@ -50,10 +47,10 @@
                 </select>
                 -->
                 @Html.DropDownListFor(model => model.Category.Id, (SelectList)ViewData["ListOfCategories"])
-                @Html.MyValidationMessage( "Category" )
+                @Html.MyValidationMessage("Category")
             </div>
         </div>
-        <div class="control-group @Html.MyValidationMark( "NextNotification" )" >
+        <div class="control-group @Html.MyValidationMark("NextNotification")" >
             <label class="control-label" for="description">
                 Photo reminder</label>
             <div class="controls" id="reminder_change">
@@ -71,10 +68,10 @@
                     @Html.TextBox("NextNotificationDays", Request["NextNotificationDays"])
                     days
                 </div>
-                @Html.MyValidationMessage( "NextNotification" )
+                @Html.MyValidationMessage("NextNotification")
             </div>
         </div>
-        <div class="control-group @Html.MyValidationMark( "Public" )" >
+        <div class="control-group @Html.MyValidationMark("Public")" >
             <label class="control-label" for="description">
                 Access rights</label>
             <div class="controls">
@@ -83,30 +80,32 @@
                     Public - everyone can view this album
                 </label>
                 <label class="radio">
-                    @Html.RadioButtonFor(model => Model.Public, false, new { id = "private" } )
+                    @Html.RadioButtonFor(model => Model.Public, false, new { id = "private" })
                     Private - only me and perhaps some specific people can view this album
                 </label>
                 <!-- to nizej widoczne tylko jesli wybrano PRIVATE -->
                 <div class="well" id="access_control" style="@(Model != null && Model.Public == false ? "" : "display:none;")">
                     <!-- to nizej widoczne tylko jesli wybrano dostep przez haslo -->
-                    <div class="control-group @Html.MyValidationMark( "Password" )">                        
+                    <div class="control-group @Html.MyValidationMark("Password")">
                         <label class="radio">
-                            <input name="privateMode" value="password" @(Request["privateMode"]=="password" ? "checked=\"checked\"" : "")  type="radio">
+                            <input name="privateMode" value="password" @(Request["privateMode"] == "password" ? "checked=\"checked\"" : "")  type="radio">
                             Protect by password
                         </label>
                         @Html.TextBoxFor(model => Model.Password)
-                        @Html.MyValidationMessage( "Password" )
+                        @Html.MyValidationMessage("Password")
                     </div>
                     <!-- to nizej widoczne tylko jesli wybrano dostep przez liste uztywkonikow -->
-                    <div class="control-group @Html.MyValidationMark( "Users" )">                        
+                    <div class="control-group @Html.MyValidationMark("Users")">
                         <label class="radio">
-                            <input name="privateMode" value="users" @(Request["privateMode"]=="users" ? "checked=\"checked\"" : "") type="radio">                            
-                            Specify list of allowed users <br />(e.g. "Login1, Login2, Login3")
-                        </label>        
-                        @Html.TextBox("usersList", Request["usersList"])                                        
-                        @Html.MyValidationMessage( "Users" )
-                    </div>                    
-                </div>                
+                            <input name="privateMode" value="users" @(Request["privateMode"] == "users" ? "checked=\"checked\"" : "") type="radio">
+                            Specify list of allowed users
+                            <br />
+                            (e.g. "Login1, Login2, Login3")
+                        </label>
+                        @Html.TextBox("usersList", Request["usersList"])
+                        @Html.MyValidationMessage("Users")
+                    </div>
+                </div>
             </div>
         </div>
         <div class="control-group">
@@ -115,37 +114,35 @@
             <div class="controls">
                 <label class="checkbox">
                     Allow comments
-                    @Html.CheckBoxFor(model => Model.CommentsAllow, new { @checked = "checked" })                    
+                    @Html.CheckBoxFor(model => Model.CommentsAllow, new { @checked = "checked" })
                 </label>
             </div>
         </div>
-
         <div class="control-group">
             <label class="control-label" for="description">
                 Comment moderation</label>
             <div class="controls">
                 <label class="checkbox">
                     Comments need moderation before publishing
-                    @Html.CheckBoxFor(model => Model.CommentsAuth)                    
+                    @Html.CheckBoxFor(model => Model.CommentsAuth)
                 </label>
             </div>
         </div>
-
         <div class="form-actions">
             <button type="submit" class="btn btn-success">
                 Create album</button>
-            <button class="btn">
-                Cancel</button>
+            <a href="@Url.Action("Manage")">
+                <button class="btn">
+                    Cancel</button>
+            </a>
         </div>
     </fieldset>
     </form>
 </div>
+<script type="text/javascript">
+    $('#reminderEn').change(function () { $('#number_of_days').slideDown(); });
+    $('#reminderDis').change(function () { $('#number_of_days').slideUp(); });
 
-
-           <script type="text/javascript">
-               $('#reminderEn').change(function () { $('#number_of_days').slideDown(); });
-               $('#reminderDis').change(function () { $('#number_of_days').slideUp(); });
-
-               $('#private').change(function () { $('#access_control').slideDown(); });
-               $('#public').change(function () { $('#access_control').slideUp(); }); 
-           </script>
+    $('#private').change(function () { $('#access_control').slideDown(); });
+    $('#public').change(function () { $('#access_control').slideUp(); }); 
+</script>
