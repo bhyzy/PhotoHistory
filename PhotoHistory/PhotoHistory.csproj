@@ -189,6 +189,8 @@
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <EmbeddedResource Include="sql\create_tables.sql" />
+    <Content Include="Views\Album\_Form.cshtml" />
+    <Content Include="Views\Album\Edit.cshtml" />
     <None Include="Views\Album\Show.cshtml" />
     <None Include="Views\Album\Manage.cshtml" />
     <None Include="Views\Album\ManageAlbum.cshtml" />

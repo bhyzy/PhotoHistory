@@ -42,7 +42,8 @@ CREATE TABLE Albums
 	public boolean NOT NULL,
 	password varchar(255),
 	comments_allow boolean NOT NULL,
-	comments_auth boolean NOT NULL
+	comments_auth boolean NOT NULL,
+	notification_period integer
 );
 
 CREATE INDEX album_user_idx on Albums (user_id);
