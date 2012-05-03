@@ -29,7 +29,7 @@ namespace PhotoHistory.Data
             }
         }
 
-        public IEnumerable<AlbumModel> GetByUser(int ?userID)
+        /*public IEnumerable<AlbumModel> GetByUser(int ?userID)
         {
             using (var session = GetSession())
             {
@@ -38,7 +38,7 @@ namespace PhotoHistory.Data
                 return session.CreateQuery("from AlbumModel where User= :user").SetParameter("user", userID).Enumerable<AlbumModel>();
             }
 
-        }
+        }*/
 
         public override void Update(AlbumModel obj)
         {

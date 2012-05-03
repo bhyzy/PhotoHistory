@@ -141,6 +141,6 @@ namespace PhotoHistory.Models
         [Required]
         public virtual string About { get; set; }
         [Required]
-        public virtual IEnumerable<AlbumProfileModel> Albums { get; set; }
+        public virtual ICollection<AlbumProfileModel> Albums { get; set; }
     }
 }

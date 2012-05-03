@@ -53,7 +53,7 @@ namespace PhotoHistory.Controllers
             System.Diagnostics.Debug.WriteLine(String.Format("UserName {0}", userName));
 
             UserRepository repo = new UserRepository();
-            UserModel user = repo.GetByUsername(userName);
+            UserModel user = repo.GetByUsernameWithAlbums(userName);
             UserProfileModel profile = null;
 
             if (user == null)
@@ -75,14 +75,14 @@ namespace PhotoHistory.Controllers
                 };
 
                 AlbumRepository albums= new AlbumRepository();
-                foreach (AlbumModel model in albums.GetByUser(user.Id) )
+               
+                foreach (AlbumModel model in user.Albums )
                 {
                     AlbumProfileModel profileModel = new AlbumProfileModel()
                     {
                         Name = model.Name,
                         Views = model.Views
                     };
-                    
 
                 }
 
