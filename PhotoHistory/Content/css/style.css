@@ -584,3 +584,8 @@ div.rank {
 	font: 14px Arial,Helvetica,sans-serif;
 	margin-top: 30px;
 }
+
+.hidden-content
+{
+    display:none;
+}

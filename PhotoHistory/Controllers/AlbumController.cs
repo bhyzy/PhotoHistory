@@ -7,6 +7,7 @@ using PhotoHistory.Data;
 using PhotoHistory.Models;
 using NHibernate;
 using System.Web.Security;
+using PhotoHistory.Common;
 
 namespace PhotoHistory.Controllers
 {
@@ -63,6 +64,56 @@ namespace PhotoHistory.Controllers
             return View(user.Albums);
         }
 
+        [Authorize]
+        public ActionResult AddPhoto()
+        {
+            System.Diagnostics.Debug.WriteLine("TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+            ViewBag.Albums = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name).Albums;
+               
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddPhoto(NewPhotoModel photo, HttpPostedFileBase fileInput)
+        {
+            System.Diagnostics.Debug.WriteLine("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            UserModel user = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
+            ViewBag.Albums = user.Albums;
+            if(photo.Source=="remote")
+                System.Diagnostics.Debug.WriteLine("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            if (ModelState.IsValid)
+            {   
+                if (photo.PhotoURL == null && fileInput == null)
+                {
+                    ViewBag.ErrorMessage = "You must select file for upload.";
+                    return View(photo);
+                }
+                AlbumModel selectedAlbum = null;
+                foreach (AlbumModel album in user.Albums)
+                {
+                    if (album.Id == photo.AlbumId)
+                    {
+                        selectedAlbum = album;
+                        break;
+                    }
+                }
+
+                if (fileInput != null)
+                    if (fileInput.ContentType == "image/jpeg")
+                    {
+                        //handle jpg upload
+                        FileHelper.savePhoto(fileInput.InputStream, selectedAlbum);
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Only jpeg files are allowed";
+                        return View(photo);
+                    }
+
+            }
+            return View();
+        }
 
         [Authorize]
         public ActionResult Create()

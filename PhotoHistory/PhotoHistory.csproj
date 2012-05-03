@@ -98,7 +98,7 @@
     </Compile>
     <Compile Include="Models\AlbumModels.cs" />
     <Compile Include="Models\CategoryModels.cs" />
-    <Compile Include="Models\PhotoModel.cs" />
+    <Compile Include="Models\PhotoModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -173,6 +173,7 @@
     <Content Include="Scripts\bootstrap-dropdown.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\addPhoto.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
@@ -189,6 +190,7 @@
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <EmbeddedResource Include="sql\create_tables.sql" />
+    <Content Include="Views\Album\AddPhoto.cshtml" />
     <None Include="Views\Album\Show.cshtml" />
     <None Include="Views\Album\Manage.cshtml" />
     <Content Include="Web.config">

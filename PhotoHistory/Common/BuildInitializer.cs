@@ -54,20 +54,20 @@ namespace PhotoHistory.Common
                 Views = 1234
             };
 
-            LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
-            PhotoModel photo = new PhotoModel()
+            LinkedList<PhotoModels> list = new LinkedList<PhotoModels>();
+            PhotoModels photo = new PhotoModels()
             {
                 Album=album, Date= DateTime.Today, Description="Słit focia nr1 album 1" 
             };
             list.AddLast(photo);
-            photo = new PhotoModel()
+            photo = new PhotoModels()
             {
                 Album = album,
                 Date = new DateTime(2012,5,1,22,33,5),
                 Description = "Słit focia nr2 album 1"
             };
             list.AddLast(photo);
-            photo = new PhotoModel()
+            photo = new PhotoModels()
             {
                 Album = album,
                 Date = new DateTime(2012, 4,30 , 1, 8, 59),
@@ -93,14 +93,14 @@ namespace PhotoHistory.Common
             };
             albums.Create(album);
 
-            photo = new PhotoModel()
+            photo = new PhotoModels()
             {
                 Album = album,
                 Date = DateTime.Today,
                 Description = "Słit focia nr1 album 2"
             };
             list.AddLast(photo);
-            photo = new PhotoModel()
+            photo = new PhotoModels()
             {
                 Album = album,
                 Date = new DateTime(2012,1,2,22,11,3),
@@ -123,7 +123,7 @@ namespace PhotoHistory.Common
             };
             albums.Create(album);
 
-            photo = new PhotoModel()
+            photo = new PhotoModels()
             {
                 Album = album,
                 Date = DateTime.Today,
@@ -150,7 +150,7 @@ namespace PhotoHistory.Common
             using(var session= SessionProvider.SessionFactory.OpenSession())
             using (var trans = session.BeginTransaction())
             {
-                foreach (PhotoModel p in list)
+                foreach (PhotoModels p in list)
                     session.Save(p);
                 trans.Commit();
             }

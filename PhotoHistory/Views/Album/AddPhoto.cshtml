@@ -1,0 +1,114 @@
+﻿@model PhotoHistory.Models.NewPhotoModel
+
+
+
+<div id="content">	
+			<div id="content-center">
+ 
+			<form class="form-horizontal" action="/Album/AddPhoto" method="post" enctype="multipart/form-data" id="uploadForm" >
+					<fieldset>
+                        @if ( Model != null )
+                        {
+                            <div class="alert alert-error">
+                                @if ( ViewBag.ErrorMessage != null )
+                                {
+                                    @ViewBag.ErrorMessage
+                                }
+                                else
+                                {
+                                    <text>Some fields are invalid - please correct the errors.</text>
+                                }
+                            </div>
+                        }
+					  <legend>Add photo</legend>
+					  <div class="control-group @Html.MyValidationMark("AlbumId")">
+						<label class="control-label" for="name">Album</label>
+						<div class="controls">
+							<select class="input-normal" id="AlbumId" name="AlbumId">
+                                @foreach (PhotoHistory.Models.AlbumModel album in ViewBag.Albums)
+                                { 
+                                    <option value="@album.Id" @(Model!=null&&Model.AlbumId==album.Id? "selected":"") > @album.Name</option>
+                                     
+                                }
+							</select>
+                            @Html.MyValidationMessage("AlbumId")
+						</div>
+					  </div>
+					  <div class="control-group">
+						<label class="control-label" for="description">Photo</label>
+						<div class="controls">
+						  <label class="radio">
+							<input name="Source"  value="local" checked="checked" type="radio" onclick="hide()"  @(Model!=null&&Model.Source=="local"?"checked":"")/>
+							Upload file from my computer
+						  </label>
+                          <label class="radio">
+							<input name="Source"  value="remote" type="radio" onclick="hide()" @(Model!=null&&Model.Source.Equals("remote")?"checked":"")/>
+							Upload file from the web (URL)
+						  </label>
+						  <div id="fileDiv"><input class="input-file input-xlarge" id="fileInput" type="file" name="fileInput"/></div>
+						  <div id="remoteDiv"><input type="text" value="@(Model!=null? Model.PhotoURL:"")" class="input-xlarge inline" id="photoURL" name="PhotoURL"/></div>
+
+						</div>
+					  </div>
+					  <div class="control-group @Html.MyValidationMark( "Description" )">
+						<label class="control-label" for="about">Description</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="description" name="Description"  rows="3" placeholder="Enter additional description of the photo... (optional)">@(Model!=null? Model.Description:"")</textarea>
+						    @Html.MyValidationMessage("Description")
+                          
+                        </div>
+					  </div>
+					  <div class="control-group @Html.MyValidationMark( "Date" )" >
+						<label class="control-label" for="name">Date</label>
+						<div class="controls">
+							<input id="datepicker" name="Date" value="@(Model!=null? Model.Date:"") "/>
+                             @Html.MyValidationMessage("Date")
+							<p class="help-block">When was this photo taken?</p>
+						</div>
+                       
+					  </div>
+					  <div class="form-actions">
+						<button type="submit" class="btn btn-success">Add photo</button>
+						<button class="btn">Cancel</button>
+					  </div>
+					</fieldset>
+			</div>
+		</div>
+
+        @section jQuery {
+        <script src="/Scripts/MicrosoftAjax.js" type="text/javascript"></script>
+        <script src="/Scripts/MicrosoftMvcValidation.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#datepicker").datepicker();
+            });
+
+            function hide() {
+                {
+                    for (var i = 0; i < document.getElementsByName("Source").length; i++) {
+                        document.u
+                        if (document.getElementById("uploadForm").Source[i].checked) {
+                            var rad_val = document.getElementById("uploadForm").Source[i].value;
+                            var fileVisibility;
+                            var remoteVisibility;
+                            if (rad_val == "remote") {
+                                fileVisibility = "hidden-content";
+                                remoteVisibility = "";
+                            }
+
+                            else {
+                                fileVisibility = "";
+                                remoteVisibility = "hidden-content";
+                            }
+                            document.getElementById("fileDiv").className = fileVisibility;
+                            document.getElementById("remoteDiv").className = remoteVisibility;
+                            return;
+                        }
+                    }
+                }
+            }
+            hide();
+
+ </script>
+        
+        }
