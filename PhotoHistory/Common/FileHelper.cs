@@ -5,9 +5,26 @@ using System.Web;
 using PhotoHistory.Models;
 using System.IO;
 using System.Net;
+using System.Drawing;
 
 namespace PhotoHistory.Common
 {
+    public class WrongPictureTypeException : Exception
+    {
+        WrongPictureTypeException():base(){}
+        WrongPictureTypeException(string message) : base(message) { }
+        WrongPictureTypeException(string message, Exception innerException) : base(message, innerException) { }
+        
+    }
+
+    public class RemoteDownloadException : Exception
+    {
+        RemoteDownloadException() : base() { }
+        RemoteDownloadException(string message) : base(message) { }
+        RemoteDownloadException(string message, Exception innerException) : base(message, innerException) { }
+
+    }
+
     public class FileHelper
     {
         public static void createUserDirectory(UserModel model)
@@ -19,7 +36,7 @@ namespace PhotoHistory.Common
         
         }
 
-        public static void savePhoto(Stream input,AlbumModel album)
+        public static void savePhoto(HttpPostedFileBase input, AlbumModel album)
         {
 
         }
@@ -35,21 +52,17 @@ namespace PhotoHistory.Common
             try
             {
                 WebRequest request = WebRequest.Create(remoteFilename);
+                
                 if (request != null)
                 {
                     response = request.GetResponse();
                     if (response != null)
                     {
                         remoteStream = response.GetResponseStream();
-                        localStream = File.Create(localFilename);
-                        byte[] buffer = new byte[1024];
-                        int bytesRead;
-                        do
-                        {
-                            bytesRead = remoteStream.Read(buffer, 0, buffer.Length);
-                            localStream.Write(buffer, 0, bytesRead);
-                            bytesProcessed += bytesRead;
-                        } while (bytesRead > 0);
+                        Image img=Image.FromStream(remoteStream, true, true);
+                        if (System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
+                            throw new Exception("Image is not jpeg");
+
                     }
                 }
             }
