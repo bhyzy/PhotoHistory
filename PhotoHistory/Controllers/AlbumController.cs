@@ -67,9 +67,7 @@ namespace PhotoHistory.Controllers
         [Authorize]
         public ActionResult AddPhoto()
         {
-            System.Diagnostics.Debug.WriteLine("TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
             ViewBag.Albums = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name).Albums;
-               
             return View();
         }
 
@@ -77,11 +75,8 @@ namespace PhotoHistory.Controllers
         [HttpPost]
         public ActionResult AddPhoto(NewPhotoModel photo, HttpPostedFileBase fileInput)
         {
-            System.Diagnostics.Debug.WriteLine("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             UserModel user = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
             ViewBag.Albums = user.Albums;
-            if(photo.Source=="remote")
-                System.Diagnostics.Debug.WriteLine("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             if (ModelState.IsValid)
             {   
                 if (photo.PhotoURL == null && fileInput == null)
@@ -89,6 +84,7 @@ namespace PhotoHistory.Controllers
                     ViewBag.ErrorMessage = "You must select file for upload.";
                     return View(photo);
                 }
+
                 AlbumModel selectedAlbum = null;
                 foreach (AlbumModel album in user.Albums)
                 {
@@ -99,17 +95,7 @@ namespace PhotoHistory.Controllers
                     }
                 }
 
-                if (fileInput != null)
-                    if (fileInput.ContentType == "image/jpeg")
-                    {
-                        //handle jpg upload
-                        FileHelper.savePhoto(fileInput.InputStream, selectedAlbum);
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMessage = "Only jpeg files are allowed";
-                        return View(photo);
-                    }
+                //FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, album);
 
             }
             return View();

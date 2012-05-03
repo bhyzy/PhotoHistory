@@ -9,39 +9,58 @@ using System.Drawing;
 
 namespace PhotoHistory.Common
 {
-    public class WrongPictureTypeException : Exception
+    public class FileUploadException : Exception
     {
-        WrongPictureTypeException():base(){}
-        WrongPictureTypeException(string message) : base(message) { }
-        WrongPictureTypeException(string message, Exception innerException) : base(message, innerException) { }
+        public FileUploadException() : base() { }
+        public FileUploadException(string message) : base(message) { }
+        public FileUploadException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    public class WrongPictureTypeException : FileUploadException
+    {
+        public WrongPictureTypeException():base(){}
+        public WrongPictureTypeException(string message) : base(message) { }
+        public WrongPictureTypeException(string message, Exception innerException) : base(message, innerException) { }
         
     }
 
-    public class RemoteDownloadException : Exception
+    public class RemoteDownloadException : FileUploadException
     {
-        RemoteDownloadException() : base() { }
-        RemoteDownloadException(string message) : base(message) { }
-        RemoteDownloadException(string message, Exception innerException) : base(message, innerException) { }
-
+        public RemoteDownloadException() : base() { }
+        public RemoteDownloadException(string message) : base(message) { }
+        public RemoteDownloadException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+
 
     public class FileHelper
     {
-        public static void createUserDirectory(UserModel model)
+        public static void CreateUserDirectory(UserModel model)
         {
         }
 
-        public static void createAlbumDirectory(AlbumModel model)
+        public static void CreateAlbumDirectory(AlbumModel model)
         { 
         
         }
 
-        public static void savePhoto(HttpPostedFileBase input, AlbumModel album)
+        public static void SavePhoto(HttpPostedFileBase input, AlbumModel album)
         {
 
         }
 
-        public static int DownloadFile(String remoteFilename,AlbumModel album)
+        public static void SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album) 
+        {
+            if (input != null)
+                SavePhoto(input, album);
+            else
+                if (string.IsNullOrEmpty(remoteFilename))
+                    throw new FileUploadException("Wrong remote file name");
+                else
+                    SavePhoto(remoteFilename, album);
+        }
+
+        public static int SavePhoto(String remoteFilename,AlbumModel album)
         {
             int bytesProcessed = 0;
             Stream remoteStream = null;
@@ -61,7 +80,7 @@ namespace PhotoHistory.Common
                         remoteStream = response.GetResponseStream();
                         Image img=Image.FromStream(remoteStream, true, true);
                         if (System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
-                            throw new Exception("Image is not jpeg");
+                            throw new WrongPictureTypeException("Image is not an jpeg");
 
                     }
                 }
@@ -79,12 +98,12 @@ namespace PhotoHistory.Common
             return bytesProcessed;
         }
 
-        public static string getPhoto()
+        public static string GetPhoto()
         {
             return null;
         }
 
-        public static IEnumerable<string> getAlbumThumbail()
+        public static IEnumerable<string> GetAlbumThumbail()
         {
             return null;
         }
