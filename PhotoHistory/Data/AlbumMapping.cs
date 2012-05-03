@@ -88,7 +88,11 @@ namespace PhotoHistory.Data
             {
                 map.Column("comments_auth");
                 map.NotNullable(true);
-            });                                   
+            });
+            Property(x => x.NotificationPeriod, map =>
+            {
+                map.Column("notification_period");
+            });  
         }
     }
 }
