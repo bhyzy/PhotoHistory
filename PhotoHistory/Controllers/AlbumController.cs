@@ -65,6 +65,7 @@ namespace PhotoHistory.Controllers
         }
 
         [Authorize]
+
         public ActionResult AddPhoto()
         {
             ViewBag.Albums = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name).Albums;
@@ -101,6 +102,54 @@ namespace PhotoHistory.Controllers
             return View();
         }
 
+        public ActionResult ManageAlbum(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            return View(album);
+        }
+
+
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            PrepareCategories();
+            return View(album);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Edit(AlbumModel album)
+        {
+            //TODO access control
+            if (ModelState.IsValid)
+            {
+                AlbumRepository albums = new AlbumRepository();
+                AlbumModel dbAlbum = albums.GetById(album.Id);
+                dbAlbum.Name = album.Name;
+                dbAlbum.Description = album.Description;
+                dbAlbum.Category = album.Category;
+                dbAlbum.NotificationPeriod = album.NotificationPeriod; //NextNotification?
+                dbAlbum.Public = album.Public;
+                if (!dbAlbum.Public)
+                {
+                    //TODO move to model
+                }
+                dbAlbum.CommentsAllow = album.CommentsAllow;
+                dbAlbum.CommentsAuth = album.CommentsAuth;
+
+                albums.Update(dbAlbum);
+
+                return RedirectToAction("Show", new { id = dbAlbum.Id });
+            }
+            PrepareCategories();
+            return View(album);
+        }
+
+
         [Authorize]
         public ActionResult Create()
         {
@@ -117,19 +166,21 @@ namespace PhotoHistory.Controllers
             PrepareCategories();
 
             //next notification 
+            //TODO refactor
             if (Request["reminder"] == "remindYes")
             {
                 System.DateTime today = System.DateTime.Now;
                 try
                 {
-                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NextNotificationDays"])); 
+                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NotificationPeriod"])); 
                     newAlbum.NextNotification = answer;
                 }
                 catch(Exception e){
-                    ModelState.AddModelError("NextNotification", "Number of days is incorrect");
+                    ModelState.AddModelError("NotificationPeriod", "Number of days is incorrect");
                 }                
             }
-            // private access
+            // private access 
+            //TODO refactor
             UserModel[] userModels = null; //an array of trusted users
             if (!newAlbum.Public)
             {
@@ -171,7 +222,7 @@ namespace PhotoHistory.Controllers
 
                 return RedirectToAction("Show", new { id = newAlbum.Id } );
             }
-
+            
             return View(newAlbum);
         }
 

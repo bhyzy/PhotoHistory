@@ -42,6 +42,14 @@ namespace PhotoHistory.Data
 
         public override void Update(AlbumModel obj)
         {
+            using (var session = GetSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(obj);
+                    transaction.Commit();
+                }
+            }
         }
 
         public override void Delete(AlbumModel obj)

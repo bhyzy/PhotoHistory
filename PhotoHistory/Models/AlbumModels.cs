@@ -33,6 +33,7 @@ namespace PhotoHistory.Models
         public virtual string Password { get; set; }
         public virtual bool CommentsAllow { get; set; }
         public virtual bool CommentsAuth { get; set; }
+        public virtual int? NotificationPeriod { get; set; }
 
 
 

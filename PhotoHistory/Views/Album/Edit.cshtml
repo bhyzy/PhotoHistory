@@ -1,32 +1,17 @@
 ﻿@model PhotoHistory.Models.AlbumModel
  
 <div id="content-center">
-    <form class="form-horizontal" action="/Album/Create" method="post">
+    <form class="form-horizontal" action="/Album/Edit" method="post">
     <fieldset>
-        <legend>Create new album</legend>
-        @if (Model != null)
-        {
-            <div class="alert alert-error">
-                @if (ViewBag.ErrorMessage != null)
-                {
-                    @ViewBag.ErrorMessage
-                }
-                else
-                {
-                    <text>Some fields are invalid - please correct the errors.</text>
-                }
-            </div>
-        }
-        
-
-        
+        <legend>Edit the album</legend>
+              
         @{Html.RenderPartial("_Form", Model);}
 
-
+        @Html.HiddenFor(model => Model.Id)
 
         <div class="form-actions">
             <button type="submit" class="btn btn-success">
-                Create album</button>
+                Save album</button>
             <a href="@Url.Action("Manage")">
                 <button class="btn">
                     Cancel</button>
