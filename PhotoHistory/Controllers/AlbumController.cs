@@ -96,8 +96,11 @@ namespace PhotoHistory.Controllers
                     }
                 }
 
-                //FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, album);
-
+                if (photo.Source == "remote")
+                    fileInput = null;
+                else
+                    photo.PhotoURL = null;
+                FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
             }
             return View();
         }

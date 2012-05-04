@@ -8,7 +8,7 @@ using NHibernate.Mapping.ByCode;
 
 namespace PhotoHistory.Data
 {
-    public class PhotoMapping:ClassMapping<PhotoModels>
+    public class PhotoMapping:ClassMapping<PhotoModel>
     {
         public PhotoMapping()
         {

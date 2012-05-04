@@ -11,23 +11,50 @@ namespace PhotoHistory.Common
 {
     public class FileHelper
     {
-        public static readonly string rootDirectory = "~"; 
-        
+        public static readonly HttpServerUtility Server= HttpContext.Current.Server;
+        public static readonly string UsersDirectory = Server.MapPath("~/Users");
+
+        public static string UserPhysicalPath(UserModel model)
+        {
+            return UsersDirectory + "/user" + model.Id + "/";
+        }
+
+        public static string AlbumPhysicalPath(AlbumModel model)
+        {
+            return UserPhysicalPath(model.User) + "album" + model.Id + "/";
+        }
+
         public static void CreateUserDirectory(UserModel model)
         {
+            string path = UserPhysicalPath(model);
+            
+            if( Directory.Exists(path) )
+                System.Diagnostics.Debug.WriteLine(string.Format("Folder uzytkownika {0} istnieje", model.Id));
+            else
+            {
+                System.Diagnostics.Debug.WriteLine(string.Format("Tworze folder uzytkownika {0}", model.Id));
+                Directory.CreateDirectory(path);
+            }
+            System.Diagnostics.Debug.WriteLine(string.Format("Sciezka {0}", path));
+
         }
 
         public static void CreateAlbumDirectory(AlbumModel model)
-        { 
-        
-        }
-
-        public static void SavePhoto(HttpPostedFileBase input, AlbumModel album)
         {
+            CreateUserDirectory(model.User);
+            string path = AlbumPhysicalPath(model);
 
+            if (Directory.Exists(path))
+                System.Diagnostics.Debug.WriteLine(string.Format("Folder albumu {0} istnieje", model.Id));
+            else
+            {
+                System.Diagnostics.Debug.WriteLine(string.Format("Tworze folder albumu  {0}", model.Id));
+                Directory.CreateDirectory(path);
+            }
+            System.Diagnostics.Debug.WriteLine(string.Format("Sciezka {0}", path));
         }
 
-        public static void SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album) 
+        public static void SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album)
         {
             if (input != null)
                 SavePhoto(input, album);
@@ -38,34 +65,44 @@ namespace PhotoHistory.Common
                     SavePhoto(remoteFilename, album);
         }
 
+        public static void SavePhoto(HttpPostedFileBase input, AlbumModel album)
+        {
+            if (input.ContentType != "image/jpeg")
+                throw new WrongPictureTypeException("Image is not an jpeg");
+            CreateAlbumDirectory(album);
+            SaveFromStream(input.InputStream, album);
+
+        }
+
+        private static void SaveFromStream(Stream input, AlbumModel album)
+        {
+            Image img = Image.FromStream(input, true, true);
+            if (System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
+                throw new WrongPictureTypeException("Image is not an jpeg");
+        }
+
+
+
         public static int SavePhoto(String remoteFilename,AlbumModel album)
         {
             int bytesProcessed = 0;
             Stream remoteStream = null;
             Stream localStream = null;
             WebResponse response = null;
-            String localFilename = null;
-
             try
             {
                 WebRequest request = WebRequest.Create(remoteFilename);
-                
                 if (request != null)
                 {
                     response = request.GetResponse();
                     if (response != null)
                     {
                         remoteStream = response.GetResponseStream();
-                        Image img=Image.FromStream(remoteStream, true, true);
-                        if (System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
-                            throw new WrongPictureTypeException("Image is not an jpeg");
-
+                        SaveFromStream(remoteStream, album);
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                else
+                    throw new RemoteDownloadException("Can't download file from specified URL.");
             }
             finally
             {
@@ -76,11 +113,7 @@ namespace PhotoHistory.Common
             return bytesProcessed;
         }
 
-        public static string GetPhoto()
-        {
-            return null;
-        }
-
+        //Zwraca 3 miniaturki (sciezki ktore mozna umiescic w <img src=...>), poczatek, srodek, koniec
         public static IEnumerable<string> GetAlbumThumbail()
         {
             return null;
