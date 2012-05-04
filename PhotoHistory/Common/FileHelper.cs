@@ -9,32 +9,10 @@ using System.Drawing;
 
 namespace PhotoHistory.Common
 {
-    public class FileUploadException : Exception
-    {
-        public FileUploadException() : base() { }
-        public FileUploadException(string message) : base(message) { }
-        public FileUploadException(string message, Exception innerException) : base(message, innerException) { }
-    }
-
-    public class WrongPictureTypeException : FileUploadException
-    {
-        public WrongPictureTypeException():base(){}
-        public WrongPictureTypeException(string message) : base(message) { }
-        public WrongPictureTypeException(string message, Exception innerException) : base(message, innerException) { }
-        
-    }
-
-    public class RemoteDownloadException : FileUploadException
-    {
-        public RemoteDownloadException() : base() { }
-        public RemoteDownloadException(string message) : base(message) { }
-        public RemoteDownloadException(string message, Exception innerException) : base(message, innerException) { }
-    }
-
-
-
     public class FileHelper
     {
+        public static readonly string rootDirectory = "~"; 
+        
         public static void CreateUserDirectory(UserModel model)
         {
         }
@@ -107,5 +85,28 @@ namespace PhotoHistory.Common
         {
             return null;
         }
+    }
+
+
+    public class FileUploadException : Exception
+    {
+        public FileUploadException() : base() { }
+        public FileUploadException(string message) : base(message) { }
+        public FileUploadException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    public class WrongPictureTypeException : FileUploadException
+    {
+        public WrongPictureTypeException() : base() { }
+        public WrongPictureTypeException(string message) : base(message) { }
+        public WrongPictureTypeException(string message, Exception innerException) : base(message, innerException) { }
+
+    }
+
+    public class RemoteDownloadException : FileUploadException
+    {
+        public RemoteDownloadException() : base() { }
+        public RemoteDownloadException(string message) : base(message) { }
+        public RemoteDownloadException(string message, Exception innerException) : base(message, innerException) { }
     }
 }
