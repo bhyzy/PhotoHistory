@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PhotoHistory.Models;
 using PhotoHistory.Data;
 using System.Web.Security;
+using PhotoHistory.Common;
 
 namespace PhotoHistory.Controllers
 {
@@ -29,39 +30,43 @@ namespace PhotoHistory.Controllers
             UserProfileModel profile = null;
 
             if (user == null)
-                ViewBag.ErrorMessage = string.Format("Can't find user {0}", userName);
-            else
             {
-                DateTime? startTime = user.DateOfBirth;
+                ViewBag.ErrorMessage = string.Format("Can't find user {0}", userName);
+                return View(profile);
+            }
+            
+            DateTime? startTime = user.DateOfBirth;
 
-                string age = "";
-                if (startTime == null)
-                    age = "Unavailable";
-                else
-                    age = "" + Helpers.GetAge(startTime ?? DateTime.Today);
-                profile = new UserProfileModel()
+            string age = "";
+            if (startTime == null)
+                age = "Unavailable";
+            else
+                age = "" + Helpers.GetAge(startTime ?? DateTime.Today);
+
+            profile = new UserProfileModel()
+            {
+                Name = user.Login,
+                About = user.About,
+                Age = age,
+                Albums = new List<AlbumProfileModel>()
+            };
+
+            string start,end;
+            foreach (AlbumModel album in user.Albums)
+            {  
+                FileHelper.GetDate(album, out start , out end);
+                AlbumProfileModel profileAlbum = new AlbumProfileModel()
                 {
-                    Name = user.Login,
-                    About = user.About,
-                    Age = age
-                };
-
-                AlbumRepository albums= new AlbumRepository();
-               
-                foreach (AlbumModel model in user.Albums )
-                {
-                    AlbumProfileModel profileModel = new AlbumProfileModel()
-                    {
-                        Name = model.Name,
-                        Views = model.Views
-                    };
-
-                }
-
+                    Name = album.Name,
+                    Thumbails = FileHelper.GetAlbumThumbnail(album),
+                    StartDate = start,
+                    EndDate = end,
+                    Views = album.Views
+                }; 
+                profile.Albums.Add(profileAlbum);
             }
 
             return View(profile);
-
         }
 
 		public ActionResult Create()

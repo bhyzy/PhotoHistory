@@ -80,11 +80,15 @@ namespace PhotoHistory.Models
 
     public class AlbumProfileModel
     {
+        [Required]
         public virtual string Name {get; set;}
-        public virtual string TimeSpan { get; set; }
+        [Required]
+        public virtual string StartDate { get; set; }
+        [Required]
+        public virtual string EndDate { get; set; }
+        [Required]
         public virtual int Views { get; set; }
-        public virtual IEnumerable<string> Thumbails { get; set; }
-
-        
+        [Required]
+        public virtual IEnumerable<string> Thumbails { get; set; }  
     }
 }

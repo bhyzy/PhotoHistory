@@ -17,6 +17,11 @@ namespace PhotoHistory.Common
         private static readonly string UserSubdirectoryPrefix = "/user";
         private static readonly string AlbumSubdirectoryPrefix = "/album";
 
+        public static readonly ushort MAX_WIDTH = 1024;
+        public static readonly ushort MAX_HEIGHT = 800;
+        public static readonly ushort THUMB_WIDTH = 133;
+        public static readonly ushort THUMB_HEIGHT = 100;
+
         private static string UserPath(UserModel model,bool physical=true)
         {
                 return physical? UsersDirectory + UserSubdirectoryPrefix + model.Id: UserSubdirectoryPrefix +model.Id;
@@ -131,6 +136,31 @@ namespace PhotoHistory.Common
                 if (localStream != null) localStream.Close();
             }
             return "";
+        }
+
+        public static void GetDate(AlbumModel album, out string start, out string end)
+        {
+            DirectoryInfo dir = new DirectoryInfo(AlbumPath(album));
+
+            if(!dir.Exists)
+            {
+                CreateAlbumDirectory(album);
+            }
+
+            FileSystemInfo[] files = dir.GetFileSystemInfos("*_mini.jpg");
+            Array.Sort<FileSystemInfo>(files, delegate(FileSystemInfo a, FileSystemInfo b)
+            {
+                return a.CreationTime.CompareTo(b.CreationTime);
+            });
+
+            if (files.Length == 0) 
+            {
+                start = "";
+                end = "";
+                return;
+            }
+            start = files.First().CreationTime.ToString("ddMMyyyy");
+            end = files.Last().CreationTime.ToString("ddMMyyyy");
         }
 
         //Zwraca sciezki(wzgledne, nie fizyczne) do miniaturek 
