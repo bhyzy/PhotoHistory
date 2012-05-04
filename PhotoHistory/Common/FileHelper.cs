@@ -24,7 +24,7 @@ namespace PhotoHistory.Common
 
         private static string UserPath(UserModel model,bool physical=true)
         {
-                return physical? UsersDirectory + UserSubdirectoryPrefix + model.Id: UserSubdirectoryPrefix +model.Id;
+                return physical? UsersDirectory + UserSubdirectoryPrefix + model.Id:UserRelativePath + UserSubdirectoryPrefix +model.Id;
         }
 
         public static string AlbumPath(AlbumModel model,bool physical=true)

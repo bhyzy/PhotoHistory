@@ -3,26 +3,26 @@
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-error">
-        @if (ViewBag.ErrorMessage != null)
+            @if (ViewBag.ErrorMessage != null)
+            {
+                    @ViewBag.ErrorMessage
+            }
+            else
+            {
+                <text>Sorry, something went wrong. A team of highly trained monkeys has been dispatched 
+                to deal with this situation.</text>
+            }
+        </div>
+    }
+    else
+        if (ViewBag.ErrorMessage != null)
         {
-                @ViewBag.ErrorMessage
+            <div class="alert alert-error">
+                    @ViewBag.ErrorMessage
+            </div>
         }
         else
         {
-            <text>Sorry, something went wrong. A team of highly trained monkeys has been dispatched 
-            to deal with this situation.</text>
-        }
-        </div>
-    }
-    else
-    if (ViewBag.ErrorMessage != null)
-    {
-        <div class="alert alert-error">
-                @ViewBag.ErrorMessage
-        </div>
-    }
-    else
-    {
 			<div id="profile-header">
 				<h1 class="page-title">
 					<a href="#">@(Model != null ? Model.Name : "")</a>
@@ -35,40 +35,54 @@
 				</div>
 				<div id="profile-albums">
 					<h2 class="page-section">Albums</h2>
-					<div id="content-left">
-						<div class="album-thumb">
-							<a href="#">
-								<img src="/tmp/photo1.jpg" class="photo" />
-								<img src="/tmp/photo2.jpg" class="photo" />
-								<img src="/tmp/photo3.jpg" class="photo" />
-							<h3 class="album-title">Noah K. everyday</h3>
-							</a>
-							<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-							<span class="album-label">Views: </span><span class="album-value">117 684</span>
-						</div>
-						<div class="album-thumb">
-							<a href="#">
-								<img src="/tmp/photo1.jpg" class="photo" />
-								<img src="/tmp/photo2.jpg" class="photo" />
-								<img src="/tmp/photo3.jpg" class="photo" />
-							<h3 class="album-title">Noah K. everyday</h3>
-							</a>
-							<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-							<span class="album-label">Views: </span><span class="album-value">117 684</span>
-						</div>
-					</div>
-					<div id="content-right">
-						<div class="album-thumb">
-							<a href="#">
-								<img src="/tmp/photo1.jpg" class="photo" />
-								<img src="/tmp/photo2.jpg" class="photo" />
-								<img src="/tmp/photo3.jpg" class="photo" />
-							<h3 class="album-title">Noah K. everyday</h3>
-							</a>
-							<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-							<span class="album-label">Views: </span><span class="album-value">117 684</span>
-						</div>
-					</div>
+                    @{
+                        if (Model != null)
+                        {
+                            List<PhotoHistory.Models.AlbumProfileModel> left = new List<PhotoHistory.Models.AlbumProfileModel>();
+                            List<PhotoHistory.Models.AlbumProfileModel> right = new List<PhotoHistory.Models.AlbumProfileModel>();
+                            List<PhotoHistory.Models.AlbumProfileModel> albums = null;
+
+                            int iter = 0;
+                            foreach (PhotoHistory.Models.AlbumProfileModel album in Model.Albums)
+                            {
+                                if (iter++ % 2 == 0)
+                                {
+                                    left.Add(album);
+                                }
+                                else
+                                {
+                                    right.Add(album);
+                                }
+                            }
+
+                            for (int count = 0; count < 2; ++count)
+                            {
+                                albums = (count == 0 ? left : right);
+                                <div id="content-@(count == 0 ? "left" : "right")">
+                                    @foreach (PhotoHistory.Models.AlbumProfileModel album in albums)
+                                    {
+                                        <div class="album-thumb">
+							                <a href="#">
+								                @{
+                                                    int thumbCount = album.Thumbnails.Count;
+                                                    List<string> thumbs = new List<string>();
+                                                    if (thumbCount > 0)
+                                                    {
+                                                        <img src="@album.Thumbnails.First()" class="photo" alt="Album thumbnail"/>
+                                                        <img src="@album.Thumbnails.ElementAt(thumbCount / 2)" class="photo" alt="Album thumbnail"/>
+                                                        <img src="@album.Thumbnails.Last()" class="photo" alt="Album thumbnail"/>
+                                                    }
+                                                }
+							                    <h3 class="album-title">@album.Name</h3>
+							                </a>
+							                <span class="album-label">Timespan: </span><span class="album-value">@album.StartDate - @album.EndDate</span><br/>
+							                <span class="album-label">Views: </span><span class="album-value">@album.Views</span>
+						                </div>
+                                    }
+                                </div>
+                            }
+                        }    
+                    }
 				</div>
 			</div>
-    }
+        }

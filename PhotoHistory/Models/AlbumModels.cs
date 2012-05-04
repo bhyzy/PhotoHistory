@@ -89,6 +89,6 @@ namespace PhotoHistory.Models
         [Required]
         public virtual int Views { get; set; }
         [Required]
-        public virtual IEnumerable<string> Thumbails { get; set; }  
+        public virtual List<string> Thumbnails { get; set; }  
     }
 }

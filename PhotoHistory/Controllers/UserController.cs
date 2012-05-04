@@ -58,7 +58,7 @@ namespace PhotoHistory.Controllers
                 AlbumProfileModel profileAlbum = new AlbumProfileModel()
                 {
                     Name = album.Name,
-                    Thumbails = FileHelper.GetAlbumThumbnail(album),
+                    Thumbnails = FileHelper.GetAlbumThumbnail(album),
                     StartDate = start,
                     EndDate = end,
                     Views = album.Views
