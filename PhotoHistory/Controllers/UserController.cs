@@ -57,6 +57,7 @@ namespace PhotoHistory.Controllers
                 FileHelper.GetDate(album, out start , out end);
                 AlbumProfileModel profileAlbum = new AlbumProfileModel()
                 {
+                    Id = album.Id,
                     Name = album.Name,
                     Thumbnails = FileHelper.GetAlbumThumbnail(album),
                     StartDate = start,

@@ -90,7 +90,7 @@ namespace PhotoHistory.Common
                 throw new WrongPictureTypeException("Image is not an jpeg");
             string name =   "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
 
-            Image thumbnail = img.GetThumbnailImage(100, 200, null, IntPtr.Zero);
+            Image thumbnail = img.GetThumbnailImage(THUMB_WIDTH, THUMB_HEIGHT, null, IntPtr.Zero);
             
             System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
             
@@ -159,8 +159,8 @@ namespace PhotoHistory.Common
                 end = "";
                 return;
             }
-            start = files.First().CreationTime.ToString("ddMMyyyy");
-            end = files.Last().CreationTime.ToString("ddMMyyyy");
+            start = files.First().CreationTime.ToString("dd/MM/yyyy");
+            end = files.Last().CreationTime.ToString("dd/MM/yyyy");
         }
 
         //Zwraca sciezki(wzgledne, nie fizyczne) do miniaturek 
