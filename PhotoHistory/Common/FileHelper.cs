@@ -69,7 +69,6 @@ namespace PhotoHistory.Common
         {
             if (input.ContentType != "image/jpeg")
                 throw new WrongPictureTypeException("Image is not an jpeg");
-            CreateAlbumDirectory(album);
             SaveFromStream(input.InputStream, album);
 
         }
@@ -77,8 +76,11 @@ namespace PhotoHistory.Common
         private static void SaveFromStream(Stream input, AlbumModel album)
         {
             Image img = Image.FromStream(input, true, true);
-            if (System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
+
+            if (!System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
                 throw new WrongPictureTypeException("Image is not an jpeg");
+            CreateAlbumDirectory(album);
+            
         }
 
 

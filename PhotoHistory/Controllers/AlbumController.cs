@@ -100,9 +100,31 @@ namespace PhotoHistory.Controllers
                     fileInput = null;
                 else
                     photo.PhotoURL = null;
-                FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
+                try
+                {
+                    FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
+                    System.Diagnostics.Debug.WriteLine("Photo uploaded successfully");
+                    return RedirectToAction("Show", new { id = photo.AlbumId });
+                }
+                catch (WrongPictureTypeException ex)
+                {
+                    ViewBag.ErrorMessage = "You must upload jpeg image.";
+                    
+                }
+                catch (RemoteDownloadException ex) 
+                {
+                    ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                }
+                catch (FileUploadException ex) 
+                {
+                    ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                }
+                catch (Exception ex) 
+                {
+                    ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                }
             }
-            return View();
+            return View(photo);
         }
 
         public ActionResult ManageAlbum(int id)
