@@ -56,7 +56,8 @@ CREATE TABLE Photos
 	photo_id serial primary key,
 	album_id integer NOT NULL REFERENCES Albums,
 	date_taken timestamp NOT NULL,
-	description text
+	description text,
+	file_path text NOT NULL
 );
 
 CREATE INDEX photo_album_idx on Photos (album_id);

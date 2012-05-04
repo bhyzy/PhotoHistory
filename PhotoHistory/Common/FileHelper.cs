@@ -11,22 +11,28 @@ namespace PhotoHistory.Common
 {
     public class FileHelper
     {
-        public static readonly HttpServerUtility Server= HttpContext.Current.Server;
-        public static readonly string UsersDirectory = Server.MapPath("~/Users");
+        private static readonly HttpServerUtility Server= HttpContext.Current.Server;
+        public static readonly string UserRelativePath = "/Users";
+        public static readonly string UsersDirectory = Server.MapPath("~" + UserRelativePath);
+        private static readonly string UserSubdirectoryPrefix = "/user";
+        private static readonly string AlbumSubdirectoryPrefix = "/album";
+        private static readonly string PhotoPrefix = "photo";
+       
+        
 
-        public static string UserPhysicalPath(UserModel model)
+        private static string UserPath(UserModel model,bool physical=true)
         {
-            return UsersDirectory + "/user" + model.Id + "/";
+                return physical? UsersDirectory + UserSubdirectoryPrefix + model.Id: UserSubdirectoryPrefix +model.Id;
         }
 
-        public static string AlbumPhysicalPath(AlbumModel model)
+        public static string AlbumPath(AlbumModel model,bool physical=true)
         {
-            return UserPhysicalPath(model.User) + "album" + model.Id + "/";
+            return UserPath(model.User, physical) + AlbumSubdirectoryPrefix + model.Id+"/";
         }
 
         public static void CreateUserDirectory(UserModel model)
         {
-            string path = UserPhysicalPath(model);
+            string path = UserPath(model);
             
             if( Directory.Exists(path) )
                 System.Diagnostics.Debug.WriteLine(string.Format("Folder uzytkownika {0} istnieje", model.Id));
@@ -42,7 +48,7 @@ namespace PhotoHistory.Common
         public static void CreateAlbumDirectory(AlbumModel model)
         {
             CreateUserDirectory(model.User);
-            string path = AlbumPhysicalPath(model);
+            string path = AlbumPath(model);
 
             if (Directory.Exists(path))
                 System.Diagnostics.Debug.WriteLine(string.Format("Folder albumu {0} istnieje", model.Id));
@@ -54,40 +60,43 @@ namespace PhotoHistory.Common
             System.Diagnostics.Debug.WriteLine(string.Format("Sciezka {0}", path));
         }
 
-        public static void SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album)
+        public static string SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album)
         {
             if (input != null)
-                SavePhoto(input, album);
+                return SavePhoto(input, album);
             else
                 if (string.IsNullOrEmpty(remoteFilename))
-                    throw new FileUploadException("Wrong remote file name");
+                    throw new RemoteDownloadException("Wrong remote file name");
                 else
-                    SavePhoto(remoteFilename, album);
+                   return SavePhoto(remoteFilename, album);
         }
 
-        public static void SavePhoto(HttpPostedFileBase input, AlbumModel album)
+        public static string SavePhoto(HttpPostedFileBase input, AlbumModel album)
         {
             if (input.ContentType != "image/jpeg")
                 throw new WrongPictureTypeException("Image is not an jpeg");
-            SaveFromStream(input.InputStream, album);
+            return SaveFromStream(input.InputStream, album);
 
         }
 
-        private static void SaveFromStream(Stream input, AlbumModel album)
+        private static string SaveFromStream(Stream input, AlbumModel album)
         {
+            CreateAlbumDirectory(album);
             Image img = Image.FromStream(input, true, true);
 
             if (!System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
                 throw new WrongPictureTypeException("Image is not an jpeg");
-            CreateAlbumDirectory(album);
-            
+            string name =   "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+            Image thumbnail = img.GetThumbnailImage(100, 200, null, IntPtr.Zero);
+            System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
+            thumbnail.Save(AlbumPath(album)+name + "_mini.jpg");
+            name += ".jpg";
+            img.Save(AlbumPath(album)+name);
+            return AlbumPath(album, false) + name;
         }
 
-
-
-        public static int SavePhoto(String remoteFilename,AlbumModel album)
+        public static string SavePhoto(String remoteFilename,AlbumModel album)
         {
-            int bytesProcessed = 0;
             Stream remoteStream = null;
             Stream localStream = null;
             WebResponse response = null;
@@ -100,25 +109,35 @@ namespace PhotoHistory.Common
                     if (response != null)
                     {
                         remoteStream = response.GetResponseStream();
-                        SaveFromStream(remoteStream, album);
+                        return SaveFromStream(remoteStream, album);
                     }
                 }
                 else
                     throw new RemoteDownloadException("Can't download file from specified URL.");
             }
+            catch (WrongPictureTypeException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new RemoteDownloadException("Can't download file from specified URL.", ex);
+            }
+                 
             finally
             {
                 if (response != null) response.Close();
                 if (remoteStream != null) remoteStream.Close();
                 if (localStream != null) localStream.Close();
             }
-            return bytesProcessed;
+            return "";
         }
 
-        //Zwraca 3 miniaturki (sciezki ktore mozna umiescic w <img src=...>), poczatek, srodek, koniec
-        public static IEnumerable<string> GetAlbumThumbail()
+        //Zwraca sciezki(wzgledne, nie fizyczne) do miniaturek 
+        public static List<string> GetAlbumThumbnail(AlbumModel album)
         {
-            return null;
+            List<string> list = new List<string>();
+            return list;
         }
     }
 

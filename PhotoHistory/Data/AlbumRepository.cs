@@ -29,6 +29,16 @@ namespace PhotoHistory.Data
             }
         }
 
+        public AlbumModel GetByIdWithPhotos(int? id)
+        {
+            using (var session = GetSession())
+            {
+                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+                album.Photos.ToList();
+                return album;
+            }
+        }
+
         /*public IEnumerable<AlbumModel> GetByUser(int ?userID)
         {
             using (var session = GetSession())

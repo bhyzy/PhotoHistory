@@ -102,8 +102,20 @@ namespace PhotoHistory.Controllers
                     photo.PhotoURL = null;
                 try
                 {
-                    FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
-                    System.Diagnostics.Debug.WriteLine("Photo uploaded successfully");
+                    string path=FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
+                    System.Diagnostics.Debug.WriteLine("Photo uploaded successfully "+path);
+                    if (string.IsNullOrEmpty(path))
+                        throw new Exception("Can't save image");
+                    PhotoRepository repo = new PhotoRepository();
+                    PhotoModel newPhoto = new PhotoModel()
+                    {
+                        Path = path,
+                        Date = DateTime.Parse(photo.Date),
+                        Description = photo.Description,
+                        Album = selectedAlbum
+                    };
+                    repo.Create(newPhoto);
+                    System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
                     return RedirectToAction("Show", new { id = photo.AlbumId });
                 }
                 catch (WrongPictureTypeException ex)
@@ -113,11 +125,7 @@ namespace PhotoHistory.Controllers
                 }
                 catch (RemoteDownloadException ex) 
                 {
-                    ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
-                }
-                catch (FileUploadException ex) 
-                {
-                    ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                    ViewBag.ErrorMessage = "Can't upload your photo from provided URL. Please check your URL and try again later.";
                 }
                 catch (Exception ex) 
                 {

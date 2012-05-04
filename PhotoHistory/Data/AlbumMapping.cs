@@ -92,7 +92,13 @@ namespace PhotoHistory.Data
             Property(x => x.NotificationPeriod, map =>
             {
                 map.Column("notification_period");
-            });  
+            });
+
+            Bag(x => x.Photos, map =>
+            {
+                map.Table("Photos");
+                map.Key(c => c.Column("album_id"));
+            }, a => a.OneToMany());
         }
     }
 }

@@ -14,10 +14,10 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-            ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
-            CreateUsers();
-            CreateCategories();
-            CreateAlbums();
+          //  ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
+          //  CreateUsers();
+          //  CreateCategories();
+          //  CreateAlbums();
         }
 
         private static void CreateAlbums()
@@ -49,21 +49,26 @@ namespace PhotoHistory.Common
             LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
             PhotoModel photo = new PhotoModel()
             {
-                Album=album, Date= DateTime.Today, Description="Słit focia nr1 album 1" 
+                Album = album,
+                Date = DateTime.Today,
+                Description = "Słit focia nr1 album 1",
+                Path = "" 
             };
             list.AddLast(photo);
             photo = new PhotoModel()
             {
                 Album = album,
                 Date = new DateTime(2012,5,1,22,33,5),
-                Description = "Słit focia nr2 album 1"
+                Description = "Słit focia nr2 album 1",
+                Path = ""
             };
             list.AddLast(photo);
             photo = new PhotoModel()
             {
                 Album = album,
                 Date = new DateTime(2012, 4,30 , 1, 8, 59),
-                Description = "Słit focia nr3 album 1"
+                Description = "Słit focia nr3 album 1",
+                Path = ""
             };
             list.AddLast(photo);
             
@@ -89,14 +94,16 @@ namespace PhotoHistory.Common
             {
                 Album = album,
                 Date = DateTime.Today,
-                Description = "Słit focia nr1 album 2"
+                Description = "Słit focia nr1 album 2",
+                Path = ""
             };
             list.AddLast(photo);
             photo = new PhotoModel()
             {
                 Album = album,
                 Date = new DateTime(2012,1,2,22,11,3),
-                Description = "Słit focia nr2 album 2"
+                Description = "Słit focia nr2 album 2",
+                Path = ""
             };
             list.AddLast(photo);
 
@@ -119,7 +126,8 @@ namespace PhotoHistory.Common
             {
                 Album = album,
                 Date = DateTime.Today,
-                Description = "Słit focia nr1 album 3"
+                Description = "Słit focia nr1 album 3",
+                Path = ""
             };
             list.AddLast(photo);
 

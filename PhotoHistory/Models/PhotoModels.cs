@@ -12,6 +12,7 @@ namespace PhotoHistory.Models
         public virtual AlbumModel Album { get; set; }
         public virtual DateTime Date { get; set; }
         public virtual string Description { get; set; }
+        public virtual string Path { get; set; }
     }
 
     

@@ -90,6 +90,7 @@
     <Compile Include="Data\CategoryMapping.cs" />
     <Compile Include="Data\DataRepository.cs" />
     <Compile Include="Data\PhotoMapping.cs" />
+    <Compile Include="Data\PhotoRepository.cs" />
     <Compile Include="Data\SessionProvider.cs" />
     <Compile Include="Data\UserMapping.cs" />
     <Compile Include="Data\UserRepository.cs" />

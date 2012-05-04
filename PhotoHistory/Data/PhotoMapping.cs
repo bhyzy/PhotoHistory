@@ -25,7 +25,6 @@ namespace PhotoHistory.Data
                     map.Column("album_id");
                     map.NotNullable(true);
            });
-
             Property(x=> x.Date, map=>
             {
                 map.Column("date_taken");
@@ -36,6 +35,12 @@ namespace PhotoHistory.Data
             {
                 map.Column("description");
                 map.NotNullable(false);
+            });
+
+            Property(x => x.Path, map =>
+            {
+                map.Column("file_path");
+                map.NotNullable(true);
             });
         }
     }

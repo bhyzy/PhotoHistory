@@ -35,6 +35,7 @@ namespace PhotoHistory.Models
         public virtual bool CommentsAuth { get; set; }
         public virtual int? NotificationPeriod { get; set; }
 
+        public virtual ICollection<PhotoModel> Photos { get; set; }
 
 
         // transforms an array with logins into an array of UserModels
