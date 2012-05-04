@@ -14,14 +14,6 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-            /*using (var session = SessionProvider.SessionFactory.OpenSession())
-            {
-                var model = session.CreateQuery("from PhotoModel where Date =:date").SetParameter("date", new DateTime(2012, 5, 1, 22, 33, 5)).UniqueResult<PhotoModel>();
-                if(model==null)
-                    System.Diagnostics.Debug.WriteLine("MODEL ==========NULLLL");
-                else
-                    System.Diagnostics.Debug.WriteLine(model.Id + " " + model.Date.ToString());
-            }*/
             ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
             CreateUsers();
             CreateCategories();
