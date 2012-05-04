@@ -16,9 +16,6 @@ namespace PhotoHistory.Common
         public static readonly string UsersDirectory = Server.MapPath("~" + UserRelativePath);
         private static readonly string UserSubdirectoryPrefix = "/user";
         private static readonly string AlbumSubdirectoryPrefix = "/album";
-        private static readonly string PhotoPrefix = "photo";
-       
-        
 
         private static string UserPath(UserModel model,bool physical=true)
         {
@@ -87,8 +84,11 @@ namespace PhotoHistory.Common
             if (!System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
                 throw new WrongPictureTypeException("Image is not an jpeg");
             string name =   "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+
             Image thumbnail = img.GetThumbnailImage(100, 200, null, IntPtr.Zero);
+            
             System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
+            
             thumbnail.Save(AlbumPath(album)+name + "_mini.jpg");
             name += ".jpg";
             img.Save(AlbumPath(album)+name);
@@ -136,7 +136,18 @@ namespace PhotoHistory.Common
         //Zwraca sciezki(wzgledne, nie fizyczne) do miniaturek 
         public static List<string> GetAlbumThumbnail(AlbumModel album)
         {
+            DirectoryInfo dir = new DirectoryInfo(AlbumPath(album));
+            FileSystemInfo[] files = dir.GetFileSystemInfos("*_mini.jpg");
+            Array.Sort<FileSystemInfo>(files, delegate(FileSystemInfo a, FileSystemInfo b)
+            {
+                return a.CreationTime.CompareTo(b.CreationTime);
+            });
+
             List<string> list = new List<string>();
+            foreach (FileSystemInfo file in files)
+            {
+                list.Add(AlbumPath(album,false) + file.Name);
+            }
             return list;
         }
     }
