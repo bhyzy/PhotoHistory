@@ -36,6 +36,7 @@ namespace PhotoHistory.Models
         public virtual int? NotificationPeriod { get; set; }
 
         public virtual ICollection<PhotoModel> Photos { get; set; }
+        public virtual ICollection<UserModel> TrustedUsers{ get; set; }
 
 
         // transforms an array with logins into an array of UserModels
@@ -44,10 +45,10 @@ namespace PhotoHistory.Models
         {
             UserRepository users = new UserRepository();
             UserModel[] userList = new UserModel[logins.Length];
-            for (int i=0;i<logins.Length;i++)
+            for (int i = 0; i < logins.Length; i++)
             {
                 UserModel user = users.GetByUsername(logins[i]);
-                if (user==null)
+                if (user == null)
                     return null;
                 userList[i] = user;
             }
@@ -57,22 +58,33 @@ namespace PhotoHistory.Models
 
         // creates a record in TrustedUser table
         public virtual bool CreateTrustedUser(UserModel user)
-        {        
-            using ( var session = SessionProvider.SessionFactory.OpenSession() )
-			{
-				using ( var transaction = session.BeginTransaction() )
-				{
-                    IQuery query = session.CreateSQLQuery(string.Format("insert into trustedusers (album_id,user_id) values ({0}, {1})",Id,user.Id) );
-                    //query.SetParameter( "album_id", Id );
-                    //query.SetParameter( "user_id", user.Id );
-					query.ExecuteUpdate();
-					transaction.Commit();
-				}
-			}
-            return true;            
+        {
+            using (var session = SessionProvider.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    IQuery query = session.CreateSQLQuery(string.Format("insert into trustedusers (album_id,user_id) values ({0}, {1})", Id, user.Id));
+                    query.ExecuteUpdate();
+                    transaction.Commit();
+                }
+            }
+            return true;
         }
 
 
+        // deletes all trusted users of the album
+        public virtual void DeleteTrustedUsers()
+        {
+            using (var session = SessionProvider.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    IQuery query = session.CreateSQLQuery(string.Format("delete from trustedusers where album_id={0}", Id));
+                    query.ExecuteUpdate();
+                    transaction.Commit();
+                }
+            }
+        }
 
     }
 
@@ -81,9 +93,9 @@ namespace PhotoHistory.Models
     public class AlbumProfileModel
     {
         [Required]
-        public virtual int ? Id { get; set; }
+        public virtual int? Id { get; set; }
         [Required]
-        public virtual string Name {get; set;}
+        public virtual string Name { get; set; }
         [Required]
         public virtual string StartDate { get; set; }
         [Required]
@@ -91,6 +103,6 @@ namespace PhotoHistory.Models
         [Required]
         public virtual int Views { get; set; }
         [Required]
-        public virtual List<string> Thumbnails { get; set; }  
+        public virtual List<string> Thumbnails { get; set; }
     }
 }

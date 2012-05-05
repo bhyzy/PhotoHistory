@@ -45,7 +45,7 @@ namespace PhotoHistory.Data
                 map.Column("category_id");
                 map.NotNullable(true);
             });
-             */ 
+             */
             Property(x => x.Name, map =>
             {
                 map.Column("name");
@@ -99,6 +99,16 @@ namespace PhotoHistory.Data
                 map.Table("Photos");
                 map.Key(c => c.Column("album_id"));
             }, a => a.OneToMany());
+
+
+            Bag(x => x.TrustedUsers, map =>
+            {
+                map.Table("trustedusers");
+                map.Key(c => c.Column("album_id"));
+            }, a => a.ManyToMany(
+                m => { m.Column ("user_id");  }
+                ));
+
         }
     }
 }

@@ -14,10 +14,10 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-          //  ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
-          //  CreateUsers();
-          //  CreateCategories();
-          //  CreateAlbums();
+            ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
+            CreateUsers();
+            CreateCategories();
+            CreateAlbums();
         }
 
         private static void CreateAlbums()
@@ -39,7 +39,6 @@ namespace PhotoHistory.Common
                 CommentsAuth = false,
                 Description = "Opis super fajnego albumu nr 1. LOL. ROFTEWRFS saflksjalfrwjlfj alksfdjlasjfl",
                 Name = "Super fajny album nr.1",
-                Password = "",
                 Public = true,
                 Rating = 10,
                 User = user,
@@ -82,7 +81,6 @@ namespace PhotoHistory.Common
                 CommentsAuth = false,
                 Description = "Opis super fajnego albumu nr 2. LOL. weratsyhdjufkilokhjgfdscxsZcvnmjkiol8i7u6tgrefcdsvfbgnh",
                 Name = "Super fajny album nr.2!!!!",
-                Password = "",
                 Public = true,
                 Rating = 11,
                 User = user,
@@ -114,7 +112,6 @@ namespace PhotoHistory.Common
                 CommentsAuth = false,
                 Description = "Opis super fajnego albumu nr 3. LOL.fsaerfgt,aem jlejarklfnjgskjafn kqnawfn kasnfk jnbwkanf kgnmwaklenb kjnawk bnkjwan knfskjhfkjna kjnfwkaj nkwanef kjnkja fnkj. Ale sie rozpisalem.",
                 Name = "Super fajny album nr.3 LOL",
-                Password = "",
                 Public = true,
                 Rating = 1,
                 User = user,
@@ -139,8 +136,8 @@ namespace PhotoHistory.Common
                 CommentsAuth = false,
                 Description = "Opis super fajnego albumu nr 4. heh",
                 Name = "Super fajny album nr.4444444444444444",
-                Password = "",
-                Public = true,
+                Public = false,
+                Password = "abc",
                 Rating = 44,
                 User = user,
                 Views = 4444

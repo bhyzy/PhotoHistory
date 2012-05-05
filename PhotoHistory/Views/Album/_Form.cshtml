@@ -1,5 +1,4 @@
 ﻿@model PhotoHistory.Models.AlbumModel
-
 <div class="control-group @Html.MyValidationMark("Name")">
     <label class="control-label" for="name">
         Name</label>
@@ -72,16 +71,16 @@
             <!-- to nizej widoczne tylko jesli wybrano dostep przez haslo -->
             <div class="control-group @Html.MyValidationMark("Password")">
                 <label class="radio">
-                    <input name="privateMode" value="password" @(Request["privateMode"] == "password" ? "checked=\"checked\"" : "")  type="radio">
+                    <input name="privateMode" value="password" @(( (Model!=null &&Model.Password != null) || Request["privateMode"] == "password") ? "checked=\"checked\"" : "")  type="radio">
                     Protect by password
                 </label>
-                @Html.TextBoxFor(model => Model.Password)
+                @Html.PasswordFor(model => Model.Password)
                 @Html.MyValidationMessage("Password")
             </div>
             <!-- to nizej widoczne tylko jesli wybrano dostep przez liste uztywkonikow -->
             <div class="control-group @Html.MyValidationMark("Users")">
                 <label class="radio">
-                    <input name="privateMode" value="users" @(Request["privateMode"] == "users" ? "checked=\"checked\"" : "") type="radio">
+                    <input name="privateMode" value="users" @( ((Model != null && Model.TrustedUsers!=null && Model.TrustedUsers.Count != 0) || Request["privateMode"] == "users") ? "checked=\"checked\"" : "") type="radio">
                     Specify list of allowed users
                     <br />
                     (e.g. "Login1, Login2, Login3")
@@ -112,5 +111,3 @@
         </label>
     </div>
 </div>
-
-

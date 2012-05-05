@@ -16,43 +16,43 @@ namespace PhotoHistory.Controllers
         //
         // GET: /Album/
 
-		public ActionResult Index()
-		{
-			return View();
-		}
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-		public ActionResult Browse()
-		{
-			UserRepository userRepo = new UserRepository();
+        public ActionResult Browse()
+        {
+            UserRepository userRepo = new UserRepository();
 
-			UserModel user = new UserModel()
-			{
-				Login = "kasia1337",
-				Password = "tralala",
-				Email = "kasia@buziaczek.pl"
-			};
-			userRepo.Create( user );
+            UserModel user = new UserModel()
+            {
+                Login = "kasia1337",
+                Password = "tralala",
+                Email = "kasia@buziaczek.pl"
+            };
+            userRepo.Create(user);
 
-			UserModel user2 = userRepo.GetById( user.Id );
-			user2.Login = "Kasia666";
-			userRepo.Update( user2 );
+            UserModel user2 = userRepo.GetById(user.Id);
+            user2.Login = "Kasia666";
+            userRepo.Update(user2);
 
-			userRepo.Delete( user2 );
-			UserModel user3 = userRepo.GetById( user2.Id );
+            userRepo.Delete(user2);
+            UserModel user3 = userRepo.GetById(user2.Id);
 
-			return View();
-		}
+            return View();
+        }
 
-		public ActionResult Charts()
-		{
-			return View();
-		}
+        public ActionResult Charts()
+        {
+            return View();
+        }
 
 
         public ActionResult Show(int id)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetById(id);
+            AlbumModel album = albums.GetByIdWithUser(id);
             return View(album);
         }
 
@@ -79,7 +79,7 @@ namespace PhotoHistory.Controllers
             UserModel user = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
             ViewBag.Albums = user.Albums;
             if (ModelState.IsValid)
-            {   
+            {
                 if (photo.PhotoURL == null && fileInput == null)
                 {
                     ViewBag.ErrorMessage = "You must select file for upload.";
@@ -102,8 +102,8 @@ namespace PhotoHistory.Controllers
                     photo.PhotoURL = null;
                 try
                 {
-                    string path=FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
-                    System.Diagnostics.Debug.WriteLine("Photo uploaded successfully "+path);
+                    string path = FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
+                    System.Diagnostics.Debug.WriteLine("Photo uploaded successfully " + path);
                     if (string.IsNullOrEmpty(path))
                         throw new Exception("Can't save image");
                     PhotoRepository repo = new PhotoRepository();
@@ -121,13 +121,13 @@ namespace PhotoHistory.Controllers
                 catch (WrongPictureTypeException ex)
                 {
                     ViewBag.ErrorMessage = "You must upload jpeg image.";
-                    
+
                 }
-                catch (RemoteDownloadException ex) 
+                catch (RemoteDownloadException ex)
                 {
                     ViewBag.ErrorMessage = "Can't upload your photo from provided URL. Please check your URL and try again later.";
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
                 }
@@ -147,7 +147,7 @@ namespace PhotoHistory.Controllers
         public ActionResult Edit(int id)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetById(id);
+            AlbumModel album = albums.GetByIdForEdit(id);
             PrepareCategories();
             return View(album);
         }
@@ -158,23 +158,33 @@ namespace PhotoHistory.Controllers
         public ActionResult Edit(AlbumModel album)
         {
             //TODO access control
+                      
+            if (!album.Public)
+                SetPrivateAccess(album);
+
             if (ModelState.IsValid)
             {
                 AlbumRepository albums = new AlbumRepository();
-                AlbumModel dbAlbum = albums.GetById(album.Id);
+                AlbumModel dbAlbum = albums.GetByIdForEdit(album.Id);
                 dbAlbum.Name = album.Name;
                 dbAlbum.Description = album.Description;
                 dbAlbum.Category = album.Category;
                 dbAlbum.NotificationPeriod = album.NotificationPeriod; //NextNotification?
                 dbAlbum.Public = album.Public;
-                if (!dbAlbum.Public)
-                {
-                    //TODO move to model
-                }
+                dbAlbum.Password = album.Password;
                 dbAlbum.CommentsAllow = album.CommentsAllow;
                 dbAlbum.CommentsAuth = album.CommentsAuth;
-
+                dbAlbum.TrustedUsers = album.TrustedUsers;
                 albums.Update(dbAlbum);
+
+                // if there are trusted users, add them
+                /*
+                if (userModels != null)
+                {
+                    album.DeleteTrustedUsers();
+                    foreach (var user in userModels)
+                        album.CreateTrustedUser(user);
+                }*/
 
                 return RedirectToAction("Show", new { id = dbAlbum.Id });
             }
@@ -205,57 +215,38 @@ namespace PhotoHistory.Controllers
                 System.DateTime today = System.DateTime.Now;
                 try
                 {
-                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NotificationPeriod"])); 
+                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NotificationPeriod"]));
                     newAlbum.NextNotification = answer;
                 }
-                catch(Exception e){
-                    ModelState.AddModelError("NotificationPeriod", "Number of days is incorrect");
-                }                
-            }
-            // private access 
-            //TODO refactor
-            UserModel[] userModels = null; //an array of trusted users
-            if (!newAlbum.Public)
-            {
-                switch (Request["privateMode"])
+                catch (Exception e)
                 {
-                    case "password":
-                        if (newAlbum.Password != null)
-                            newAlbum.Password = newAlbum.Password.HashMD5();
-                        else
-                            ModelState.AddModelError("Password", "You didn't provide a password");
-                        break;
-                    case "users":
-                        if (Request["usersList"] == null)
-                        {
-                            ModelState.AddModelError("Users", "You didn't provide a user list");
-                            break;
-                        }
-                        string[] userLogins = Request["usersList"].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-                        userModels = AlbumModel.FindUsersByLogins(userLogins);
-                        if (userModels == null)
-                            ModelState.AddModelError("Users", "At least one login you provided is incorrect.");
-                        break;
+                    ModelState.AddModelError("NotificationPeriod", "Number of days is incorrect");
                 }
             }
+            // private access 
+            if (!newAlbum.Public)
+                SetPrivateAccess(newAlbum);
+
             if (ModelState.IsValid)
-            {                                
+            {
                 //assign a current user
                 UserRepository users = new UserRepository();
-                newAlbum.User = 
+                newAlbum.User =
                     users.GetByUsername(HttpContext.User.Identity.Name);
 
                 AlbumRepository albums = new AlbumRepository();
                 albums.Create(newAlbum);
 
                 // if there are trusted users, add them
+                /*
                 if (userModels != null)
                     foreach (var user in userModels)
                         newAlbum.CreateTrustedUser(user);
+                */
 
-                return RedirectToAction("Show", new { id = newAlbum.Id } );
+                return RedirectToAction("Show", new { id = newAlbum.Id });
             }
-            
+
             return View(newAlbum);
         }
 
@@ -265,9 +256,44 @@ namespace PhotoHistory.Controllers
         {
             using (var session = SessionProvider.SessionFactory.OpenSession())
             {
-                ViewData["ListOfCategories"] = 
+                ViewData["ListOfCategories"] =
                     new SelectList(session.QueryOver<CategoryModel>().List(), "Id", "Name");
             }
+        }
+
+
+        // handles private access settings from form
+        // should be in model 
+        private UserModel[] SetPrivateAccess(AlbumModel album)
+        {
+            UserModel[] userModels = null; //an array of trusted users
+            switch (Request["privateMode"])
+            {
+                case "password":
+                    if (album.Password != null)
+                        album.Password = album.Password.HashMD5();
+                    else
+                        ModelState.AddModelError("Password", "You didn't provide a password");
+                    break;
+                case "users":
+                    album.Password = null; //nullify password, because its checkbox was not ticked
+                    if (string.IsNullOrEmpty(Request["usersList"]))
+                    {
+                        ModelState.AddModelError("Users", "You didn't provide a user list");
+                        break;
+                    }
+                    string[] userLogins = Request["usersList"].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                    userModels = AlbumModel.FindUsersByLogins(userLogins);
+                    if (userModels == null)
+                        ModelState.AddModelError("Users", "At least one login you provided is incorrect.");
+                    else
+                        album.TrustedUsers = userModels;
+                    break;
+                default:
+                    album.Password = null; //nullify password, because its checkbox was not ticked
+                    break;
+            }
+            return userModels;
         }
 
     }
