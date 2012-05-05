@@ -9,6 +9,7 @@ using System.Net;
 using System.Web.Mvc;
 using PhotoHistory.Models;
 using PhotoHistory.Common;
+using System.Drawing;
 
 namespace PhotoHistory
 {
@@ -56,6 +57,25 @@ namespace PhotoHistory
 
 			return new MvcHtmlString( string.Empty );
 		}
+
+        public static void TransformWithAspectRatio(ref Image image, int maxWidth, int maxHeight)
+        {
+            if (image == null)
+                return;
+
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+
+            var newImage = new Bitmap(newWidth, newHeight);
+            Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
+            image.Dispose();
+            image = newImage;
+        }
 
         public static int GetAge(DateTime birthDate)
         {

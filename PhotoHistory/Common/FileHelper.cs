@@ -150,6 +150,7 @@ namespace PhotoHistory.Common
             if (!IsJPEG(img))
                 throw new FileUploadException("You must upload jpeg image.");
 
+            Helpers.TransformWithAspectRatio(ref img, MAX_WIDTH, MAX_HEIGHT);
             Image thumbnail = img.GetThumbnailImage(THUMB_WIDTH, THUMB_HEIGHT, null, IntPtr.Zero);
 
             System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
@@ -157,6 +158,7 @@ namespace PhotoHistory.Common
             thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
             name += ".jpg";
             img.Save(AlbumPath(album) + name);
+            thumbnail.Dispose();
             return AlbumPath(album, false) + name;
         }
 

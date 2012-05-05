@@ -136,6 +136,7 @@ namespace PhotoHistory.Controllers
                         repo.Create(newPhoto);
                         System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
                         path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
+                        img.Dispose();
                         if(string.IsNullOrEmpty(path))
                             throw new Exception("Returned path is empty");
                         transaction.Commit();
