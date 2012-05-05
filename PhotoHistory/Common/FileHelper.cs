@@ -67,44 +67,28 @@ namespace PhotoHistory.Common
             System.Diagnostics.Debug.WriteLine(string.Format("Sciezka {0}", path));
         }
 
-        public static string SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album, string name)
+        public static Image PrepareImageFromRemoteOrLocal(NewPhotoModel photo)
         {
+            HttpPostedFileBase input = photo.FileInput;
+            string remoteFilename = photo.PhotoURL;
+
             if (input != null)
-                return SavePhoto(input, album, name);
+                return PrepareImage(input);
             else
                 if (string.IsNullOrEmpty(remoteFilename))
                     throw new FileUploadException("Can't upload your photo from provided URL. Please check your URL and try again later.");
                 else
-                    return SavePhoto(remoteFilename, album, name);
+                    return PrepareImage(remoteFilename);
         }
 
-        public static string SavePhoto(HttpPostedFileBase input, AlbumModel album, string name)
+        private static Image PrepareImage(HttpPostedFileBase input)
         {
             if (input.ContentType != "image/jpeg")
                 throw new FileUploadException("You must upload jpeg image.");
-            return SaveFromStream(input.InputStream, album, name);
-
+            return PrepareImage(input.InputStream);
         }
 
-        private static string SaveFromStream(Stream input, AlbumModel album, string name)
-        {
-            CreateAlbumDirectory(album);
-            Image img = Image.FromStream(input, true, true);
-
-            if (!System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
-                throw new FileUploadException("You must upload jpeg image.");
-
-            Image thumbnail = img.GetThumbnailImage(THUMB_WIDTH, THUMB_HEIGHT, null, IntPtr.Zero);
-
-            System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
-
-            thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
-            name += ".jpg";
-            img.Save(AlbumPath(album) + name);
-            return AlbumPath(album, false) + name;
-        }
-
-        public static string SavePhoto(String remoteFilename, AlbumModel album,string name)
+        private static Image PrepareImage(String remoteFilename)
         {
             Stream remoteStream = null;
             Stream localStream = null;
@@ -118,7 +102,7 @@ namespace PhotoHistory.Common
                     if (response != null)
                     {
                         remoteStream = response.GetResponseStream();
-                        return SaveFromStream(remoteStream, album, name);
+                        return PrepareImage(remoteStream);
                     }
                 }
                 else
@@ -139,8 +123,44 @@ namespace PhotoHistory.Common
                 if (remoteStream != null) remoteStream.Close();
                 if (localStream != null) localStream.Close();
             }
-            return "";
+            return null;
         }
+
+        private static Image PrepareImage(Stream input)
+        {
+            try
+            {
+                return Image.FromStream(input, true, true);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static bool IsJPEG(Image img)
+        {
+            return System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat);
+        }
+
+        public static string SavePhoto(Image img, AlbumModel album, string name)
+        {
+            CreateAlbumDirectory(album);
+
+            if (!IsJPEG(img))
+                throw new FileUploadException("You must upload jpeg image.");
+
+            Image thumbnail = img.GetThumbnailImage(THUMB_WIDTH, THUMB_HEIGHT, null, IntPtr.Zero);
+
+            System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
+
+            thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
+            name += ".jpg";
+            img.Save(AlbumPath(album) + name);
+            return AlbumPath(album, false) + name;
+        }
+
+
 
         public static void GetDate(AlbumModel album, out string start, out string end)
         {

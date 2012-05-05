@@ -8,6 +8,7 @@ using PhotoHistory.Models;
 using NHibernate;
 using System.Web.Security;
 using PhotoHistory.Common;
+using System.Drawing;
 
 namespace PhotoHistory.Controllers
 {
@@ -78,7 +79,29 @@ namespace PhotoHistory.Controllers
         {
             UserModel user = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
             ViewBag.Albums = user.Albums;
-            ModelState.AddModelError("FileInput", "lol");
+
+            Image img = null;
+
+            if (photo.Source == "remote")
+                photo.FileInput = null;
+            else
+                photo.PhotoURL = null;
+
+            try
+            {
+                img = FileHelper.PrepareImageFromRemoteOrLocal(photo);
+                if (img == null)
+                    throw new FileUploadException("Can't upload your photo. Please try again later.");
+            }
+            catch (FileUploadException ex)
+            {
+                ModelState.AddModelError("FileInput", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("FileInput", "Your file is invalid.");
+            }
+
             if (ModelState.IsValid)
             {
                 AlbumModel selectedAlbum = null;
@@ -90,11 +113,6 @@ namespace PhotoHistory.Controllers
                         break;
                     }
                 }
-
-                if (photo.Source == "remote")
-                    photo.FileInput = null;
-                else
-                    photo.PhotoURL = null;
 
                 using(ISession session= SessionProvider.SessionFactory.OpenSession())
                 using(ITransaction transaction = session.BeginTransaction())
@@ -117,7 +135,7 @@ namespace PhotoHistory.Controllers
                         };
                         repo.Create(newPhoto);
                         System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
-                        path = FileHelper.SaveRemoteOrLocal(photo.FileInput, photo.PhotoURL, selectedAlbum, photoName);
+                        path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
                         if(string.IsNullOrEmpty(path))
                             throw new Exception("Returned path is empty");
                         transaction.Commit();
@@ -126,13 +144,12 @@ namespace PhotoHistory.Controllers
                     catch (FileUploadException ex)
                     {
                         transaction.Rollback();
-                        //ViewBag.ErrorMessage = ex.Message;
                         ModelState.AddModelError("FileInput", ex.Message);
                     }
                     catch (Exception)
                     {
                         transaction.Rollback();
-                        ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                        ModelState.AddModelError("FileInput","Can't upload your photo. Please try again later.");
                     }
                 }
             }

@@ -72,15 +72,13 @@
                                             <div class="album-thumb">
 							                    <a href="/Album/Show?id=@album.Id">
 								                    @{
-                                            int thumbCount = album.Thumbnails.Count;
-                                            List<string> thumbs = new List<string>();
-                                            if (thumbCount > 0)
-                                            {
-                                                            <img src="@album.Thumbnails.First()" class="photo" alt="Album thumbnail"/>
-                                                            <img src="@album.Thumbnails.ElementAt(thumbCount / 2)" class="photo" alt="Album thumbnail"/>
-                                                            <img src="@album.Thumbnails.Last()" class="photo" alt="Album thumbnail"/>
-                                            }
-                                                    }
+                                                        int thumbCount = album.Thumbnails.Count;
+                                                        List<string> thumbs = new List<string>();
+                                                         <img src="@(thumbCount>0? album.Thumbnails.First() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+                                                         <img src="@(thumbCount>1? album.Thumbnails.ElementAt((int)Math.Ceiling(thumbCount/2.0) ) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+                                                         <img src="@(thumbCount>2? album.Thumbnails.Last() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+
+                                                     } 
 							                        <h3 class="album-title">@album.Name</h3>
 							                    </a>
 							                    <span class="album-label">Timespan: </span><span class="album-value">@album.StartDate - @album.EndDate</span><br/>
