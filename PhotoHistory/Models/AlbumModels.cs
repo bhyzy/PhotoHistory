@@ -11,21 +11,15 @@ namespace PhotoHistory.Models
     public class AlbumModel
     {
         public virtual int? Id { get; set; }
-        //public virtual int UserId { get; set; }
-        public virtual UserModel User { get; set; } // 'belongs to' association
-
+        public virtual UserModel User { get; set; } 
         [Required]
         public virtual CategoryModel Category { get; set; }
-        //public virtual int CategoryId { get; set; }
-
         [Required]
         [StringLength(255, MinimumLength = 3)]
         public virtual string Name { get; set; }
-
         [Required]
         [StringLength(1000)]
         public virtual string Description { get; set; }
-
         public virtual int Rating { get; set; }
         public virtual int Views { get; set; }
         public virtual DateTime? NextNotification { get; set; }
@@ -34,7 +28,6 @@ namespace PhotoHistory.Models
         public virtual bool CommentsAllow { get; set; }
         public virtual bool CommentsAuth { get; set; }
         public virtual int? NotificationPeriod { get; set; }
-
         public virtual ICollection<PhotoModel> Photos { get; set; }
         public virtual ICollection<UserModel> TrustedUsers{ get; set; }
 

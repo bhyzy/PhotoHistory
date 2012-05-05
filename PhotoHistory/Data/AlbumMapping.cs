@@ -34,18 +34,6 @@ namespace PhotoHistory.Data
                 map.NotNullable(true);
             });
 
-            /*
-            Property(x => x.UserId, map =>
-                {
-                    map.Column("user_id");
-                    map.NotNullable(true);
-                });
-            Property(x => x.CategoryId, map =>
-            {
-                map.Column("category_id");
-                map.NotNullable(true);
-            });
-             */
             Property(x => x.Name, map =>
             {
                 map.Column("name");

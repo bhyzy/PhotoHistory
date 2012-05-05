@@ -177,15 +177,6 @@ namespace PhotoHistory.Controllers
                 dbAlbum.TrustedUsers = album.TrustedUsers;
                 albums.Update(dbAlbum);
 
-                // if there are trusted users, add them
-                /*
-                if (userModels != null)
-                {
-                    album.DeleteTrustedUsers();
-                    foreach (var user in userModels)
-                        album.CreateTrustedUser(user);
-                }*/
-
                 return RedirectToAction("Show", new { id = dbAlbum.Id });
             }
             PrepareCategories();
@@ -209,7 +200,6 @@ namespace PhotoHistory.Controllers
             PrepareCategories();
 
             //next notification 
-            //TODO refactor
             if (Request["reminder"] == "remindYes")
             {
                 System.DateTime today = System.DateTime.Now;
@@ -237,13 +227,6 @@ namespace PhotoHistory.Controllers
                 AlbumRepository albums = new AlbumRepository();
                 albums.Create(newAlbum);
 
-                // if there are trusted users, add them
-                /*
-                if (userModels != null)
-                    foreach (var user in userModels)
-                        newAlbum.CreateTrustedUser(user);
-                */
-
                 return RedirectToAction("Show", new { id = newAlbum.Id });
             }
 
@@ -263,7 +246,6 @@ namespace PhotoHistory.Controllers
 
 
         // handles private access settings from form
-        // should be in model 
         private UserModel[] SetPrivateAccess(AlbumModel album)
         {
             UserModel[] userModels = null; //an array of trusted users
