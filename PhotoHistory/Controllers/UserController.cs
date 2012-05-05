@@ -26,7 +26,7 @@ namespace PhotoHistory.Controllers
                  userName = HttpContext.User.Identity.Name;
 
             UserRepository repo = new UserRepository();
-            UserModel user = repo.GetByUsernameWithAlbums(userName);
+            UserModel user = repo.GetByUsernameWithPhotos(userName);
             UserProfileModel profile = null;
 
             if (user == null)
@@ -52,9 +52,11 @@ namespace PhotoHistory.Controllers
             };
 
             string start,end;
+
             foreach (AlbumModel album in user.Albums)
             {  
-                FileHelper.GetDate(album, out start , out end);
+                Helpers.AlbumDateRange(album, out start , out end);
+
                 AlbumProfileModel profileAlbum = new AlbumProfileModel()
                 {
                     Id = album.Id,

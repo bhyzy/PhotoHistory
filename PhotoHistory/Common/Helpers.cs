@@ -7,6 +7,8 @@ using System.Web.Helpers;
 using System.Net.Mail;
 using System.Net;
 using System.Web.Mvc;
+using PhotoHistory.Models;
+using PhotoHistory.Common;
 
 namespace PhotoHistory
 {
@@ -61,6 +63,28 @@ namespace PhotoHistory
             int age = now.Year - birthDate.Year;
             if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day)) age--;
             return age;
+        }
+
+        public static void AlbumDateRange(AlbumModel album, out string start, out  string end)
+        {
+            start = "";
+            end = "";
+
+            if (album.Photos.Count == 0)
+                return;
+
+            DateTime startD = album.Photos.First().Date;
+            DateTime endD = album.Photos.First().Date;
+            foreach (PhotoModel photo in album.Photos)
+            {
+                if (photo.Date < startD)
+                    startD = photo.Date;
+                else if (photo.Date > endD)
+                    endD = photo.Date;
+            }
+
+            start = startD.ToString("dd/MM/yyyy");
+            end = endD.ToString("dd/MM/yyyy");
         }
     }
 }

@@ -93,6 +93,18 @@ namespace PhotoHistory.Data
             }
         }
 
+        public UserModel GetByUsernameWithPhotos(string username)
+        {
+            using (var session = GetSession())
+            {
+                UserModel user = session.CreateQuery("from UserModel where Login = :login").SetParameter("login", username).UniqueResult<UserModel>();
+                user.Albums.ToList();
+                foreach (AlbumModel album in user.Albums)
+                    album.Photos.ToList();
+                return user;
+            }
+        }
+
 		public UserModel GetByEmail(string email)
 		{
 			using ( var session = GetSession() )
