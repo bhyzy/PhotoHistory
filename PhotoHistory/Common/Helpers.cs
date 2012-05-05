@@ -10,6 +10,9 @@ using System.Web.Mvc;
 using PhotoHistory.Models;
 using PhotoHistory.Common;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.IO;
 
 namespace PhotoHistory
 {
@@ -58,23 +61,48 @@ namespace PhotoHistory
 			return new MvcHtmlString( string.Empty );
 		}
 
-        public static void TransformWithAspectRatio(ref Image image, int maxWidth, int maxHeight)
+        public static Image TransformWithAspectRatio(Image image, int maxWidth, int maxHeight,bool thumbnail)
         {
             if (image == null)
-                return;
+                return null;
 
-            var ratioX = (double)maxWidth / image.Width;
-            var ratioY = (double)maxHeight / image.Height;
-            var ratio = Math.Min(ratioX, ratioY);
+            if (image.Width <= maxWidth && image.Height <= maxHeight)
+                return (Image)image.Clone();
 
-            var newWidth = (int)(image.Width * ratio);
-            var newHeight = (int)(image.Height * ratio);
+            int newWidth = 0;
+            int newHeight = 0;
 
+            if (thumbnail)
+            {
+                newWidth = maxWidth;
+                newHeight = maxHeight;
+            }
+            else
+            {
+                var ratioX = (double)maxWidth / image.Width;
+                var ratioY = (double)maxHeight / image.Height;
+                var ratio = Math.Min(ratioX, ratioY);
+
+                newWidth = (int)(image.Width * ratio);
+                newHeight = (int)(image.Height * ratio);
+            }
 
             var newImage = new Bitmap(newWidth, newHeight);
-            Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
-            image.Dispose();
-            image = newImage;
+
+            System.Drawing.Graphics graphic = System.Drawing.Graphics.FromImage(newImage);
+
+            System.Drawing.Imaging.ImageCodecInfo[] Info = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+            System.Drawing.Imaging.EncoderParameters Params = new System.Drawing.Imaging.EncoderParameters(1);
+            Params.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
+
+            graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphic.SmoothingMode = SmoothingMode.HighQuality;
+            graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            graphic.CompositingQuality = CompositingQuality.HighQuality;
+
+            graphic.DrawImage(image, 0, 0, newWidth, newHeight);
+
+            return newImage;
         }
 
         public static int GetAge(DateTime birthDate)
@@ -83,6 +111,21 @@ namespace PhotoHistory
             int age = now.Year - birthDate.Year;
             if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day)) age--;
             return age;
+        }
+
+        public static List<string> AlbumThumbnails(AlbumModel album)
+        {
+            List<PhotoModel> photos = new List<PhotoModel>(album.Photos);
+            photos.Sort(delegate(PhotoModel a, PhotoModel b)
+            {
+                return a.Date.CompareTo(b.Date);
+            }); 
+            List<string> result = new List<string>(photos.Count);
+            foreach (PhotoModel photo in photos)
+            {
+                result.Add(Path.GetDirectoryName(photo.Path).Replace("\\","/") + "/" + Path.GetFileNameWithoutExtension(photo.Path) + "_mini.jpg");
+            }
+            return result;
         }
 
         public static void AlbumDateRange(AlbumModel album, out string start, out  string end)

@@ -146,19 +146,18 @@ namespace PhotoHistory.Common
         public static string SavePhoto(Image img, AlbumModel album, string name)
         {
             CreateAlbumDirectory(album);
-
             if (!IsJPEG(img))
                 throw new FileUploadException("You must upload jpeg image.");
-
-            Helpers.TransformWithAspectRatio(ref img, MAX_WIDTH, MAX_HEIGHT);
-            Image thumbnail = img.GetThumbnailImage(THUMB_WIDTH, THUMB_HEIGHT, null, IntPtr.Zero);
-
-            System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
-
-            thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
-            name += ".jpg";
-            img.Save(AlbumPath(album) + name);
-            thumbnail.Dispose();
+            using (Image transformed = Helpers.TransformWithAspectRatio(img, MAX_WIDTH, MAX_HEIGHT, false))
+            {
+                using(Image thumbnail = Helpers.TransformWithAspectRatio(transformed, THUMB_WIDTH, THUMB_HEIGHT, true))
+                {
+                    System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
+                    thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
+                }
+                name += ".jpg";
+                transformed.Save(AlbumPath(album) + name);
+            }
             return AlbumPath(album, false) + name;
         }
 
@@ -189,7 +188,8 @@ namespace PhotoHistory.Common
             end = files.Last().CreationTime.ToString("dd/MM/yyyy");
         }
 
-        //Zwraca sciezki(wzgledne, nie fizyczne) do miniaturek 
+        //Zwraca sciezki(wzgledne, nie fizyczne) do miniaturek, 
+        //sortuje wzgledem daty utworzenia na dysku! zle, uzywac funkcji z Helpers 
         public static List<string> GetAlbumThumbnail(AlbumModel album)
         {
             DirectoryInfo dir = new DirectoryInfo(AlbumPath(album));

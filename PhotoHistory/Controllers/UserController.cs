@@ -61,14 +61,19 @@ namespace PhotoHistory.Controllers
                 {
                     Id = album.Id,
                     Name = album.Name,
-                    Thumbnails = FileHelper.GetAlbumThumbnail(album),
+                    Thumbnails = Helpers.AlbumThumbnails(album),
                     StartDate = start,
                     EndDate = end,
                     Views = album.Views
                 }; 
                 profile.Albums.Add(profileAlbum);
             }
-
+            profile.Albums.Sort(delegate(AlbumProfileModel a, AlbumProfileModel b)
+            {
+                int aa=a.Id??0;
+                int bb=b.Id??0;
+                return aa.CompareTo(bb);
+            });
             return View(profile);
         }
 

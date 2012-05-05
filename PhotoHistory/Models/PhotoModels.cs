@@ -20,16 +20,17 @@ namespace PhotoHistory.Models
     {
         [Required(ErrorMessage = "You must select an album.")]
         public virtual int ? AlbumId { get; set; }
-        [Required(ErrorMessage = "You must specify date.")]
 
+        [Required(ErrorMessage = "You must specify date.")]
         [ValidPhotoDate(ErrorMessage="Enter valid date. You can't select date from the future.")]
         public virtual String Date { get; set; }
+        
         [StringLength(1000,ErrorMessage = "Description can't be longer than 1000 characters.")]
         public virtual string Description { get; set; }
+        
         [Required(ErrorMessage = "You must select source for your photo.")]
         public virtual string Source { get; set; }
 
-        
         public virtual string PhotoURL { get; set; }
 
         [ValidUpload]

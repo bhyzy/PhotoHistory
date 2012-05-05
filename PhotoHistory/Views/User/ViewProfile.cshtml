@@ -75,7 +75,7 @@
                                                         int thumbCount = album.Thumbnails.Count;
                                                         List<string> thumbs = new List<string>();
                                                          <img src="@(thumbCount>0? album.Thumbnails.First() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
-                                                         <img src="@(thumbCount>1? album.Thumbnails.ElementAt((int)Math.Ceiling(thumbCount/2.0) ) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+                                                         <img src="@(thumbCount>1? album.Thumbnails.ElementAt(thumbCount/2) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
                                                          <img src="@(thumbCount>2? album.Thumbnails.Last() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
 
                                                      } 

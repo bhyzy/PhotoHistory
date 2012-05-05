@@ -80,81 +80,74 @@ namespace PhotoHistory.Controllers
             UserModel user = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
             ViewBag.Albums = user.Albums;
 
-            Image img = null;
-
             if (photo.Source == "remote")
                 photo.FileInput = null;
             else
                 photo.PhotoURL = null;
-
+            ITransaction transaction = null;
             try
             {
-                img = FileHelper.PrepareImageFromRemoteOrLocal(photo);
-                if (img == null)
-                    throw new FileUploadException("Can't upload your photo. Please try again later.");
+                using(Image img = FileHelper.PrepareImageFromRemoteOrLocal(photo))
+                {
+                    if (img == null)
+                        throw new FileUploadException("Can't upload your photo. Please try again later.");
+
+                    if (ModelState.IsValid)
+                    {
+                        AlbumModel selectedAlbum = null;
+                        foreach (AlbumModel album in user.Albums)
+                        {
+                            if (album.Id == photo.AlbumId)
+                            {
+                                selectedAlbum = album;
+                                break;
+                            }
+                        }
+
+                        using(ISession session= SessionProvider.SessionFactory.OpenSession())
+                        using( transaction = session.BeginTransaction())
+                        {
+                                string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+                                string path = FileHelper.getPhotoPath(selectedAlbum, photoName); 
+                    
+                                if (string.IsNullOrEmpty(path))
+                                    throw new Exception("Can't save image");
+
+                                PhotoRepository repo = new PhotoRepository();
+
+                                PhotoModel newPhoto = new PhotoModel()
+                                {
+                                    Path = path,
+                                    Date = DateTime.Parse(photo.Date),
+                                    Description = photo.Description,
+                                    Album = selectedAlbum
+                                };
+
+                                repo.Create(newPhoto);
+                                System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
+                                path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
+
+                                if(string.IsNullOrEmpty(path))
+                                    throw new Exception("Returned path is empty");
+
+                                transaction.Commit();
+                                return RedirectToAction("Show", new { id = photo.AlbumId });
+                            }
+                        }
+                    }
             }
             catch (FileUploadException ex)
             {
+                if(transaction!=null)
+                    transaction.Rollback();
                 ModelState.AddModelError("FileInput", ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ModelState.AddModelError("FileInput", "Your file is invalid.");
+                if (transaction != null)
+                    transaction.Rollback();
+                ModelState.AddModelError("FileInput", "Can't upload your photo. Please try again later.");
             }
-
-            if (ModelState.IsValid)
-            {
-                AlbumModel selectedAlbum = null;
-                foreach (AlbumModel album in user.Albums)
-                {
-                    if (album.Id == photo.AlbumId)
-                    {
-                        selectedAlbum = album;
-                        break;
-                    }
-                }
-
-                using(ISession session= SessionProvider.SessionFactory.OpenSession())
-                using(ITransaction transaction = session.BeginTransaction())
-                {
-                    try
-                    {
-                        string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
-                        string path = FileHelper.getPhotoPath(selectedAlbum, photoName); 
-                    
-                        if (string.IsNullOrEmpty(path))
-                            throw new Exception("Can't save image");
-
-                        PhotoRepository repo = new PhotoRepository();
-                        PhotoModel newPhoto = new PhotoModel()
-                        {
-                            Path = path,
-                            Date = DateTime.Parse(photo.Date),
-                            Description = photo.Description,
-                            Album = selectedAlbum
-                        };
-                        repo.Create(newPhoto);
-                        System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
-                        path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
-                        img.Dispose();
-                        if(string.IsNullOrEmpty(path))
-                            throw new Exception("Returned path is empty");
-                        transaction.Commit();
-                        return RedirectToAction("Show", new { id = photo.AlbumId });
-                    }
-                    catch (FileUploadException ex)
-                    {
-                        transaction.Rollback();
-                        ModelState.AddModelError("FileInput", ex.Message);
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                        ModelState.AddModelError("FileInput","Can't upload your photo. Please try again later.");
-                    }
-                }
-            }
-
             return View(photo);
         }
 
