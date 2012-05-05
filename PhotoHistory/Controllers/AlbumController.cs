@@ -74,18 +74,13 @@ namespace PhotoHistory.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult AddPhoto(NewPhotoModel photo, HttpPostedFileBase fileInput)
+        public ActionResult AddPhoto(NewPhotoModel photo)
         {
             UserModel user = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
             ViewBag.Albums = user.Albums;
+            ModelState.AddModelError("FileInput", "lol");
             if (ModelState.IsValid)
             {
-                if (photo.PhotoURL == null && fileInput == null)
-                {
-                    ViewBag.ErrorMessage = "You must select file for upload.";
-                    return View(photo);
-                }
-
                 AlbumModel selectedAlbum = null;
                 foreach (AlbumModel album in user.Albums)
                 {
@@ -97,41 +92,51 @@ namespace PhotoHistory.Controllers
                 }
 
                 if (photo.Source == "remote")
-                    fileInput = null;
+                    photo.FileInput = null;
                 else
                     photo.PhotoURL = null;
-                try
-                {
-                    string path = FileHelper.SaveRemoteOrLocal(fileInput, photo.PhotoURL, selectedAlbum);
-                    System.Diagnostics.Debug.WriteLine("Photo uploaded successfully " + path);
-                    if (string.IsNullOrEmpty(path))
-                        throw new Exception("Can't save image");
-                    PhotoRepository repo = new PhotoRepository();
-                    PhotoModel newPhoto = new PhotoModel()
-                    {
-                        Path = path,
-                        Date = DateTime.Parse(photo.Date),
-                        Description = photo.Description,
-                        Album = selectedAlbum
-                    };
-                    repo.Create(newPhoto);
-                    System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
-                    return RedirectToAction("Show", new { id = photo.AlbumId });
-                }
-                catch (WrongPictureTypeException ex)
-                {
-                    ViewBag.ErrorMessage = "You must upload jpeg image.";
 
-                }
-                catch (RemoteDownloadException ex)
+                using(ISession session= SessionProvider.SessionFactory.OpenSession())
+                using(ITransaction transaction = session.BeginTransaction())
                 {
-                    ViewBag.ErrorMessage = "Can't upload your photo from provided URL. Please check your URL and try again later.";
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                    try
+                    {
+                        string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+                        string path = FileHelper.getPhotoPath(selectedAlbum, photoName); 
+                    
+                        if (string.IsNullOrEmpty(path))
+                            throw new Exception("Can't save image");
+
+                        PhotoRepository repo = new PhotoRepository();
+                        PhotoModel newPhoto = new PhotoModel()
+                        {
+                            Path = path,
+                            Date = DateTime.Parse(photo.Date),
+                            Description = photo.Description,
+                            Album = selectedAlbum
+                        };
+                        repo.Create(newPhoto);
+                        System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
+                        path = FileHelper.SaveRemoteOrLocal(photo.FileInput, photo.PhotoURL, selectedAlbum, photoName);
+                        if(string.IsNullOrEmpty(path))
+                            throw new Exception("Returned path is empty");
+                        transaction.Commit();
+                        return RedirectToAction("Show", new { id = photo.AlbumId });
+                    }
+                    catch (FileUploadException ex)
+                    {
+                        transaction.Rollback();
+                        //ViewBag.ErrorMessage = ex.Message;
+                        ModelState.AddModelError("FileInput", ex.Message);
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        ViewBag.ErrorMessage = "Can't upload your photo. Please try again later.";
+                    }
                 }
             }
+
             return View(photo);
         }
 
@@ -218,7 +223,7 @@ namespace PhotoHistory.Controllers
                     System.DateTime answer = today.AddDays(Int32.Parse(Request["NotificationPeriod"]));
                     newAlbum.NextNotification = answer;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     ModelState.AddModelError("NotificationPeriod", "Number of days is incorrect");
                 }

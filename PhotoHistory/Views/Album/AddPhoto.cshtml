@@ -1,4 +1,5 @@
 ﻿@model PhotoHistory.Models.NewPhotoModel
+           
 <div id="content-center">
     <form class="form-horizontal" action="/Album/AddPhoto" method="post" enctype="multipart/form-data" id="uploadForm" >
 	    <fieldset>
@@ -16,51 +17,50 @@
                     }
                 </div>
             }
-            @{Html.RenderPartial("_Form", Model);}
+            
+            @{Html.RenderPartial("_PhotoForm", Model);}
+
             <div class="form-actions">
 		        <button type="submit" class="btn btn-success">Add photo</button>
-		        <button class="btn">Cancel</button>
+		        <a href="@Url.Action("Index","Home")">
+                    <button class="btn">Cancel</button>
+                </a>
 		    </div>
 	    </fieldset>
     </form>
 </div>
 
+@section jQuery {
+<script type="text/javascript">
+    $(function () {
+        $("#datepicker").datepicker();
+    });
 
-
-        @section jQuery {
-        <script src="/Scripts/MicrosoftAjax.js" type="text/javascript"></script>
-        <script src="/Scripts/MicrosoftMvcValidation.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            $(function () {
-                $("#datepicker").datepicker();
-            });
-
-            function hide() {
-                {
-                    for (var i = 0; i < document.getElementsByName("Source").length; i++) {
-                        document.u
-                        if (document.getElementById("uploadForm").Source[i].checked) {
-                            var rad_val = document.getElementById("uploadForm").Source[i].value;
-                            var fileVisibility;
-                            var remoteVisibility;
-                            if (rad_val == "remote") {
-                                fileVisibility = "hidden-content";
-                                remoteVisibility = "";
-                            }
-
-                            else {
-                                fileVisibility = "";
-                                remoteVisibility = "hidden-content";
-                            }
-                            document.getElementById("fileDiv").className = fileVisibility;
-                            document.getElementById("remoteDiv").className = remoteVisibility;
-                            return;
-                        }
+    function hide() {
+        {
+            for (var i = 0; i < document.getElementsByName("Source").length; i++) {
+                document.u
+                if (document.getElementById("uploadForm").Source[i].checked) {
+                    var rad_val = document.getElementById("uploadForm").Source[i].value;
+                    var fileVisibility;
+                    var remoteVisibility;
+                    if (rad_val == "remote") {
+                        fileVisibility = "hidden-content";
+                        remoteVisibility = "";
                     }
+
+                    else {
+                        fileVisibility = "";
+                        remoteVisibility = "hidden-content";
+                    }
+                    document.getElementById("fileDiv").className = fileVisibility;
+                    document.getElementById("remoteDiv").className = remoteVisibility;
+                    return;
                 }
             }
-            hide();
-
- </script>
-        
         }
+    }
+    hide();
+    </script>
+        
+}

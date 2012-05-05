@@ -11,7 +11,7 @@ namespace PhotoHistory.Common
 {
     public class FileHelper
     {
-        private static readonly HttpServerUtility Server= HttpContext.Current.Server;
+        private static readonly HttpServerUtility Server = HttpContext.Current.Server;
         public static readonly string UserRelativePath = "/Users";
         public static readonly string UsersDirectory = Server.MapPath("~" + UserRelativePath);
         private static readonly string UserSubdirectoryPrefix = "/user";
@@ -22,21 +22,26 @@ namespace PhotoHistory.Common
         public static readonly ushort THUMB_WIDTH = 133;
         public static readonly ushort THUMB_HEIGHT = 100;
 
-        private static string UserPath(UserModel model,bool physical=true)
+        private static string UserPath(UserModel model, bool physical = true)
         {
-                return physical? UsersDirectory + UserSubdirectoryPrefix + model.Id:UserRelativePath + UserSubdirectoryPrefix +model.Id;
+            return physical ? UsersDirectory + UserSubdirectoryPrefix + model.Id : UserRelativePath + UserSubdirectoryPrefix + model.Id;
         }
 
-        public static string AlbumPath(AlbumModel model,bool physical=true)
+        public static string AlbumPath(AlbumModel model, bool physical = true)
         {
-            return UserPath(model.User, physical) + AlbumSubdirectoryPrefix + model.Id+"/";
+            return UserPath(model.User, physical) + AlbumSubdirectoryPrefix + model.Id + "/";
+        }
+
+        public static string getPhotoPath(AlbumModel album, string photoName)
+        {
+            return AlbumPath(album, false) + photoName;
         }
 
         public static void CreateUserDirectory(UserModel model)
         {
             string path = UserPath(model);
-            
-            if( Directory.Exists(path) )
+
+            if (Directory.Exists(path))
                 System.Diagnostics.Debug.WriteLine(string.Format("Folder uzytkownika {0} istnieje", model.Id));
             else
             {
@@ -62,45 +67,44 @@ namespace PhotoHistory.Common
             System.Diagnostics.Debug.WriteLine(string.Format("Sciezka {0}", path));
         }
 
-        public static string SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album)
+        public static string SaveRemoteOrLocal(HttpPostedFileBase input, String remoteFilename, AlbumModel album, string name)
         {
             if (input != null)
-                return SavePhoto(input, album);
+                return SavePhoto(input, album, name);
             else
                 if (string.IsNullOrEmpty(remoteFilename))
-                    throw new RemoteDownloadException("Wrong remote file name");
+                    throw new FileUploadException("Can't upload your photo from provided URL. Please check your URL and try again later.");
                 else
-                   return SavePhoto(remoteFilename, album);
+                    return SavePhoto(remoteFilename, album, name);
         }
 
-        public static string SavePhoto(HttpPostedFileBase input, AlbumModel album)
+        public static string SavePhoto(HttpPostedFileBase input, AlbumModel album, string name)
         {
             if (input.ContentType != "image/jpeg")
-                throw new WrongPictureTypeException("Image is not an jpeg");
-            return SaveFromStream(input.InputStream, album);
+                throw new FileUploadException("You must upload jpeg image.");
+            return SaveFromStream(input.InputStream, album, name);
 
         }
 
-        private static string SaveFromStream(Stream input, AlbumModel album)
+        private static string SaveFromStream(Stream input, AlbumModel album, string name)
         {
             CreateAlbumDirectory(album);
             Image img = Image.FromStream(input, true, true);
 
             if (!System.Drawing.Imaging.ImageFormat.Jpeg.Equals(img.RawFormat))
-                throw new WrongPictureTypeException("Image is not an jpeg");
-            string name =   "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+                throw new FileUploadException("You must upload jpeg image.");
 
             Image thumbnail = img.GetThumbnailImage(THUMB_WIDTH, THUMB_HEIGHT, null, IntPtr.Zero);
-            
+
             System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
-            
-            thumbnail.Save(AlbumPath(album)+name + "_mini.jpg");
+
+            thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
             name += ".jpg";
-            img.Save(AlbumPath(album)+name);
+            img.Save(AlbumPath(album) + name);
             return AlbumPath(album, false) + name;
         }
 
-        public static string SavePhoto(String remoteFilename,AlbumModel album)
+        public static string SavePhoto(String remoteFilename, AlbumModel album,string name)
         {
             Stream remoteStream = null;
             Stream localStream = null;
@@ -114,21 +118,21 @@ namespace PhotoHistory.Common
                     if (response != null)
                     {
                         remoteStream = response.GetResponseStream();
-                        return SaveFromStream(remoteStream, album);
+                        return SaveFromStream(remoteStream, album, name);
                     }
                 }
                 else
-                    throw new RemoteDownloadException("Can't download file from specified URL.");
+                    throw new FileUploadException("Can't upload your photo from provided URL. Please check your URL and try again later.");
             }
-            catch (WrongPictureTypeException ex)
+            catch (FileUploadException ex)
             {
                 throw ex;
             }
             catch (Exception ex)
             {
-                throw new RemoteDownloadException("Can't download file from specified URL.", ex);
+                throw new FileUploadException("Can't download file from specified URL.", ex);
             }
-                 
+
             finally
             {
                 if (response != null) response.Close();
@@ -142,7 +146,7 @@ namespace PhotoHistory.Common
         {
             DirectoryInfo dir = new DirectoryInfo(AlbumPath(album));
 
-            if(!dir.Exists)
+            if (!dir.Exists)
             {
                 CreateAlbumDirectory(album);
             }
@@ -153,7 +157,7 @@ namespace PhotoHistory.Common
                 return a.CreationTime.CompareTo(b.CreationTime);
             });
 
-            if (files.Length == 0) 
+            if (files.Length == 0)
             {
                 start = "";
                 end = "";
@@ -176,32 +180,16 @@ namespace PhotoHistory.Common
             List<string> list = new List<string>();
             foreach (FileSystemInfo file in files)
             {
-                list.Add(AlbumPath(album,false) + file.Name);
+                list.Add(AlbumPath(album, false) + file.Name);
             }
             return list;
         }
     }
-
-
-    public class FileUploadException : Exception
-    {
-        public FileUploadException() : base() { }
-        public FileUploadException(string message) : base(message) { }
-        public FileUploadException(string message, Exception innerException) : base(message, innerException) { }
-    }
-
-    public class WrongPictureTypeException : FileUploadException
-    {
-        public WrongPictureTypeException() : base() { }
-        public WrongPictureTypeException(string message) : base(message) { }
-        public WrongPictureTypeException(string message, Exception innerException) : base(message, innerException) { }
-
-    }
-
-    public class RemoteDownloadException : FileUploadException
-    {
-        public RemoteDownloadException() : base() { }
-        public RemoteDownloadException(string message) : base(message) { }
-        public RemoteDownloadException(string message, Exception innerException) : base(message, innerException) { }
-    }
 }
+
+ public class FileUploadException : Exception
+ {
+     public FileUploadException() : base() { }
+     public FileUploadException(string message) : base(message) { }
+     public FileUploadException(string message, Exception innerException) : base(message, innerException) { }
+ }
