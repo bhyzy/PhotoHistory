@@ -1,5 +1,7 @@
 ﻿@model PhotoHistory.Models.AlbumModel
 
+    <script src="@(Url.Content( "~/Scripts/galleria-1.2.7.js" ))"></script>
+
 <div id="content">
     <div id="album-header">
         <h1 class="page-title">
@@ -16,9 +18,16 @@
         <h2 class="album-author">
             by <a href="#">@Model.User.Login</a></h2>
     </div>
-    <div id="album-viewer">
-        <img src="@(Url.Content("~/Content/tmp/image-browser.png"))" />
+    
+    <div id="album-viewer" style="height:500px;">
+    
+        @foreach (var photo in Model.Photos)
+        {
+            <img src="@photo.Path" data-description="Taken on @photo.Date.ToLongDateString()" data-title="Photo number @photo.Id" />
+        }
+
     </div>
+
     <div id="album-footer">
         <div id="album-desc">
             @Model.Description
@@ -57,4 +66,14 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    Galleria.loadTheme('/Scripts/galleria/themes/classic/galleria.classic.min.js');
+    Galleria.run('#album-viewer');
+    Galleria.configure({
+        idleMode: false,
+        showInfo: true
+    });
+</script>
 

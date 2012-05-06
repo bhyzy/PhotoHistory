@@ -53,7 +53,7 @@ namespace PhotoHistory.Controllers
         public ActionResult Show(int id)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetByIdWithUser(id);
+            AlbumModel album = albums.GetByIdForManage(id);
             return View(album);
         }
 
