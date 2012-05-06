@@ -123,11 +123,16 @@ namespace PhotoHistory
             List<string> result = new List<string>(photos.Count);
             foreach (PhotoModel photo in photos)
             {
-                result.Add(Path.GetDirectoryName(photo.Path).Replace("\\","/") + "/" + Path.GetFileNameWithoutExtension(photo.Path) + "_mini.jpg");
+                result.Add(PhotoThumbnail(photo));
             }
             return result;
         }
 
+        public static string PhotoThumbnail(PhotoModel photo)
+        {
+            return Path.GetDirectoryName(photo.Path).Replace("\\", "/") + "/" + Path.GetFileNameWithoutExtension(photo.Path) + "_mini.jpg";
+        }
+        
         public static void AlbumDateRange(AlbumModel album, out string start, out  string end)
         {
             start = "";

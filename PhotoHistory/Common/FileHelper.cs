@@ -32,7 +32,7 @@ namespace PhotoHistory.Common
             return UserPath(model.User, physical) + AlbumSubdirectoryPrefix + model.Id + "/";
         }
 
-        public static string getPhotoPath(AlbumModel album, string photoName)
+        public static string getPhotoPathWithoutExtension(AlbumModel album, string photoName)
         {
             return AlbumPath(album, false) + photoName;
         }

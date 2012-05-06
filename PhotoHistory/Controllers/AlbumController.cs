@@ -108,7 +108,7 @@ namespace PhotoHistory.Controllers
                         using( transaction = session.BeginTransaction())
                         {
                                 string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
-                                string path = FileHelper.getPhotoPath(selectedAlbum, photoName); 
+                                string path = FileHelper.getPhotoPathWithoutExtension(selectedAlbum, photoName) +".jpg"; 
                     
                                 if (string.IsNullOrEmpty(path))
                                     throw new Exception("Can't save image");

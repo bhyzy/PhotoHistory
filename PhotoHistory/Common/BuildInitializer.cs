@@ -45,7 +45,8 @@ namespace PhotoHistory.Common
                 Views = 1234
             };
 
-            LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
+            //Zdjecia byly tworzone bez linku, usuniecie kodu
+            /*LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
             PhotoModel photo = new PhotoModel()
             {
                 Album = album,
@@ -70,7 +71,7 @@ namespace PhotoHistory.Common
                 Path = ""
             };
             list.AddLast(photo);
-            
+            */
 
             albums.Create(album);
 
@@ -87,7 +88,7 @@ namespace PhotoHistory.Common
                 Views = 12334
             };
             albums.Create(album);
-
+            /*
             photo = new PhotoModel()
             {
                 Album = album,
@@ -104,7 +105,7 @@ namespace PhotoHistory.Common
                 Path = ""
             };
             list.AddLast(photo);
-
+            */
             album = new AlbumModel()
             {
                 Category = category,
@@ -118,7 +119,7 @@ namespace PhotoHistory.Common
                 Views = 1
             };
             albums.Create(album);
-
+            /*
             photo = new PhotoModel()
             {
                 Album = album,
@@ -127,7 +128,7 @@ namespace PhotoHistory.Common
                 Path = ""
             };
             list.AddLast(photo);
-
+            */
 
             album = new AlbumModel()
             {
@@ -143,14 +144,14 @@ namespace PhotoHistory.Common
                 Views = 4444
             };
             albums.Create(album);
-
+            /*
             using(var session= SessionProvider.SessionFactory.OpenSession())
             using (var trans = session.BeginTransaction())
             {
                 foreach (PhotoModel p in list)
                     session.Save(p);
                 trans.Commit();
-            }
+            }*/
         }
 
         private static void CreateCategories()
