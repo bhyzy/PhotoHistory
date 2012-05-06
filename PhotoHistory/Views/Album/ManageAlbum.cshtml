@@ -73,7 +73,8 @@
                         }
                         else if (Model.TrustedUsers.Count != 0)
                         {
-                            <text> Private - accessible by @string.Join(", ",Model.TrustedUsers.Select(u => u.Login)) </text>
+                            <text> Private - accessible by @string.Join(", ", Model.TrustedUsers.Select(u => u.Login))
+                            </text>
                         }
                     </div>
                 </div>
@@ -95,30 +96,29 @@
         </div>
         <form action="#" method="post">
         <div class="actions right">
-            <button class="btn btn-success">
-                <i class="icon-camera icon-white"></i>Add photo</button>
+            <a href="@Url.Action("AddPhoto")">
+                <button class="btn btn-success">
+                    <i class="icon-camera icon-white"></i>Add photo</button>
+            </a>
             <button class="btn btn-danger">
                 <i class="icon-remove icon-white"></i>Delete selected photos</button>
         </div>
         <div style="clear: both;">
             &nbsp;</div>
         <div id="photos-list">
-
             @foreach (var photo in Model.Photos)
             {
-            <div class="photo-entry">
-                <div class="photo-handle">
-                    <input type="checkbox" id="1"></div>
-                <div class="photo-thumb">
-                    <img src="@photo.Path" class="photo" /></div>
-                <div class="photo-date">
-                    @photo.Date</div>
-                <div class="photo-desc">
-                    @photo.Description</div>
-            </div>
+                <div class="photo-entry">
+                    <div class="photo-handle">
+                        <input type="checkbox" id="1"></div>
+                    <div class="photo-thumb">
+                        <img src="@photo.Path" class="photo" /></div>
+                    <div class="photo-date">
+                        @photo.Date.ToLongDateString()</div>
+                    <div class="photo-desc">
+                        @photo.Description</div>
+                </div>
             }
-
-
         </div>
         </form>
     </div>
