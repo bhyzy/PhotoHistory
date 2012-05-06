@@ -1,7 +1,5 @@
 ﻿@model PhotoHistory.Models.AlbumModel
-
-    <script src="@(Url.Content( "~/Scripts/galleria-1.2.7.js" ))"></script>
-
+<script src="@(Url.Content("~/Scripts/galleria-1.2.7.js"))"></script>
 <div id="content">
     <div id="album-header">
         <h1 class="page-title">
@@ -11,23 +9,29 @@
                 <i class="icon-ok icon-white"></i>Follow</button>
             <!-- jesli jest wlascicielem: manage this album -->
             <a href="@Url.Action("ManageAlbum", new { id = Model.Id })">
-            <button class="btn btn-primary">
-                <i class="icon-edit icon-white"></i>Manage this album</button>
-                </a>
+                <button class="btn btn-primary">
+                    <i class="icon-edit icon-white"></i>Manage this album</button>
+            </a>
         </h1>
         <h2 class="album-author">
-            by <a href="#">@Model.User.Login</a></h2>
+            by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
-    
-    <div id="album-viewer" style="height:500px;">
-    
+    <div id="album-viewer" style="height: 500px;">
         @foreach (var photo in Model.Photos)
         {
             <img src="@photo.Path" data-description="Taken on @photo.Date.ToLongDateString()" data-title="Photo number @photo.Id" />
         }
-
     </div>
-
+    <div style="background-color:Black; color:White;">
+        <span >Controls: </span>
+        <span id="jump_start">
+            Jump to start</span>
+        <span id="jump_end">
+            Jump to end</span>
+            <!-- 
+            (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
+            -->
+    </div>
     <div id="album-footer">
         <div id="album-desc">
             @Model.Description
@@ -66,8 +70,6 @@
         </div>
     </div>
 </div>
-
-
 <script>
     Galleria.loadTheme('/Scripts/galleria/themes/classic/galleria.classic.min.js');
     Galleria.run('#album-viewer');
@@ -75,5 +77,13 @@
         idleMode: false,
         showInfo: true
     });
-</script>
 
+    $('#jump_start').click(function () {
+        var gallery = Galleria.get(0); // gallery is now the first galleria instance
+        gallery.show(0); // will start slideshow when the element #play is clicked
+    });
+    $('#jump_end').click(function () {
+        var gallery = Galleria.get(0); // gallery is now the first galleria instance
+        gallery.show(gallery.getDataLength()); // will start slideshow when the element #play is clicked
+    });
+</script>

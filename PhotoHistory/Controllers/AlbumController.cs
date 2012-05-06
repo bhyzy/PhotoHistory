@@ -54,6 +54,16 @@ namespace PhotoHistory.Controllers
         {
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForManage(id);
+
+            UserRepository users = new UserRepository();
+            var user = users.GetByUsername(HttpContext.User.Identity.Name);
+            if (user == null || user.Id != album.User.Id) //if not logged in or not an author
+            {
+                //increment views
+                album.Views += 1;
+                albums.Update(album);
+            }
+
             return View(album);
         }
 
@@ -87,7 +97,7 @@ namespace PhotoHistory.Controllers
             ITransaction transaction = null;
             try
             {
-                using(Image img = FileHelper.PrepareImageFromRemoteOrLocal(photo))
+                using (Image img = FileHelper.PrepareImageFromRemoteOrLocal(photo))
                 {
                     if (img == null)
                         throw new FileUploadException("Can't upload your photo. Please try again later.");
@@ -104,41 +114,41 @@ namespace PhotoHistory.Controllers
                             }
                         }
 
-                        using(ISession session= SessionProvider.SessionFactory.OpenSession())
-                        using( transaction = session.BeginTransaction())
+                        using (ISession session = SessionProvider.SessionFactory.OpenSession())
+                        using (transaction = session.BeginTransaction())
                         {
-                                string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
-                                string path = FileHelper.getPhotoPathWithoutExtension(selectedAlbum, photoName) +".jpg"; 
-                    
-                                if (string.IsNullOrEmpty(path))
-                                    throw new Exception("Can't save image");
+                            string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+                            string path = FileHelper.getPhotoPathWithoutExtension(selectedAlbum, photoName) + ".jpg";
 
-                                PhotoRepository repo = new PhotoRepository();
+                            if (string.IsNullOrEmpty(path))
+                                throw new Exception("Can't save image");
 
-                                PhotoModel newPhoto = new PhotoModel()
-                                {
-                                    Path = path,
-                                    Date = DateTime.Parse(photo.Date),
-                                    Description = photo.Description,
-                                    Album = selectedAlbum
-                                };
+                            PhotoRepository repo = new PhotoRepository();
 
-                                repo.Create(newPhoto);
-                                System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
-                                path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
+                            PhotoModel newPhoto = new PhotoModel()
+                            {
+                                Path = path,
+                                Date = DateTime.Parse(photo.Date),
+                                Description = photo.Description,
+                                Album = selectedAlbum
+                            };
 
-                                if(string.IsNullOrEmpty(path))
-                                    throw new Exception("Returned path is empty");
+                            repo.Create(newPhoto);
+                            System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
+                            path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
 
-                                transaction.Commit();
-                                return RedirectToAction("Show", new { id = photo.AlbumId });
-                            }
+                            if (string.IsNullOrEmpty(path))
+                                throw new Exception("Returned path is empty");
+
+                            transaction.Commit();
+                            return RedirectToAction("Show", new { id = photo.AlbumId });
                         }
                     }
+                }
             }
             catch (FileUploadException ex)
             {
-                if(transaction!=null)
+                if (transaction != null)
                     transaction.Rollback();
                 ModelState.AddModelError("FileInput", ex.Message);
             }
@@ -165,7 +175,7 @@ namespace PhotoHistory.Controllers
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForEdit(id);
             PrepareCategories();
-            ViewData["usersList"] = string.Join(", ",album.TrustedUsers.Select(u => u.Login));
+            ViewData["usersList"] = string.Join(", ", album.TrustedUsers.Select(u => u.Login));
             return View(album);
         }
 
@@ -175,7 +185,7 @@ namespace PhotoHistory.Controllers
         public ActionResult Edit(AlbumModel album)
         {
             //TODO access control
-                      
+
             if (!album.Public)
                 SetPrivateAccess(album);
 
