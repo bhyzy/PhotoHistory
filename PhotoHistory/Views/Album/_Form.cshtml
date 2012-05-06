@@ -85,7 +85,7 @@
                     <br />
                     (e.g. "Login1, Login2, Login3")
                 </label>
-                @Html.TextBox("usersList", Request["usersList"])
+                @Html.TextBox("usersList", Request["usersList"] != null ? Request["usersList"] : ViewData["usersList"])
                 @Html.MyValidationMessage("Users")
             </div>
         </div>

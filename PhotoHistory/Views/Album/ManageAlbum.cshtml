@@ -1,4 +1,5 @@
-﻿<div id="content">
+﻿@model PhotoHistory.Models.AlbumModel
+<div id="content">
     <h1 class="page-title">
         Manage album</h1>
     <div id="manage-settings">
@@ -22,7 +23,7 @@
                     Name</label>
                 <div class="controls">
                     <div class="well well-small">
-                        Noah K. Everyday</div>
+                        @Model.Name</div>
                 </div>
             </div>
             <div class="control-group">
@@ -30,8 +31,7 @@
                     Description</label>
                 <div class="controls">
                     <div class="well well-small">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae odio non
-                        diam posuere fermentum. Sed fringilla varius sapien quis vehicula.</div>
+                        @Model.Description</div>
                 </div>
             </div>
             <div class="control-group">
@@ -39,7 +39,7 @@
                     Category</label>
                 <div class="controls">
                     <div class="well well-small">
-                        People</div>
+                        @Model.Category.Name</div>
                 </div>
             </div>
             <div class="control-group">
@@ -47,7 +47,15 @@
                     Photo reminder</label>
                 <div class="controls">
                     <div class="well well-small">
-                        Enabled - remind every 2 weeks</div>
+                        @if (Model.NotificationPeriod != null)
+                        {                    
+                            <text> Enabled - remind every @Model.NotificationPeriod days </text>
+                        }
+                        else
+                        {
+                            <text> Disabled </text>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="control-group">
@@ -55,7 +63,19 @@
                     Access rights</label>
                 <div class="controls">
                     <div class="well well-small">
-                        Public - everyone can view this album</div>
+                        @if (Model.Public)
+                        {
+                            <text> Public - everyone can view this album </text>
+                        }
+                        else if (Model.Password != null)
+                        {
+                            <text> Private - accessible by password</text>
+                        }
+                        else if (Model.TrustedUsers.Count != 0)
+                        {
+                            <text> Private - accessible by @string.Join(", ",Model.TrustedUsers.Select(u => u.Login)) </text>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="control-group">
@@ -83,46 +103,22 @@
         <div style="clear: both;">
             &nbsp;</div>
         <div id="photos-list">
+
+            @foreach (var photo in Model.Photos)
+            {
             <div class="photo-entry">
                 <div class="photo-handle">
                     <input type="checkbox" id="1"></div>
                 <div class="photo-thumb">
-                    <img src="tmp/photo1.jpg" class="photo" /></div>
+                    <img src="@photo.Path" class="photo" /></div>
                 <div class="photo-date">
-                    2012-04-13</div>
+                    @photo.Date</div>
                 <div class="photo-desc">
-                    Ala ma kota filemona...</div>
+                    @photo.Description</div>
             </div>
-            <div class="photo-entry">
-                <div class="photo-handle">
-                    <input type="checkbox" id="2"></div>
-                <div class="photo-thumb">
-                    <img src="tmp/photo1.jpg" class="photo" /></div>
-                <div class="photo-date">
-                    2012-04-13</div>
-                <div class="photo-desc">
-                    Ala ma kota filemona...</div>
-            </div>
-            <div class="photo-entry">
-                <div class="photo-handle">
-                    <input type="checkbox" id="3"></div>
-                <div class="photo-thumb">
-                    <img src="tmp/photo1.jpg" class="photo" /></div>
-                <div class="photo-date">
-                    2012-04-13</div>
-                <div class="photo-desc">
-                    Ala ma kota filemona...</div>
-            </div>
-            <div class="photo-entry">
-                <div class="photo-handle">
-                    <input type="checkbox" id="4"></div>
-                <div class="photo-thumb">
-                    <img src="tmp/photo1.jpg" class="photo" /></div>
-                <div class="photo-date">
-                    2012-04-13</div>
-                <div class="photo-desc">
-                    Ala ma kota filemona...</div>
-            </div>
+            }
+
+
         </div>
         </form>
     </div>
