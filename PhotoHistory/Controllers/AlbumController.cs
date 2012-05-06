@@ -154,7 +154,7 @@ namespace PhotoHistory.Controllers
         public ActionResult ManageAlbum(int id)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetById(id);
+            AlbumModel album = albums.GetByIdForManage(id);
             return View(album);
         }
 
@@ -165,6 +165,7 @@ namespace PhotoHistory.Controllers
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForEdit(id);
             PrepareCategories();
+            ViewData["usersList"] = string.Join(", ",album.TrustedUsers.Select(u => u.Login));
             return View(album);
         }
 
