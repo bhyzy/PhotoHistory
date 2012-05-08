@@ -109,6 +109,14 @@ namespace PhotoHistory.Data
 
         public override void Delete(AlbumModel obj)
         {
+            using (var session = GetSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(obj);
+                    transaction.Commit();
+                }
+            }
         }
 
 

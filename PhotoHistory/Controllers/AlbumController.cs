@@ -53,7 +53,7 @@ namespace PhotoHistory.Controllers
         public ActionResult Show(int id)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetByIdForManage(id);
+            AlbumModel album = albums.GetByIdForShow(id);
 
             UserRepository users = new UserRepository();
             var user = users.GetByUsername(HttpContext.User.Identity.Name);
@@ -170,6 +170,18 @@ namespace PhotoHistory.Controllers
 
 
         [Authorize]
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            //TODO access control
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            albums.Delete(album);
+            return RedirectToAction("Manage");
+        }
+
+
+        [Authorize]
         public ActionResult Edit(int id)
         {
             AlbumRepository albums = new AlbumRepository();
@@ -220,6 +232,8 @@ namespace PhotoHistory.Controllers
         }
 
 
+
+
         [Authorize]
         [HttpPost]
         public ActionResult Create(AlbumModel newAlbum)
@@ -260,6 +274,8 @@ namespace PhotoHistory.Controllers
             return View(newAlbum);
         }
 
+
+        // ------------ PRIVATE METHODS ------------------
 
         // loads categories as a list
         private void PrepareCategories()
