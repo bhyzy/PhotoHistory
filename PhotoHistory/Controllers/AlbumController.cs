@@ -191,6 +191,24 @@ namespace PhotoHistory.Controllers
             return RedirectToAction("Manage");
         }
 
+        [Authorize]
+        [HttpPost]
+        public ActionResult DeletePhotos(int albumId, int[] selectedObjects)
+        {
+            //TODO access control
+            PhotoRepository photos = new PhotoRepository();
+            if (selectedObjects != null)
+            {
+                foreach (int id in selectedObjects)
+                {
+                    PhotoModel photo = photos.GetById(id);
+                    if (photo.Album.Id == albumId)
+                        photos.Delete(photo);
+                }
+            }
+            return RedirectToAction("ManageAlbum", new { id = albumId });
+        }
+
 
         [Authorize]
         public ActionResult Edit(int id)
@@ -219,7 +237,7 @@ namespace PhotoHistory.Controllers
                 dbAlbum.Name = album.Name;
                 dbAlbum.Description = album.Description;
                 dbAlbum.Category = album.Category;
-                dbAlbum.NotificationPeriod = album.NotificationPeriod; //NextNotification?
+                dbAlbum.NotificationPeriod = album.NotificationPeriod; 
                 dbAlbum.Public = album.Public;
                 dbAlbum.Password = album.Password;
                 dbAlbum.CommentsAllow = album.CommentsAllow;
