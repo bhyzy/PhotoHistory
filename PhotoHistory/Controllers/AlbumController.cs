@@ -95,6 +95,7 @@ namespace PhotoHistory.Controllers
             else
                 photo.PhotoURL = null;
             ITransaction transaction = null;
+            ISession session = null;
             try
             {
                 using (Image img = FileHelper.PrepareImageFromRemoteOrLocal(photo))
@@ -114,48 +115,58 @@ namespace PhotoHistory.Controllers
                             }
                         }
 
-                        using (ISession session = SessionProvider.SessionFactory.OpenSession())
-                        using (transaction = session.BeginTransaction())
-                        {
-                            string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
-                            string path = FileHelper.getPhotoPathWithoutExtension(selectedAlbum, photoName) + ".jpg";
+                    session = SessionProvider.SessionFactory.OpenSession();
+                    transaction = session.BeginTransaction();
+                    
+                    string photoName = "photo_" + DateTime.Now.ToString("yyyyMMddHHmmssff");
+                    string path = FileHelper.getPhotoPathWithoutExtension(selectedAlbum, photoName) + ".jpg";
 
-                            if (string.IsNullOrEmpty(path))
-                                throw new Exception("Can't save image");
+                    if (string.IsNullOrEmpty(path))
+                        throw new Exception("Can't save image");
 
-                            PhotoRepository repo = new PhotoRepository();
+                    PhotoRepository repo = new PhotoRepository();
 
-                            PhotoModel newPhoto = new PhotoModel()
-                            {
-                                Path = path,
-                                Date = DateTime.Parse(photo.Date),
-                                Description = photo.Description,
-                                Album = selectedAlbum
-                            };
+                    PhotoModel newPhoto = new PhotoModel()
+                    {
+                        Path = path,
+                        Date = DateTime.Parse(photo.Date),
+                        Description = photo.Description,
+                        Album = selectedAlbum
+                    };
 
-                            repo.Create(newPhoto);
-                            System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
-                            path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
+                    repo.Create(newPhoto);
+                    System.Diagnostics.Debug.WriteLine("Created db entry " + newPhoto.Id);
+                    path = FileHelper.SavePhoto(img, selectedAlbum, photoName);
 
-                            if (string.IsNullOrEmpty(path))
-                                throw new Exception("Returned path is empty");
+                    if (string.IsNullOrEmpty(path))
+                        throw new Exception("Returned path is empty");
 
-                            transaction.Commit();
-                            return RedirectToAction("Show", new { id = photo.AlbumId });
-                        }
+                    transaction.Commit();
+                    return RedirectToAction("Show", new { id = photo.AlbumId });
+                        
                     }
                 }
             }
             catch (FileUploadException ex)
             {
                 if (transaction != null)
+                {
                     transaction.Rollback();
+                    transaction.Dispose();
+                }
+                if (session != null)
+                    session.Dispose();
                 ModelState.AddModelError("FileInput", ex.Message);
             }
             catch (Exception)
             {
                 if (transaction != null)
+                {
                     transaction.Rollback();
+                    transaction.Dispose();
+                }
+                if (session != null)
+                    session.Dispose();
                 ModelState.AddModelError("FileInput", "Can't upload your photo. Please try again later.");
             }
             return View(photo);
