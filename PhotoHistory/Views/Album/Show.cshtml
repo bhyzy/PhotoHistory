@@ -140,15 +140,14 @@
             $('ul#roundabout').roundabout({
                 enableDrag: true
             });
-
-
         });
 
-
+        // obsluga zmiany obrazka - wazne
         $('#roundabout li').focus(function () {
             $('#photo-desc-replace').html('<h3>' + this.getAttribute('title') + '</h3>' + this.getAttribute('description'))
         });
 
+        // funkcja obslugujaca przyciski nawigacyjne
         function move(days) {
             var closest_photo = 0
             var active_photo = $('ul#roundabout').roundabout('getChildInFocus')
