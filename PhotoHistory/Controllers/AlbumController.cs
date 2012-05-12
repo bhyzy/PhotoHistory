@@ -355,30 +355,5 @@ namespace PhotoHistory.Controllers
 			return userModels;
 		}
 
-		//private bool PhotoReadGPSLocation(string photoPath, ref double locLatitude, ref double locLongitude)
-		//{
-		//   try
-		//   {
-		//      ExifFile file = ExifFile.Read( photoPath );
-
-		//      if ( file.Properties.ContainsKey( ExifTag.GPSLatitude ) && file.Properties.ContainsKey( ExifTag.GPSLongitude ) )
-		//      {
-		//         GPSLatitudeLongitude gpsLatitude = (GPSLatitudeLongitude)file.Properties[ExifTag.GPSLatitude];
-		//         GPSLatitudeLongitude gpsLongitude = (GPSLatitudeLongitude)file.Properties[ExifTag.GPSLongitude];
-
-		//         locLatitude = gpsLatitude.ToFloat();
-		//         locLongitude = gpsLongitude.ToFloat();
-
-		//         return true;
-		//      }
-		//   }
-		//   catch ( System.Exception ex )
-		//   {
-		//      Debug.WriteLine( ex.ToString() );
-		//   }
-
-		//   return false;
-		//}
-
 	}
 }

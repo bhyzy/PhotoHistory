@@ -1,3 +1,7 @@
+html {
+	height: 100%;
+	width: 100%;
+}
 body {
     background: url("../img/img01.jpg") repeat scroll left top #F7F7F7;
     color: #5A554E;
@@ -5,6 +9,8 @@ body {
     font-size: 14px;
     margin: 0;
     padding: 0;
+    height: 100%;
+    width: 100%;
 }
 h1, h2, h3 {
     color: #32639A;
@@ -638,4 +644,16 @@ table.controls
 #jump_start:hover, #jump_end:hover
 {
     cursor:pointer;
+}
+
+#map-canvas {
+	width: 100%;
+	height: 400px;
+}
+#map-canvas-placeholder {
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	background: hsl(200,10%,97%);
+	line-height: 400px;
 }

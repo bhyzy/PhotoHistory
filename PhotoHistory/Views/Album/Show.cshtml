@@ -112,13 +112,12 @@
         </div>
     </div>
     <div id="content-right">
-        <div id="map-mockup" style="width:100%; height:500px; background-color:Maroon;">
-        </div>
+        <div id="map-canvas"></div>
     </div>
 </div>
 
 @section JS {
-    <script>
+     <script type="text/javascript">
         $(document).ready(function () {
             $('ul#roundabout').roundabout({
                 enableDrag: true
@@ -152,19 +151,39 @@
         }
     </script>
 
-    function initialize() {
-      var myOptions = {
-        zoom: 8,
-        center: new google.maps.LatLng(-34.397, 150.644),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    }
+    <script type="text/javascript">
+        function initializeMap() {
+            console.log('initializeMap()');
 
-    function loadScript() {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = "http://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&sensor=TRUE_OR_FALSE&callback=initialize";
-      document.body.appendChild(script);
-    }
+            @if (Model.Photos.Count() > 0)
+            {
+                <text>
+                var myOptions = {
+                    zoom: 7,
+                    center: new google.maps.LatLng(-34.397, 150.644),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+                </text>
+            }
+            else
+            {
+               <text>
+               var mapCanvas = document.getElementById("map-canvas");
+               //var msg = document.createElement(
+               mapCanvas.innerHTML = '<div id="map-canvas-placeholder">No geographical data available</div>';
+               </text> 
+            }
+        }
+
+        function loadScript() {
+            console.log('loadScript()');
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyA1KTeO9Ixsb6_ysEwin8bf4r5G9Rm3GYc&sensor=false&callback=initializeMap";
+            document.body.appendChild(script);
+        }
+
+        window.onload = loadScript;
+    </script>
 }
