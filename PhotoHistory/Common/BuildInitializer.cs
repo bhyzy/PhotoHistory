@@ -14,10 +14,10 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-           // ExecuteSQLFile("PhotoHistory.sql.create_tables.sql");
-           // CreateUsers();
-           // CreateCategories();
-           // CreateAlbums();
+			  //ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
+			  //CreateUsers();
+			  //CreateCategories();
+			  //CreateAlbums();
         }
 
         private static void CreateAlbums()
@@ -46,13 +46,13 @@ namespace PhotoHistory.Common
             };
 
             //Zdjecia byly tworzone bez linku, usuniecie kodu
-            /*LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
+            LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
             PhotoModel photo = new PhotoModel()
             {
                 Album = album,
                 Date = DateTime.Today,
                 Description = "Słit focia nr1 album 1",
-                Path = "" 
+                Path = "/Static/photos/photo_2012051022444645.jpg" 
             };
             list.AddLast(photo);
             photo = new PhotoModel()
@@ -60,7 +60,7 @@ namespace PhotoHistory.Common
                 Album = album,
                 Date = new DateTime(2012,5,1,22,33,5),
                 Description = "Słit focia nr2 album 1",
-                Path = ""
+                Path = "/Static/photos/photo_2012051022450267.jpg"
             };
             list.AddLast(photo);
             photo = new PhotoModel()
@@ -68,10 +68,10 @@ namespace PhotoHistory.Common
                 Album = album,
                 Date = new DateTime(2012, 4,30 , 1, 8, 59),
                 Description = "Słit focia nr3 album 1",
-                Path = ""
+                Path = "/Static/photos/photo_2012051022452109.jpg"
             };
             list.AddLast(photo);
-            */
+            
 
             albums.Create(album);
 
@@ -144,14 +144,14 @@ namespace PhotoHistory.Common
                 Views = 4444
             };
             albums.Create(album);
-            /*
+            
             using(var session= SessionProvider.SessionFactory.OpenSession())
             using (var trans = session.BeginTransaction())
             {
                 foreach (PhotoModel p in list)
                     session.Save(p);
                 trans.Commit();
-            }*/
+            }
         }
 
         private static void CreateCategories()

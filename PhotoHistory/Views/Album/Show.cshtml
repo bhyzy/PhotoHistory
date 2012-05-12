@@ -1,4 +1,11 @@
 ﻿@model PhotoHistory.Models.AlbumModel
+
+@{    
+    // no nie moglem tego inaczej zrobic
+    List<PhotoHistory.Models.PhotoModel> photosSorted = new List<PhotoHistory.Models.PhotoModel>(Model.Photos);
+    photosSorted.Sort((x, y) => x.Date.CompareTo(y.Date));
+    }           
+
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.roundabout.js"))"></script>
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drag-2.0.min.js"))"></script>
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drop-2.0.min.js"))"></script>
@@ -18,14 +25,15 @@
         <h2 class="album-author">
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
-    <div style="height: 450px;">
+    <div style="height: 430px; overflow:hidden;">
         @if (Model.Photos.Count() >= 3)
         {
-            <ul id="roundabout" style="width: 500px;">
-                @foreach (var photo in Model.Photos)
+            <ul id="roundabout" style="width: 450px;">
+                @for (int i = 0; i < photosSorted.Count();i++ )
                 {
-                    <li>
-                        <img src="@photo.Path" data-description="Taken on @photo.Date.ToLongDateString()" data-title="Photo number @photo.Id" />
+                    var photo = photosSorted[i];
+                    <li description="@photo.Description" title="@(i+1). @photo.Date.ToLongDateString() ">
+                        <img src="@photo.Path" date="@photo.Date.ToShortDateString()"   />
                     </li>
                 }
             </ul>
@@ -37,33 +45,39 @@
             </h3>
         }
     </div>
+
+    
+    <div id="photo-desc-replace">
+    </div>
+
+
     <div>
-        <table class="controls" cellpadding=6>
+        <table class="controls" cellpadding="6">
             <tr>
-                <td id="jump_start">
-                     Previous year <<<<
+                <td onclick="move(-365);">
+                    Previous year <<<<
                 </td>
-                <td>
-                    Previous month <<< 
+                <td onclick="move(-30);">
+                    Previous month <<<
                 </td>
-                <td>
+                <td onclick="move(-7);">
                     Previous week <<
                 </td>
-                <td>
+                <td onclick="move(-1);">
                     Previous day <
                 </td>
                 <td>
                 </td>
-                <td>
+                <td onclick="move(1);">
                     Next day >
                 </td>
-                <td>
+                <td onclick="move(7);">
                     Next week >>
                 </td>
-                <td>
+                <td onclick="move(30);">
                     Next month >>>
                 </td>
-                <td id="jump_end">
+                <td onclick="move(365);">
                     Next year >>>>
                 </td>
             </tr>
@@ -72,57 +86,195 @@
             (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
             -->
     </div>
-    <div id="album-footer">
-        <div id="album-desc">
-            @Model.Description
+
+
+    <div style="height:50px;"></div>
+
+    <div id="content-left">
+        <div id="album-footer">
+            <div id="album-desc">
+                @Model.Description
+            </div>
+            <div id="album-rate">
+                Rating: <span class="album-rating">17</span> <span class="label label-success"><a
+                    href="#">+1</a></span> <span class="label label-important"><a href="#">-1</a></span>
+            </div>
         </div>
-        <div id="album-rate">
-            Rating: <span class="album-rating">17</span> <span class="label label-success"><a
-                href="#">+1</a></span> <span class="label label-important"><a href="#">-1</a></span>
+        <div id="album-comments">
+            <form class="form-horizontal" action="#" method="post">
+            <fieldset>
+                <div class="control-group">
+                    <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
+                </div>
+                <div class="control-group">
+                    <button type="submit" class="btn btn-primary">
+                        Add comment</button>
+                </div>
+            </fieldset>
+            </form>
+            <div class="album-comment">
+                Comment 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
+                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
+                eqw
+            </div>
+            <div class="album-comment">
+                Comment 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
+                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
+                eqwe qw eqw eqw eqw
+            </div>
+            <div class="album-comment">
+                Comment 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
+                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. Dqwdkq
+                podkqwp odkqwp ofkepofk wepofkwe pofewkpo :)
+            </div>
         </div>
     </div>
-    <div id="album-comments">
-        <form class="form-horizontal" action="#" method="post">
-        <fieldset>
-            <div class="control-group">
-                <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
-            </div>
-            <div class="control-group">
-                <button type="submit" class="btn btn-primary">
-                    Add comment</button>
-            </div>
-        </fieldset>
-        </form>
-        <div class="album-comment">
-            Comment 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-            odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
-            eqw
-        </div>
-        <div class="album-comment">
-            Comment 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-            odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
-            eqwe qw eqw eqw eqw
-        </div>
-        <div class="album-comment">
-            Comment 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-            odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. Dqwdkq
-            podkqwp odkqwp ofkepofk wepofkwe pofewkpo :)
-        </div>
+    <div id="content-right">
+        <div id="map-canvas"></div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('ul#roundabout').roundabout({
-            enableDrag: true
+
+@section JS {
+     <script type="text/javascript">
+        $(document).ready(function () {
+            $('ul#roundabout').roundabout({
+                enableDrag: true
+            });
         });
-    });
 
+        // obsluga zmiany obrazka - wazne
+        $('#roundabout li').focus(function () {
+            $('#photo-desc-replace').html('<h3>' + this.getAttribute('title') + '</h3>' + this.getAttribute('description'))
+        });
 
-    $('#jump_start').click(function () {
-        $('ul#roundabout').roundabout("animateToChild", 0)
-    });
-    $('#jump_end').click(function () {
-        $('ul#roundabout').roundabout("animateToChild", @Model.Photos.Count()-1)
-    });
+        // funkcja obslugujaca przyciski nawigacyjne
+        function move(days) {
+            var closest_photo = 0
+            var active_photo = $('ul#roundabout').roundabout('getChildInFocus')
+            var photos = new Array()
+            photos = $('#roundabout img')
+            var d = new Date(photos[active_photo].getAttribute('date'))
+            var desired_date = d.setDate(d.getDate() + days)
+            console.log('desired :' + desired_date)
+            photos.each(function (index, Element) {
+                if (Math.abs(desired_date - new Date(Element.getAttribute('date'))) < Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date')))) {
+                    closest_photo = index
+                }
+                else {
+                    console.log(Element.getAttribute('date'))
+                    console.log(Math.abs(desired_date - new Date(Element.getAttribute('date'))))
+                    console.log(photos[closest_photo].getAttribute('date'))
+                    console.log(Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date'))))
+                }
+            });
+            //alert(closest_photo)
+            //$('ul#roundabout').roundabout("animateToChild", closest_photo)
+            var deg = 360 / photos.size()
+            $('ul#roundabout').roundabout("animateToDelta", (active_photo - closest_photo) * deg)
+        }
+    </script>
 
-</script>
+    <script type="text/javascript">
+
+        function CenterControl(controlDiv, map, bounds, center) {
+
+          // Set CSS styles for the DIV containing the control
+          // Setting padding to 5 px will offset the control
+          // from the edge of the map.
+          controlDiv.style.padding = '5px';
+
+          // Set CSS for the control border.
+          var controlUI = document.createElement('div');
+          controlUI.style.backgroundColor = '#ffffee';
+          controlUI.style.borderStyle = 'solid';
+          controlUI.style.borderWidth = '2px';
+          controlUI.style.cursor = 'pointer';
+          controlUI.style.textAlign = 'center';
+          controlUI.title = 'Click to set the map to Home';
+          controlDiv.appendChild(controlUI);
+
+          // Set CSS for the control interior.
+          var controlText = document.createElement('div');
+          controlText.style.fontFamily = 'Arial,sans-serif';
+          controlText.style.fontSize = '12px';
+          controlText.style.paddingLeft = '15px';
+          controlText.style.paddingRight = '15px';
+          controlText.style.color = 'black';
+          controlText.innerHTML = '<strong>Center</strong>';
+          controlUI.appendChild(controlText);
+
+          // Setup the click event listeners: simply set the map to Chicago.
+          google.maps.event.addDomListener(controlUI, 'click', function() {
+            map.fitBounds(bounds);
+            map.setCenter(center);
+          });
+        }
+
+        function initializeMap() {
+            console.log('initializeMap()');
+
+            @{ bool hasGeoData = false; }
+
+            @if (Model.Photos.Count() > 0)
+            {
+                <text>
+                var myOptions = {
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                }
+                var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+                var markers = [];
+                var bounds = new google.maps.LatLngBounds();
+                </text>
+
+                foreach (PhotoHistory.Models.PhotoModel photo in Model.Photos)
+                {
+                    if (photo.LocationLatitude.HasValue && photo.LocationLongitude.HasValue)
+                    {
+                        hasGeoData = true;
+
+                        <text>
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(@photo.LocationLatitude.Value, @photo.LocationLongitude.Value),
+                            map: map
+                        });
+                        markers.push(marker);
+                        bounds.extend(marker.getPosition());
+                        </text>
+                    }
+                }
+
+                if (hasGeoData)
+                {
+                    <text>
+                    map.fitBounds(bounds);
+                    map.setCenter(bounds.getCenter());
+
+                    var centerControlDiv = document.createElement('div');
+                    var centerControl = new CenterControl(centerControlDiv, map, bounds, bounds.getCenter());
+
+                    centerControlDiv.index = 1;
+                    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+                    </text>
+                }
+            }
+            
+            @if (!hasGeoData)
+            {
+               <text>
+               var mapCanvas = document.getElementById("map-canvas");
+               mapCanvas.innerHTML = '<div id="map-canvas-placeholder">No geographical data available</div>';
+               </text> 
+            }
+        }
+
+        function loadScript() {
+            console.log('loadScript()');
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyA1KTeO9Ixsb6_ysEwin8bf4r5G9Rm3GYc&sensor=false&callback=initializeMap";
+            document.body.appendChild(script);
+        }
+
+        window.onload = loadScript;
+    </script>
+}
