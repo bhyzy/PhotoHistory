@@ -40,40 +40,46 @@ namespace PhotoHistory.Data
             }
         }
 
-        public IList<AlbumModel> GetMostPopular(int maxAlbums)
+        public List<AlbumModel> GetMostPopular(int maxAlbums)
         {
-            IList<AlbumModel> models = new List<AlbumModel>();
+            List<AlbumModel> models = new List<AlbumModel>();
             using (var session = GetSession())
             {
                 var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Views"));
-                models = criteria.List<AlbumModel>();
+                models = criteria.List<AlbumModel>().ToList();
+                foreach (AlbumModel album in models)
+                    album.Photos.ToList();
             }
             return models;
         }
 
-        public IList<AlbumModel> GetTopRated(int maxAlbums)
+        public List<AlbumModel> GetTopRated(int maxAlbums)
         {
-            IList<AlbumModel> models = new List<AlbumModel>();
+            List<AlbumModel> models = new List<AlbumModel>();
             using (var session = GetSession())
             {
                 var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Rating"));
-                models = criteria.List<AlbumModel>();
+                models = criteria.List<AlbumModel>().ToList();
+                foreach (AlbumModel album in models)
+                    album.Photos.ToList();
             }
             return models;
         }
 
-        public IList<AlbumModel> GetRandom(int maxAlbums)
+        public List<AlbumModel> GetRandom(int maxAlbums)
         {
-            IList<AlbumModel> models = new List<AlbumModel>();
+            List<AlbumModel> models = new List<AlbumModel>();
             using (var session = GetSession())
             {
-                var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("RANDOM()"));
-                models = criteria.List<AlbumModel>();
+                var query = session.CreateQuery("from AlbumModel order by RANDOM()").SetMaxResults(maxAlbums);
+                models = query.List<AlbumModel>().ToList();
+                foreach (AlbumModel album in models)
+                    album.Photos.ToList();
             }
             return models;
         }
 
-        public IList<AlbumModel> GetRecentlyCommented(int maxAlbums)
+        public List<AlbumModel> GetRecentlyCommented(int maxAlbums)
         {
             //TODO
             return GetRandom(maxAlbums);

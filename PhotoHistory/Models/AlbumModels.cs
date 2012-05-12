@@ -94,7 +94,29 @@ namespace PhotoHistory.Models
         [Required]
         public virtual int Views { get; set; }
         [Required]
+        public virtual int Rating { get; set; }
+        [Required]
+        public virtual int Comments { get; set; }
+        [Required]
         public virtual List<string> Thumbnails { get; set; }
+
+        public static AlbumProfileModel FromAlbum(AlbumModel album)
+        { 
+            string start,end;
+            Helpers.AlbumDateRange(album, out start, out end);
+            AlbumProfileModel profileAlbum = new AlbumProfileModel()
+            {
+                Id = album.Id,
+                Name = album.Name,
+                Thumbnails = Helpers.AlbumThumbnails(album),
+                StartDate = start,
+                EndDate = end,
+                Views = album.Views,
+                Rating = album.Rating,
+                
+            };
+            return profileAlbum;
+        }
     }
 
     public class HomepageAlbumModel
@@ -103,6 +125,6 @@ namespace PhotoHistory.Models
         public virtual string Name { get; set; }
 
         [Required]
-        public virtual IEnumerable<AlbumProfileModel> Albums {get; set;}
+        public virtual List<AlbumProfileModel> Albums {get; set;}
     }
 }

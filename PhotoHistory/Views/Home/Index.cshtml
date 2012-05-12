@@ -1,121 +1,54 @@
 ﻿@model List<PhotoHistory.Models.HomepageAlbumModel>
 
-<div id="content-left">
-    @foreach (PhotoHistory.Models.HomepageAlbumModel AlbumContainer in Model)
-    { 
-        <div class="post">
-        <h2 class="title"> <a href="#">@AlbumContainer.Name</a> </h2>
-        <div class="entry">
-            @foreach (PhotoHistory.Models.AlbumProfileModel album in AlbumContainer.Albums)
-            {
-                <div class="album-thumb">
-				    <a href="@Url.Action("Album", "Show", new { id=album.Id})">
-					    @{
-                            int thumbCount = album.Thumbnails.Count;
-                            List<string> thumbs = new List<string>();
-                                <img src="@(thumbCount>0? album.Thumbnails.First() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
-                                <img src="@(thumbCount>1? album.Thumbnails.ElementAt(thumbCount/2) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
-                                <img src="@(thumbCount>2? album.Thumbnails.Last() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+@{
+    List<PhotoHistory.Models.HomepageAlbumModel> left = new List<PhotoHistory.Models.HomepageAlbumModel>();
+    List<PhotoHistory.Models.HomepageAlbumModel> right = new List<PhotoHistory.Models.HomepageAlbumModel>();
+    List<PhotoHistory.Models.HomepageAlbumModel> albums = null;
 
-                            } 
-					    <h3 class="album-title">@album.Name</h3>
-				    </a>
-				    <span class="album-label">Timespan: </span><span class="album-value">@album.StartDate - @album.EndDate</span><br/>
-				    <span class="album-label">Views: </span><span class="album-value">@album.Views</span>
-			    </div>
-            }
-        </div>
-    </div>
-    
+    int iter = 0;
+    foreach (PhotoHistory.Models.HomepageAlbumModel album in Model)
+    {
+        if (iter++ % 2 == 0)
+        {
+            left.Add(album);
+        }
+        else
+        {
+            right.Add(album);
+        }
     }
-</div>
 
+    for (int count = 0; count < 2; ++count)
+    {
+        albums = (count == 0 ? left : right);
+        <div id="content-@(count == 0 ? "left" : "right")">
 
+        @foreach (PhotoHistory.Models.HomepageAlbumModel AlbumContainer in albums)
+        { 
+            <div class="post">
+                <h2 class="title"> <a href="#">@AlbumContainer.Name</a> </h2>
+                <div class="entry">
+                    @foreach (PhotoHistory.Models.AlbumProfileModel album in AlbumContainer.Albums)
+                    {
+                        <div class="album-thumb">
+				            <a href="@Url.Action("Album", "Show", new { id = album.Id })">
+					            @{
+                                    int thumbCount = album.Thumbnails.Count;
+                                    List<string> thumbs = new List<string>();
+                                    <img src="@(thumbCount > 0 ? album.Thumbnails.First() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+                                    <img src="@(thumbCount > 1 ? album.Thumbnails.ElementAt(thumbCount / 2) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+                                    <img src="@(thumbCount > 2 ? album.Thumbnails.Last() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
 
-
-<div id="content-right">
-    <div class="post">
-        <h2 class="title">
-            <a href="#">Popular</a></h2>
-        <div class="entry">
-            <div class="album-thumb">
-                <a href="#">
-                    <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                    <h3 class="album-title">
-                        Noah K. everyday</h3>
-                </a><span class="album-label">Timespan: </span><span class="album-value">03/01/2003
-                    - 12/04/2012</span><br />
-                <span class="album-label">Views: </span><span class="album-value">117 684</span>
+                                 } 
+					            <h3 class="album-title">@album.Name</h3>
+				            </a>
+				            <span class="album-label">Timespan: </span><span class="album-value">@album.StartDate - @album.EndDate</span><br/>
+				            <span class="album-label">Views: </span><span class="album-value">@album.Views</span>
+			            </div>
+                    }
+                </div>
             </div>
-            <div class="album-thumb">
-                <a href="#">
-                    <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                    <h3 class="album-title">
-                        Noah K. everyday</h3>
-                </a><span class="album-label">Timespan: </span><span class="album-value">03/01/2003
-                    - 12/04/2012</span><br />
-                <span class="album-label">Views: </span><span class="album-value">117 684</span>
-            </div>
+        }
         </div>
-    </div>
-    <div class="post">
-        <h2 class="title">
-            <a href="#">Highest rated</a></h2>
-        <div class="entry">
-            <div class="album-thumb">
-                <a href="#">
-                    <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                    <h3 class="album-title">
-                        Noah K. everyday</h3>
-                </a><span class="album-label">Timespan: </span><span class="album-value">03/01/2003
-                    - 12/04/2012</span><br />
-                <span class="album-label">Views: </span><span class="album-value">117 684</span>
-            </div>
-            <div class="album-thumb">
-                <a href="#">
-                    <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                    <h3 class="album-title">
-                        Noah K. everyday</h3>
-                </a><span class="album-label">Timespan: </span><span class="album-value">03/01/2003
-                    - 12/04/2012</span><br />
-                <span class="album-label">Views: </span><span class="album-value">117 684</span>
-            </div>
-        </div>
-    </div>
-    <div class="post">
-        <h2 class="title">
-            <a href="#">Most commented</a></h2>
-        <div class="entry">
-            <div class="album-thumb">
-                <a href="#">
-                    <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                    <h3 class="album-title">
-                        Noah K. everyday</h3>
-                </a><span class="album-label">Timespan: </span><span class="album-value">03/01/2003
-                    - 12/04/2012</span><br />
-                <span class="album-label">Views: </span><span class="album-value">117 684</span>
-            </div>
-            <div class="album-thumb">
-                <a href="#">
-                    <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                    <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                    <h3 class="album-title">
-                        Noah K. everyday</h3>
-                </a><span class="album-label">Timespan: </span><span class="album-value">03/01/2003
-                    - 12/04/2012</span><br />
-                <span class="album-label">Views: </span><span class="album-value">117 684</span>
-            </div>
-        </div>
-    </div>
-</div>
+    }
+ }

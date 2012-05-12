@@ -128,6 +128,30 @@ namespace PhotoHistory
         {
             return Path.GetDirectoryName(photo.Path).Replace("\\", "/") + "/" + Path.GetFileNameWithoutExtension(photo.Path) + "_mini.jpg";
         }
+
+        public static List<AlbumProfileModel> Convert(List<AlbumModel> albums)
+        {
+            List<AlbumProfileModel> list = new List<AlbumProfileModel>();
+            string start,end;
+
+            foreach (AlbumModel album in albums)
+            {
+                Helpers.AlbumDateRange(album, out start, out end);
+
+                AlbumProfileModel profileAlbum = new AlbumProfileModel()
+                {
+                    Id = album.Id,
+                    Name = album.Name,
+                    Thumbnails = Helpers.AlbumThumbnails(album),
+                    StartDate = start,
+                    EndDate = end,
+                    Views = album.Views
+                };
+                list.Add(profileAlbum);
+            }
+            return list;
+            
+        }
         
         public static void AlbumDateRange(AlbumModel album, out string start, out  string end)
         {
