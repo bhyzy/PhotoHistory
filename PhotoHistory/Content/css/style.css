@@ -622,6 +622,14 @@ table.controls td
         text-align:center;
 }
 
+table.controls td:hover
+{
+        background-color:Black;
+        color:White;
+        border-radius:5px;
+        cursor:pointer;
+}
+
 table.controls
 {
     margin-bottom:50px;
