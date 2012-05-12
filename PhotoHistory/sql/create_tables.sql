@@ -57,8 +57,8 @@ CREATE TABLE Photos
 	album_id integer NOT NULL REFERENCES Albums,
 	date_taken timestamp NOT NULL,
 	description text,
-	file_path text NOT NULL,
-	location geography(point,4326)
+	file_path text NOT NULL
+	--location geography(point,4326)
 );
 
 CREATE INDEX photo_album_idx on Photos (album_id);

@@ -13,7 +13,7 @@ namespace PhotoHistory.Models
 		public virtual DateTime Date { get; set; }
 		public virtual string Description { get; set; }
 		public virtual string Path { get; set; }
-		public virtual string Location { get; set; }
+		//public virtual string Location { get; set; }
 	}
 
 
