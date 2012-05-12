@@ -88,7 +88,7 @@ namespace PhotoHistory.Data
                 map.Key(c => c.Column("album_id"));
             }, a => a.OneToMany());
 
-
+            
             Bag(x => x.TrustedUsers, map =>
             {
                 map.Table("trustedusers");
