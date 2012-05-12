@@ -68,7 +68,7 @@ namespace PhotoHistory.Data
                 var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                 album.Category.ToString();
                 album.TrustedUsers.ToString();
-                album.Photos.ToList().Sort( (x,y) => x.Date.CompareTo(y.Date)  );
+                album.Photos.ToList();
                 album.User.ToString();
                 return album;
             }

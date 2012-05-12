@@ -56,6 +56,9 @@ namespace PhotoHistory.Controllers
 		{
 			AlbumRepository albums = new AlbumRepository();
 			AlbumModel album = albums.GetByIdForShow( id );
+            
+            List<PhotoModel> photos = album.Photos.ToList();
+            photos.Sort((x, y) => x.Date.CompareTo(y.Date));
 
 			UserRepository users = new UserRepository();
 			var user = users.GetByUsername( HttpContext.User.Identity.Name );
