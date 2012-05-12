@@ -9,8 +9,8 @@ using NHibernate;
 using System.Web.Security;
 using PhotoHistory.Common;
 using System.Drawing;
-using ExifLibrary;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 namespace PhotoHistory.Controllers
 {
@@ -138,12 +138,12 @@ namespace PhotoHistory.Controllers
 							Album = selectedAlbum
 						};
 
-						double locLatitude = 0, locLongitude = 0;
-						if ( PhotoReadGPSLocation( HttpContext.Server.MapPath( string.Format( "~/{0}", path ) ),
-															ref locLatitude, ref locLongitude ) )
+						double? locLatitude = img.GPSLatitude();
+						double? locLongitude = img.GPSLongitude();
+						if ( locLatitude.HasValue && locLongitude.HasValue )
 						{
-							newPhoto.LocationLatitude = locLatitude;
-							newPhoto.LocationLongitude = locLongitude;
+							newPhoto.LocationLatitude = locLatitude.Value;
+							newPhoto.LocationLongitude = locLongitude.Value;
 						}
 
 						repo.Create( newPhoto );
@@ -355,30 +355,30 @@ namespace PhotoHistory.Controllers
 			return userModels;
 		}
 
-		private bool PhotoReadGPSLocation(string photoPath, ref double locLatitude, ref double locLongitude)
-		{
-			try
-			{
-				ExifFile file = ExifFile.Read( photoPath );
+		//private bool PhotoReadGPSLocation(string photoPath, ref double locLatitude, ref double locLongitude)
+		//{
+		//   try
+		//   {
+		//      ExifFile file = ExifFile.Read( photoPath );
 
-				if ( file.Properties.ContainsKey( ExifTag.GPSLatitude ) && file.Properties.ContainsKey( ExifTag.GPSLongitude ) )
-				{
-					GPSLatitudeLongitude gpsLatitude = (GPSLatitudeLongitude)file.Properties[ExifTag.GPSLatitude];
-					GPSLatitudeLongitude gpsLongitude = (GPSLatitudeLongitude)file.Properties[ExifTag.GPSLongitude];
+		//      if ( file.Properties.ContainsKey( ExifTag.GPSLatitude ) && file.Properties.ContainsKey( ExifTag.GPSLongitude ) )
+		//      {
+		//         GPSLatitudeLongitude gpsLatitude = (GPSLatitudeLongitude)file.Properties[ExifTag.GPSLatitude];
+		//         GPSLatitudeLongitude gpsLongitude = (GPSLatitudeLongitude)file.Properties[ExifTag.GPSLongitude];
 
-					locLatitude = gpsLatitude.ToFloat();
-					locLongitude = gpsLongitude.ToFloat();
+		//         locLatitude = gpsLatitude.ToFloat();
+		//         locLongitude = gpsLongitude.ToFloat();
 
-					return true;
-				}
-			}
-			catch ( System.Exception ex )
-			{
-				Debug.WriteLine( ex.ToString() );
-			}
+		//         return true;
+		//      }
+		//   }
+		//   catch ( System.Exception ex )
+		//   {
+		//      Debug.WriteLine( ex.ToString() );
+		//   }
 
-			return false;
-		}
+		//   return false;
+		//}
 
 	}
 }
