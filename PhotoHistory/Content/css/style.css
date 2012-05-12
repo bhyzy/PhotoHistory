@@ -632,8 +632,7 @@ table.controls td:hover
 
 table.controls
 {
-    margin-bottom:50px;
-    
+ margin: 10px 0;       
     }
     
 table.controls tbody
@@ -645,4 +644,9 @@ table.controls tbody
 #jump_start:hover, #jump_end:hover
 {
     cursor:pointer;
+}
+
+#photo-desc-replace
+{
+    
 }

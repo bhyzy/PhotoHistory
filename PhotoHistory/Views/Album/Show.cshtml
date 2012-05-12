@@ -1,4 +1,11 @@
 ﻿@model PhotoHistory.Models.AlbumModel
+
+@{    
+    // no nie moglem tego inaczej zrobic
+    List<PhotoHistory.Models.PhotoModel> photosSorted = new List<PhotoHistory.Models.PhotoModel>(Model.Photos);
+    photosSorted.Sort((x, y) => x.Date.CompareTo(y.Date));
+    }           
+
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.roundabout.js"))"></script>
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drag-2.0.min.js"))"></script>
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drop-2.0.min.js"))"></script>
@@ -22,10 +29,11 @@
         @if (Model.Photos.Count() >= 3)
         {
             <ul id="roundabout" style="width: 450px;">
-                @foreach (var photo in Model.Photos)
+                @for (int i = 0; i < photosSorted.Count();i++ )
                 {
-                    <li>
-                        <img src="@photo.Path" date="@photo.Date.ToShortDateString()" data-title="Photo number @photo.Id" />
+                    var photo = photosSorted[i];
+                    <li description="@photo.Description" title="@(i+1). @photo.Date.ToLongDateString() ">
+                        <img src="@photo.Path" date="@photo.Date.ToShortDateString()"   />
                     </li>
                 }
             </ul>
@@ -37,6 +45,12 @@
             </h3>
         }
     </div>
+
+    
+    <div id="photo-desc-replace">
+    </div>
+
+
     <div>
         <table class="controls" cellpadding="6">
             <tr>
@@ -72,6 +86,10 @@
             (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
             -->
     </div>
+
+
+    <div style="height:50px;"></div>
+
     <div id="content-left">
         <div id="album-footer">
             <div id="album-desc">
@@ -124,6 +142,12 @@
                 enableDrag: true
             });
 
+
+        });
+
+
+        $('#roundabout li').focus(function () {
+            $('#photo-desc-replace').html('<h3>' + this.getAttribute('title') + '</h3>' + this.getAttribute('description'))
         });
 
         function move(days) {

@@ -31,6 +31,7 @@ namespace PhotoHistory.Models
         public virtual ICollection<PhotoModel> Photos { get; set; }
         public virtual ICollection<UserModel> TrustedUsers{ get; set; }
 
+  
 
         // transforms an array with logins into an array of UserModels
         // returns null if at least one login was not found
@@ -97,5 +98,17 @@ namespace PhotoHistory.Models
         public virtual int Views { get; set; }
         [Required]
         public virtual List<string> Thumbnails { get; set; }
+    }
+
+
+    public class AlbumModelSortedPhotos : AlbumModel
+    {
+        public virtual List<PhotoModel> SortedPhotos { get; set; }
+
+        public AlbumModelSortedPhotos(AlbumModel album)
+        {
+            SortedPhotos = new List<PhotoModel>(album.Photos);
+            SortedPhotos.Sort((x, y) => x.Date.CompareTo(y.Date));
+        }
     }
 }
