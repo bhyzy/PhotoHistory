@@ -477,7 +477,7 @@ h1.page-title, .page-title a, h2.album-author, h2.page-section {
 div.album-comment {
 	/* background: hsl(140,50%,90%); */
 	margin-top: 15px;
-	width: 500px;
+	width: 100%;
 }
 h2.album-author {
 	font-size: 14px;

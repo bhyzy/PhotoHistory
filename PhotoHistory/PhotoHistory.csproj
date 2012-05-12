@@ -81,6 +81,7 @@
     <Compile Include="Common\BuildInitializer.cs" />
     <Compile Include="Common\FileHelper.cs" />
     <Compile Include="Common\Helpers.cs" />
+    <Compile Include="Common\ImageExtensions.cs" />
     <Compile Include="Common\ValidationAttributes.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
