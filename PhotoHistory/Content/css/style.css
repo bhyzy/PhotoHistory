@@ -619,7 +619,7 @@ div.rank {
    #roundabout img
    {
        width:500px;
-       height:400px;
+       
        }
 
 
@@ -664,3 +664,8 @@ table.controls tbody
 	background: hsl(200,10%,97%);
 	line-height: 400px;
 }
+
+
+#photo-desc-replace
+{
+    }

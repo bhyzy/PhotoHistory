@@ -25,7 +25,7 @@
         <h2 class="album-author">
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
-    <div style="height: 450px;">
+    <div style="height: 430px; overflow:hidden;">
         @if (Model.Photos.Count() >= 3)
         {
             <ul id="roundabout" style="width: 450px;">
