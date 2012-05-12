@@ -624,7 +624,7 @@ table.controls td
 
 table.controls td:hover
 {
-        background-color:Black;
+        background-color:#138ac4;
         color:White;
         border-radius:5px;
         cursor:pointer;
@@ -633,6 +633,13 @@ table.controls td:hover
 table.controls
 {
     margin-bottom:50px;
+    
+    }
+    
+table.controls tbody
+    {
+        background-color:beige;
+        
     }
 
 #jump_start:hover, #jump_end:hover

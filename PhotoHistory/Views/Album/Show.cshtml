@@ -21,7 +21,7 @@
     <div style="height: 450px;">
         @if (Model.Photos.Count() >= 3)
         {
-            <ul id="roundabout" style="width: 500px;">
+            <ul id="roundabout" style="width: 450px;">
                 @foreach (var photo in Model.Photos)
                 {
                     <li>
@@ -72,6 +72,11 @@
             (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
             -->
     </div>
+
+    <div id="photo-desc">
+    
+    </div>
+
     <div id="album-footer">
         <div id="album-desc">
             @Model.Description
