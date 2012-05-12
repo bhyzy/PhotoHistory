@@ -5,6 +5,7 @@ using System.Web;
 using PhotoHistory.Models;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 
 namespace PhotoHistory.Data
 {
@@ -101,8 +102,23 @@ namespace PhotoHistory.Data
 
         public List<AlbumModel> GetRecentlyCommented(int maxAlbums)
         {
-            //TODO
-            return GetRandom(maxAlbums);
+            List<AlbumModel> models = new List<AlbumModel>();
+            
+            using (var session = GetSession())
+            {
+                var albumQuery = session.CreateSQLQuery(String.Format("select distinct album_id from (select album_id,date_posted  from Comments c order by c.date_posted ) a limit {0};", maxAlbums));
+                var albumsId =albumQuery.List<int>();
+
+                AlbumModel album;
+                foreach (int id in albumsId)
+                {
+                    album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+                    album.Photos.ToList();
+                    album.Comments.ToList();
+                    models.Add(album);
+                }
+                return models;
+            }
         }
 
         public AlbumModel GetByIdForEdit(int? id)

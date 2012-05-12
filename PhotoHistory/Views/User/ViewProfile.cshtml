@@ -69,21 +69,7 @@
                                     <div id="content-@(count == 0 ? "left" : "right")">
                                         @foreach (PhotoHistory.Models.AlbumProfileModel album in albums)
                                         {
-                                            <div class="album-thumb">
-							                    <a href="@Url.Action("Album", "Show", new { id=album.Id})">
-								                    @{
-                                                        int thumbCount = album.Thumbnails.Count;
-                                                        List<string> thumbs = new List<string>();
-                                                         <img src="@(thumbCount>0? album.Thumbnails.First() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
-                                                         <img src="@(thumbCount>1? album.Thumbnails.ElementAt(thumbCount/2) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
-                                                         <img src="@(thumbCount>2? album.Thumbnails.Last() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
-
-                                                     } 
-							                        <h3 class="album-title">@album.Name</h3>
-							                    </a>
-							                    <span class="album-label">Timespan: </span><span class="album-value">@album.StartDate - @album.EndDate</span><br/>
-							                    <span class="album-label">Views: </span><span class="album-value">@album.Views</span>
-						                    </div>
+                                            Html.RenderPartial("_AlbumMiniView", album);
                                         }
                                     </div>
                                 }

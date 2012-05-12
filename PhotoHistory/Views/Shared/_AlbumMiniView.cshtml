@@ -1,7 +1,7 @@
 ﻿@model PhotoHistory.Models.AlbumProfileModel
            
 <div class="album-thumb">
-	<a href="@Url.Action("Album", "Show", new { id = Model.Id })">
+	<a href="@Url.Action("Show", "Album", new { id = Model.Id })">
 		@{
             int thumbCount = Model.Thumbnails.Count;
             List<string> thumbs = new List<string>();
