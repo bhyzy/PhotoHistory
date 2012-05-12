@@ -6,6 +6,7 @@ using PhotoHistory.Models;
 using System.IO;
 using System.Net;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace PhotoHistory.Common
 {
@@ -150,17 +151,36 @@ namespace PhotoHistory.Common
                 throw new FileUploadException("You must upload jpeg image.");
             using (Image transformed = Helpers.TransformWithAspectRatio(img, MAX_WIDTH, MAX_HEIGHT, false))
             {
-                using(Image thumbnail = Helpers.TransformWithAspectRatio(transformed, THUMB_WIDTH, THUMB_HEIGHT, true))
+
+                EncoderParameters encoderParameters = new EncoderParameters(1);
+                using (encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L))
                 {
-                    System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
-                    thumbnail.Save(AlbumPath(album) + name + "_mini.jpg");
+
+                    using (Image thumbnail = Helpers.TransformWithAspectRatio(transformed, THUMB_WIDTH, THUMB_HEIGHT, true))
+                    {
+                        System.Diagnostics.Debug.WriteLine(AlbumPath(album) + name + "_mini.jpg");
+                        thumbnail.Save(AlbumPath(album) + name + "_mini.jpg", GetEncoder(ImageFormat.Jpeg), encoderParameters);
+                    }
+                    name += ".jpg";
+                    transformed.Save(AlbumPath(album) + name, GetEncoder(ImageFormat.Jpeg), encoderParameters);
                 }
-                name += ".jpg";
-                transformed.Save(AlbumPath(album) + name);
+                return AlbumPath(album, false) + name;
             }
-            return AlbumPath(album, false) + name;
         }
 
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
 
 
         public static void GetDate(AlbumModel album, out string start, out string end)

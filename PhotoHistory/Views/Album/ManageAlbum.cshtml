@@ -12,12 +12,11 @@
                 <button class="btn btn-warning">
                     <i class="icon-edit icon-white"></i>Change settings</button>
             </a>
-            <form action="/Album/Delete" method="post"  style="display:inline;" onsubmit="if(!confirm('Are you sure you want to delete this album?')){return false;}">
+            <form action="/Album/Delete" method="post" style="display: inline;" onsubmit="if(!confirm('Are you sure you want to delete this album?')){return false;}">
             @Html.Hidden("id", Model.Id)
-            <button class="btn btn-danger">
-                <i class="icon-remove icon-white" onclick="this.form.submit();"></i>Delete album</button>
+            <button class="btn btn-danger" onclick="this.form.submit();">
+                <i class="icon-remove icon-white"></i>Delete album</button>
             </form>
-
         </div>
         <div style="clear: both;">
             &nbsp;</div>
@@ -98,13 +97,14 @@
             <h2 class="page-section">
                 Photos</h2>
         </div>
-        <form action="#" method="post">
+        <form action="/Album/DeletePhotos" method="post" id="photos_form"  onsubmit="if(!confirm('Are you sure you want to delete selected photos?')){return false;}">
+        @Html.Hidden("albumId", Model.Id)
         <div class="actions right">
             <a href="@Url.Action("AddPhoto")">
-                <button class="btn btn-success">
+                <button class="btn btn-success" type=button>
                     <i class="icon-camera icon-white"></i>Add photo</button>
             </a>
-            <button class="btn btn-danger">
+            <button class="btn btn-danger" onclick="this.form.submit();">
                 <i class="icon-remove icon-white"></i>Delete selected photos</button>
         </div>
         <div style="clear: both;">
@@ -114,7 +114,7 @@
             {
                 <div class="photo-entry">
                     <div class="photo-handle">
-                        <input type="checkbox" id="@photo.Id"></div>
+                        <input type="checkbox" value="@photo.Id" name="selectedObjects"></div>
                     <div class="photo-thumb">
                         <img src="@photo.Path" class="photo" /></div>
                     <div class="photo-date">
