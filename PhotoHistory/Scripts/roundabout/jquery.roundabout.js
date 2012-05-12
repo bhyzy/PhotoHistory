@@ -897,7 +897,7 @@
 
 			return this
 				.each(function() {
-					var delta = $(this).data("roundabout").bearing - degrees;
+				    var delta = $(this).data("roundabout").bearing - degrees;
 					delta = (Math.abs(360 - delta) < Math.abs(delta)) ? 360 - delta : -delta;
 					delta = (delta > 180) ? -(360 - delta) : delta;
 

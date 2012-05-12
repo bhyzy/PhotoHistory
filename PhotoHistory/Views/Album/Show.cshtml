@@ -25,7 +25,7 @@
                 @foreach (var photo in Model.Photos)
                 {
                     <li>
-                        <img src="@photo.Path" data-description="Taken on @photo.Date.ToLongDateString()" data-title="Photo number @photo.Id" />
+                        <img src="@photo.Path" date="@photo.Date.ToShortDateString()" data-title="Photo number @photo.Id" />
                     </li>
                 }
             </ul>
@@ -38,32 +38,32 @@
         }
     </div>
     <div>
-        <table class="controls" cellpadding=6>
+        <table class="controls" cellpadding="6">
             <tr>
-                <td id="jump_start">
-                     Previous year <<<<
+                <td onclick="move(-365);">
+                    Previous year <<<<
                 </td>
-                <td>
-                    Previous month <<< 
+                <td onclick="move(-30);">
+                    Previous month <<<
                 </td>
-                <td>
+                <td onclick="move(-7);">
                     Previous week <<
                 </td>
-                <td>
+                <td onclick="move(-1);">
                     Previous day <
                 </td>
                 <td>
                 </td>
-                <td>
+                <td onclick="move(1);">
                     Next day >
                 </td>
-                <td>
+                <td onclick="move(7);">
                     Next week >>
                 </td>
-                <td>
+                <td onclick="move(30);">
                     Next month >>>
                 </td>
-                <td id="jump_end">
+                <td onclick="move(365);">
                     Next year >>>>
                 </td>
             </tr>
@@ -115,14 +115,36 @@
         $('ul#roundabout').roundabout({
             enableDrag: true
         });
+
     });
 
 
-    $('#jump_start').click(function () {
-        $('ul#roundabout').roundabout("animateToChild", 0)
-    });
-    $('#jump_end').click(function () {
-        $('ul#roundabout').roundabout("animateToChild", @Model.Photos.Count()-1)
-    });
+    function move(days){
+        var closest_photo = 0
+        var active_photo = $('ul#roundabout').roundabout('getChildInFocus')
+        var photos = new Array()
+        photos = $('#roundabout img')
+        var d = new Date(photos[active_photo].getAttribute('date'))
+        var desired_date = d.setDate(d.getDate()+days)
+        console.log('desired :'+desired_date)
+        photos.each(function(index,Element){
+            if( Math.abs(desired_date - new Date(Element.getAttribute('date'))) < Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date'))) )
+            {
+                closest_photo = index
+            }
+            else
+            {
+                console.log(Element.getAttribute('date'))
+                console.log(Math.abs(desired_date - new Date(Element.getAttribute('date'))))
+                console.log(photos[closest_photo].getAttribute('date'))
+                console.log(Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date'))) )
+            }
+        });
+        //alert(closest_photo)
+        //$('ul#roundabout').roundabout("animateToChild", closest_photo)
+        var deg = 360 / photos.size()
+        $('ul#roundabout').roundabout("animateToDelta", (active_photo-closest_photo)*deg)
+    }
+    
 
 </script>
