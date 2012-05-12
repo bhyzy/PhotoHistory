@@ -81,8 +81,6 @@ namespace PhotoHistory.Models
 
     }
 
-
-
     public class AlbumProfileModel
     {
         [Required]
@@ -97,5 +95,14 @@ namespace PhotoHistory.Models
         public virtual int Views { get; set; }
         [Required]
         public virtual List<string> Thumbnails { get; set; }
+    }
+
+    public class HomepageAlbumModel
+    {
+        [Required]
+        public virtual string Name { get; set; }
+
+        [Required]
+        public virtual IEnumerable<AlbumProfileModel> Albums {get; set;}
     }
 }

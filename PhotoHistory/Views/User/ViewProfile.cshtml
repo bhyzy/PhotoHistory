@@ -70,7 +70,7 @@
                                         @foreach (PhotoHistory.Models.AlbumProfileModel album in albums)
                                         {
                                             <div class="album-thumb">
-							                    <a href="/Album/Show?id=@album.Id">
+							                    <a href="@Url.Action("Album", "Show", new { id=album.Id})">
 								                    @{
                                                         int thumbCount = album.Thumbnails.Count;
                                                         List<string> thumbs = new List<string>();

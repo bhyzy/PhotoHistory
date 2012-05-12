@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PhotoHistory.Models;
 using NHibernate;
+using NHibernate.Criterion;
 
 namespace PhotoHistory.Data
 {
@@ -37,6 +38,45 @@ namespace PhotoHistory.Data
                 album.User.ToString();
                 return album;
             }
+        }
+
+        public IList<AlbumModel> GetMostPopular(int maxAlbums)
+        {
+            IList<AlbumModel> models = new List<AlbumModel>();
+            using (var session = GetSession())
+            {
+                var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Views"));
+                models = criteria.List<AlbumModel>();
+            }
+            return models;
+        }
+
+        public IList<AlbumModel> GetTopRated(int maxAlbums)
+        {
+            IList<AlbumModel> models = new List<AlbumModel>();
+            using (var session = GetSession())
+            {
+                var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Rating"));
+                models = criteria.List<AlbumModel>();
+            }
+            return models;
+        }
+
+        public IList<AlbumModel> GetRandom(int maxAlbums)
+        {
+            IList<AlbumModel> models = new List<AlbumModel>();
+            using (var session = GetSession())
+            {
+                var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("RANDOM()"));
+                models = criteria.List<AlbumModel>();
+            }
+            return models;
+        }
+
+        public IList<AlbumModel> GetRecentlyCommented(int maxAlbums)
+        {
+            //TODO
+            return GetRandom(maxAlbums);
         }
 
         public AlbumModel GetByIdForEdit(int? id)
