@@ -153,6 +153,41 @@
     </script>
 
     <script type="text/javascript">
+
+        function CenterControl(controlDiv, map, bounds, center) {
+
+          // Set CSS styles for the DIV containing the control
+          // Setting padding to 5 px will offset the control
+          // from the edge of the map.
+          controlDiv.style.padding = '5px';
+
+          // Set CSS for the control border.
+          var controlUI = document.createElement('div');
+          controlUI.style.backgroundColor = '#ffffee';
+          controlUI.style.borderStyle = 'solid';
+          controlUI.style.borderWidth = '2px';
+          controlUI.style.cursor = 'pointer';
+          controlUI.style.textAlign = 'center';
+          controlUI.title = 'Click to set the map to Home';
+          controlDiv.appendChild(controlUI);
+
+          // Set CSS for the control interior.
+          var controlText = document.createElement('div');
+          controlText.style.fontFamily = 'Arial,sans-serif';
+          controlText.style.fontSize = '12px';
+          controlText.style.paddingLeft = '15px';
+          controlText.style.paddingRight = '15px';
+          controlText.style.color = 'black';
+          controlText.innerHTML = '<strong>Center</strong>';
+          controlUI.appendChild(controlText);
+
+          // Setup the click event listeners: simply set the map to Chicago.
+          google.maps.event.addDomListener(controlUI, 'click', function() {
+            map.fitBounds(bounds);
+            map.setCenter(center);
+          });
+        }
+
         function initializeMap() {
             console.log('initializeMap()');
 
@@ -162,22 +197,18 @@
             {
                 <text>
                 var myOptions = {
-                    zoom: 7,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                    mapTypeId: google.maps.MapTypeId.HYBRID
                 }
                 var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
                 var markers = [];
+                var bounds = new google.maps.LatLngBounds();
                 </text>
 
-                int numMarkers = 0;
-                double centerLat = 0, centerLong = 0; 
                 foreach (PhotoHistory.Models.PhotoModel photo in Model.Photos)
                 {
                     if (photo.LocationLatitude.HasValue && photo.LocationLongitude.HasValue)
                     {
-                        ++numMarkers;
-                        centerLat += photo.LocationLatitude.Value;
-                        centerLong += photo.LocationLongitude.Value;
+                        hasGeoData = true;
 
                         <text>
                         var marker = new google.maps.Marker({
@@ -185,16 +216,22 @@
                             map: map
                         });
                         markers.push(marker);
+                        bounds.extend(marker.getPosition());
                         </text>
                     }
                 }
 
-                if (numMarkers > 0)
+                if (hasGeoData)
                 {
-                    hasGeoData = true;
                     <text>
-                    var center = new google.maps.LatLng(@(centerLat / numMarkers), @(centerLong / numMarkers));
-                    map.setCenter(center);
+                    map.fitBounds(bounds);
+                    map.setCenter(bounds.getCenter());
+
+                    var centerControlDiv = document.createElement('div');
+                    var centerControl = new CenterControl(centerControlDiv, map, bounds, bounds.getCenter());
+
+                    centerControlDiv.index = 1;
+                    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
                     </text>
                 }
             }
