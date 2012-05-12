@@ -589,3 +589,45 @@ div.rank {
 {
     display:none;
 }
+
+
+
+   .roundabout-holder {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      height: 5em;
+      width: 5em;
+   }
+   .roundabout-moveable-item {
+      height: 4em;
+      width: 4em;
+      cursor: pointer;
+      background-color: #ccc;
+      border: 1px solid #999;
+   }
+   .roundabout-in-focus {
+      cursor: auto;
+   }
+   
+   #roundabout img
+   {
+       width:500px;
+       height:400px;
+       }
+
+
+table.controls td
+{
+        text-align:center;
+}
+
+table.controls
+{
+    margin-bottom:50px;
+    }
+
+#jump_start:hover, #jump_end:hover
+{
+    cursor:pointer;
+}

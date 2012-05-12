@@ -1,7 +1,5 @@
 ﻿@model PhotoHistory.Models.AlbumModel
-<script src="@(Url.Content("~/Scripts/roundabout/jquery.roundabout.js"))"></script>
-<script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drag-2.0.min.js"))"></script>
-<script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drop-2.0.min.js"))"></script>
+<script src="@(Url.Content("~/Scripts/galleria-1.2.7.js"))"></script>
 <div id="content">
     <div id="album-header">
         <h1 class="page-title">
@@ -18,57 +16,19 @@
         <h2 class="album-author">
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
-    <div style="height: 450px;">
-        @if (Model.Photos.Count() >= 3)
+    <div id="album-viewer" style="height: 500px;">
+        @foreach (var photo in Model.Photos)
         {
-            <ul id="roundabout" style="width: 500px;">
-                @foreach (var photo in Model.Photos)
-                {
-                    <li>
-                        <img src="@photo.Path" data-description="Taken on @photo.Date.ToLongDateString()" data-title="Photo number @photo.Id" />
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <h3>
-                You need at least 3 photos to see a presentation.
-            </h3>
+            <img src="@photo.Path" data-description="Taken on @photo.Date.ToLongDateString()" data-title="Photo number @photo.Id" />
         }
     </div>
-    <div>
-        <table class="controls" cellpadding=6>
-            <tr>
-                <td id="jump_start">
-                     Previous year <<<<
-                </td>
-                <td>
-                    Previous month <<< 
-                </td>
-                <td>
-                    Previous week <<
-                </td>
-                <td>
-                    Previous day <
-                </td>
-                <td>
-                </td>
-                <td>
-                    Next day >
-                </td>
-                <td>
-                    Next week >>
-                </td>
-                <td>
-                    Next month >>>
-                </td>
-                <td id="jump_end">
-                    Next year >>>>
-                </td>
-            </tr>
-        </table>
-        <!-- 
+    <div style="background-color:Black; color:White;">
+        <span >Controls: </span>
+        <span id="jump_start">
+            Jump to start</span>
+        <span id="jump_end">
+            Jump to end</span>
+            <!-- 
             (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
             -->
     </div>
@@ -111,18 +71,19 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-        $('ul#roundabout').roundabout({
-            enableDrag: true
-        });
+    Galleria.loadTheme('/Scripts/galleria/themes/classic/galleria.classic.min.js');
+    Galleria.run('#album-viewer');
+    Galleria.configure({
+        idleMode: false,
+        showInfo: true
     });
-
 
     $('#jump_start').click(function () {
-        $('ul#roundabout').roundabout("animateToChild", 0)
+        var gallery = Galleria.get(0); // gallery is now the first galleria instance
+        gallery.show(0); // will start slideshow when the element #play is clicked
     });
     $('#jump_end').click(function () {
-        $('ul#roundabout').roundabout("animateToChild", @Model.Photos.Count()-1)
+        var gallery = Galleria.get(0); // gallery is now the first galleria instance
+        gallery.show(gallery.getDataLength()); // will start slideshow when the element #play is clicked
     });
-
 </script>
