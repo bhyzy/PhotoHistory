@@ -72,79 +72,99 @@
             (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
             -->
     </div>
-    <div id="album-footer">
-        <div id="album-desc">
-            @Model.Description
+    <div id="content-left">
+        <div id="album-footer">
+            <div id="album-desc">
+                @Model.Description
+            </div>
+            <div id="album-rate">
+                Rating: <span class="album-rating">17</span> <span class="label label-success"><a
+                    href="#">+1</a></span> <span class="label label-important"><a href="#">-1</a></span>
+            </div>
         </div>
-        <div id="album-rate">
-            Rating: <span class="album-rating">17</span> <span class="label label-success"><a
-                href="#">+1</a></span> <span class="label label-important"><a href="#">-1</a></span>
+        <div id="album-comments">
+            <form class="form-horizontal" action="#" method="post">
+            <fieldset>
+                <div class="control-group">
+                    <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
+                </div>
+                <div class="control-group">
+                    <button type="submit" class="btn btn-primary">
+                        Add comment</button>
+                </div>
+            </fieldset>
+            </form>
+            <div class="album-comment">
+                Comment 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
+                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
+                eqw
+            </div>
+            <div class="album-comment">
+                Comment 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
+                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
+                eqwe qw eqw eqw eqw
+            </div>
+            <div class="album-comment">
+                Comment 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
+                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. Dqwdkq
+                podkqwp odkqwp ofkepofk wepofkwe pofewkpo :)
+            </div>
         </div>
     </div>
-    <div id="album-comments">
-        <form class="form-horizontal" action="#" method="post">
-        <fieldset>
-            <div class="control-group">
-                <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
-            </div>
-            <div class="control-group">
-                <button type="submit" class="btn btn-primary">
-                    Add comment</button>
-            </div>
-        </fieldset>
-        </form>
-        <div class="album-comment">
-            Comment 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-            odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
-            eqw
-        </div>
-        <div class="album-comment">
-            Comment 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-            odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
-            eqwe qw eqw eqw eqw
-        </div>
-        <div class="album-comment">
-            Comment 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-            odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. Dqwdkq
-            podkqwp odkqwp ofkepofk wepofkwe pofewkpo :)
+    <div id="content-right">
+        <div id="map-mockup" style="width:100%; height:500px; background-color:Maroon;">
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('ul#roundabout').roundabout({
-            enableDrag: true
+
+@section JS {
+    <script>
+        $(document).ready(function () {
+            $('ul#roundabout').roundabout({
+                enableDrag: true
+            });
+
         });
 
-    });
+        function move(days) {
+            var closest_photo = 0
+            var active_photo = $('ul#roundabout').roundabout('getChildInFocus')
+            var photos = new Array()
+            photos = $('#roundabout img')
+            var d = new Date(photos[active_photo].getAttribute('date'))
+            var desired_date = d.setDate(d.getDate() + days)
+            console.log('desired :' + desired_date)
+            photos.each(function (index, Element) {
+                if (Math.abs(desired_date - new Date(Element.getAttribute('date'))) < Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date')))) {
+                    closest_photo = index
+                }
+                else {
+                    console.log(Element.getAttribute('date'))
+                    console.log(Math.abs(desired_date - new Date(Element.getAttribute('date'))))
+                    console.log(photos[closest_photo].getAttribute('date'))
+                    console.log(Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date'))))
+                }
+            });
+            //alert(closest_photo)
+            //$('ul#roundabout').roundabout("animateToChild", closest_photo)
+            var deg = 360 / photos.size()
+            $('ul#roundabout').roundabout("animateToDelta", (active_photo - closest_photo) * deg)
+        }
+    </script>
 
-
-    function move(days){
-        var closest_photo = 0
-        var active_photo = $('ul#roundabout').roundabout('getChildInFocus')
-        var photos = new Array()
-        photos = $('#roundabout img')
-        var d = new Date(photos[active_photo].getAttribute('date'))
-        var desired_date = d.setDate(d.getDate()+days)
-        console.log('desired :'+desired_date)
-        photos.each(function(index,Element){
-            if( Math.abs(desired_date - new Date(Element.getAttribute('date'))) < Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date'))) )
-            {
-                closest_photo = index
-            }
-            else
-            {
-                console.log(Element.getAttribute('date'))
-                console.log(Math.abs(desired_date - new Date(Element.getAttribute('date'))))
-                console.log(photos[closest_photo].getAttribute('date'))
-                console.log(Math.abs(desired_date - new Date(photos[closest_photo].getAttribute('date'))) )
-            }
-        });
-        //alert(closest_photo)
-        //$('ul#roundabout').roundabout("animateToChild", closest_photo)
-        var deg = 360 / photos.size()
-        $('ul#roundabout').roundabout("animateToDelta", (active_photo-closest_photo)*deg)
+    function initialize() {
+      var myOptions = {
+        zoom: 8,
+        center: new google.maps.LatLng(-34.397, 150.644),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     }
-    
 
-</script>
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "http://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&sensor=TRUE_OR_FALSE&callback=initialize";
+      document.body.appendChild(script);
+    }
+}

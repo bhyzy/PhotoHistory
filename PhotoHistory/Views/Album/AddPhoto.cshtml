@@ -30,37 +30,36 @@
     </form>
 </div>
 
-@section jQuery {
-<script type="text/javascript">
-    $(function () {
-        $("#datepicker").datepicker();
-    });
+@section JS {
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker();
+        });
 
-    function hide() {
-        {
-            for (var i = 0; i < document.getElementsByName("Source").length; i++) {
-                document.u
-                if (document.getElementById("uploadForm").Source[i].checked) {
-                    var rad_val = document.getElementById("uploadForm").Source[i].value;
-                    var fileVisibility;
-                    var remoteVisibility;
-                    if (rad_val == "remote") {
-                        fileVisibility = "hidden-content";
-                        remoteVisibility = "";
-                    }
+        function hide() {
+            {
+                for (var i = 0; i < document.getElementsByName("Source").length; i++) {
+                    document.u
+                    if (document.getElementById("uploadForm").Source[i].checked) {
+                        var rad_val = document.getElementById("uploadForm").Source[i].value;
+                        var fileVisibility;
+                        var remoteVisibility;
+                        if (rad_val == "remote") {
+                            fileVisibility = "hidden-content";
+                            remoteVisibility = "";
+                        }
 
-                    else {
-                        fileVisibility = "";
-                        remoteVisibility = "hidden-content";
+                        else {
+                            fileVisibility = "";
+                            remoteVisibility = "hidden-content";
+                        }
+                        document.getElementById("fileDiv").className = fileVisibility;
+                        document.getElementById("remoteDiv").className = remoteVisibility;
+                        return;
                     }
-                    document.getElementById("fileDiv").className = fileVisibility;
-                    document.getElementById("remoteDiv").className = remoteVisibility;
-                    return;
                 }
             }
         }
-    }
-    hide();
-    </script>
-        
+        hide();
+    </script>   
 }
