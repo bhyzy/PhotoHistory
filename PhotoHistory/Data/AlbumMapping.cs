@@ -88,6 +88,12 @@ namespace PhotoHistory.Data
                 map.Key(c => c.Column("album_id"));
             }, a => a.OneToMany());
 
+            Bag(x => x.Comments, map =>
+            {
+                map.Table("Comments");
+                map.Key(c => c.Column("comment_id"));
+            }, a => a.OneToMany());
+
 
             Bag(x => x.TrustedUsers, map =>
             {

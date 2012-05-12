@@ -145,7 +145,9 @@ namespace PhotoHistory
                     Thumbnails = Helpers.AlbumThumbnails(album),
                     StartDate = start,
                     EndDate = end,
-                    Views = album.Views
+                    Views = album.Views,
+                    Comments = album.Comments.Count,
+                    Rating = album.Rating
                 };
                 list.Add(profileAlbum);
             }

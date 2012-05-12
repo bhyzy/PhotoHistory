@@ -30,6 +30,16 @@ namespace PhotoHistory.Data
             }
         }
 
+        public AlbumModel GetWithComments(int? id)
+        {
+            using (var session = GetSession())
+            {
+                AlbumModel album = session.CreateQuery("from AlbumModel where Id= :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+                album.Comments.ToList();
+                return album;
+            }
+        }
+
         public AlbumModel GetByIdWithUser(int? id)
         {
             using (var session = GetSession())
@@ -48,7 +58,11 @@ namespace PhotoHistory.Data
                 var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Views"));
                 models = criteria.List<AlbumModel>().ToList();
                 foreach (AlbumModel album in models)
+                { 
                     album.Photos.ToList();
+                    album.Comments.ToList();
+                }
+                    
             }
             return models;
         }
@@ -61,7 +75,10 @@ namespace PhotoHistory.Data
                 var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Rating"));
                 models = criteria.List<AlbumModel>().ToList();
                 foreach (AlbumModel album in models)
+                {
                     album.Photos.ToList();
+                    album.Comments.ToList();
+                }
             }
             return models;
         }
@@ -74,7 +91,10 @@ namespace PhotoHistory.Data
                 var query = session.CreateQuery("from AlbumModel order by RANDOM()").SetMaxResults(maxAlbums);
                 models = query.List<AlbumModel>().ToList();
                 foreach (AlbumModel album in models)
+                {
                     album.Photos.ToList();
+                    album.Comments.ToList();
+                }
             }
             return models;
         }

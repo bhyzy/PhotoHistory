@@ -28,7 +28,9 @@ namespace PhotoHistory.Models
         public virtual bool CommentsAllow { get; set; }
         public virtual bool CommentsAuth { get; set; }
         public virtual int? NotificationPeriod { get; set; }
+
         public virtual ICollection<PhotoModel> Photos { get; set; }
+        public virtual ICollection<CommentModel> Comments { get; set; }
         public virtual ICollection<UserModel> TrustedUsers{ get; set; }
 
 
