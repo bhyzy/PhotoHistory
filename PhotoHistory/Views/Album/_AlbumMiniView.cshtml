@@ -1,0 +1,21 @@
+﻿@model PhotoHistory.Models.AlbumProfileModel
+           
+<div class="album-thumb">
+	<a href="@Url.Action("Album", "Show", new { id = Model.Id })">
+		@{
+            int thumbCount = Model.Thumbnails.Count;
+            List<string> thumbs = new List<string>();
+            <img src="@(thumbCount > 0 ? Model.Thumbnails.First() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+            <img src="@(thumbCount > 1 ? Model.Thumbnails.ElementAt(thumbCount / 2) : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+            <img src="@(thumbCount > 2 ? Model.Thumbnails.Last() : "/Content/img/album_placeHolder.jpg")" class="photo" alt="Album thumbnail"/>
+
+            } 
+		<h3 class="album-title">@Model.Name</h3>
+	</a>
+	<span class="album-label">Timespan: </span><span class="album-value">@Model.StartDate - @Model.EndDate</span><br/>
+	<span class="album-label">Views: </span><span class="album-value">@Model.Views</span><br/>
+    <span class="album-label">Rating: </span><span class="album-value">@Model.Rating</span><br/>
+    <span class="album-label">Comments: </span><span class="album-value">@Model.Comments</span>
+                            
+</div>
+
