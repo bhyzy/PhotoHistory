@@ -47,6 +47,16 @@ namespace PhotoHistory.Data
 			//{
 			//   map.Column( "location" );
 			//} );
+
+			Property( x => x.LocationLatitude, map =>
+			{
+				map.Column( "loc_latitude" );
+			} );
+
+			Property( x => x.LocationLongitude, map =>
+			{
+				map.Column( "loc_longitude" );
+			} );
 		}
 	}
 
