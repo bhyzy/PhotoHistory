@@ -35,8 +35,18 @@ namespace PhotoHistory.Data
         {
             using (var session = GetSession())
             {
-                AlbumModel album = session.CreateQuery("from AlbumModel where Id= :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                 album.Comments.ToList();
+                return album;
+            }
+        }
+
+        public AlbumModel GetByIdWithPhotos(int? id)
+        {
+            using (var session = GetSession())
+            {
+                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+                album.Photos.ToList();
                 return album;
             }
         }
@@ -83,6 +93,25 @@ namespace PhotoHistory.Data
             }
             return models;
         }
+        
+        public List<AlbumModel> GetBiggest(int maxAlbums)
+        {
+            List<AlbumModel> models = new List<AlbumModel>();
+            using (var session = GetSession())
+            {
+                var sql = session.CreateSQLQuery("select album_id,count(album_id) albums from Albums join Photos using(album_id) group by album_id order by albums desc;");
+                IList<object[]> list = sql.List<object[]>();
+                AlbumModel album;
+                foreach (object[] item in list)
+                {
+                    album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", item[0]).UniqueResult<AlbumModel>();
+                    album.Photos.ToList();
+                    album.Comments.ToList();
+                    models.Add(album);
+                }
+            }
+            return models;
+        }
 
         public List<AlbumModel> GetRandom(int maxAlbums)
         {
@@ -103,7 +132,6 @@ namespace PhotoHistory.Data
         public List<AlbumModel> GetRecentlyCommented(int maxAlbums)
         {
             List<AlbumModel> models = new List<AlbumModel>();
-            
             using (var session = GetSession())
             {
                 var albumQuery = session.CreateSQLQuery(String.Format("select distinct album_id from (select album_id,date_posted  from Comments c order by c.date_posted ) a limit {0};", maxAlbums));
@@ -115,6 +143,27 @@ namespace PhotoHistory.Data
                     album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                     album.Photos.ToList();
                     album.Comments.ToList();
+                    models.Add(album);
+                }
+                return models;
+            }
+        }
+
+        public List<AlbumModel> GetMostCommented(int maxAlbums)
+        {
+            List<AlbumModel> models = new List<AlbumModel>();
+
+            using (var session = GetSession())
+            {
+                var albumQuery = session.CreateSQLQuery(String.Format("select album_id, count(album_id) as albCount from Comments c group by album_id order by albCount desc limit {0};", maxAlbums));
+                var albumsId = albumQuery.List<object[]>();
+
+                AlbumModel album = GetWithComments(1);
+                foreach (object[] item in albumsId)
+                {
+                    album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", item[0]).UniqueResult<AlbumModel>();
+                    album.Photos.ToList<PhotoModel>();
+                    album.Comments.ToList<CommentModel>();
                     models.Add(album);
                 }
                 return models;
@@ -156,15 +205,7 @@ namespace PhotoHistory.Data
             }
         }
 
-        public AlbumModel GetByIdWithPhotos(int? id)
-        {
-            using (var session = GetSession())
-            {
-                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.Photos.ToList();
-                return album;
-            }
-        }
+
 
         /*public IEnumerable<AlbumModel> GetByUser(int ?userID)
         {

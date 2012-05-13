@@ -27,12 +27,6 @@ namespace PhotoHistory.Controllers
 
             models.Add(new HomepageAlbumModel()
             {
-                Name = "Recently commented",
-                Albums = Helpers.Convert(repo.GetRecentlyCommented(ALBUMS_IN_CATEGORY))
-            });
-
-            models.Add(new HomepageAlbumModel()
-            {
                 Name = "Top rated",
                 Albums = Helpers.Convert(repo.GetTopRated(ALBUMS_IN_CATEGORY))
             });
@@ -41,6 +35,24 @@ namespace PhotoHistory.Controllers
             {
                 Name = "Random",
                 Albums = Helpers.Convert(repo.GetRandom(ALBUMS_IN_CATEGORY))
+            });
+
+            models.Add(new HomepageAlbumModel()
+            {
+                Name = "Biggest",
+                Albums = Helpers.Convert(repo.GetBiggest(ALBUMS_IN_CATEGORY))
+            });
+
+            models.Add(new HomepageAlbumModel()
+            {
+                Name = "Recently commented",
+                Albums = Helpers.Convert(repo.GetRecentlyCommented(ALBUMS_IN_CATEGORY))
+            });
+
+            models.Add(new HomepageAlbumModel()
+            {
+                Name = "Most commented",
+                Albums = Helpers.Convert(repo.GetMostCommented(ALBUMS_IN_CATEGORY))
             });
 
 			return View(models);

@@ -92,7 +92,7 @@ namespace PhotoHistory.Data
             Bag(x => x.Comments, map =>
             {
                 map.Table("Comments");
-                map.Key(c => c.Column("comment_id"));
+                map.Key(c => c.Column("album_id"));
             }, a => a.OneToMany());
 
             

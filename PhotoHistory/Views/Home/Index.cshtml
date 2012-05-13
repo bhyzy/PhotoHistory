@@ -24,16 +24,19 @@
         <div id="content-@(count == 0 ? "left" : "right")">
 
         @foreach (PhotoHistory.Models.HomepageAlbumModel AlbumContainer in albums)
-        { 
-            <div class="post">
-                <h2 class="title"> <a href="#">@AlbumContainer.Name</a> </h2>
-                <div class="entry">
-                    @foreach (PhotoHistory.Models.AlbumProfileModel album in AlbumContainer.Albums)
-                    {
-                        Html.RenderPartial("_AlbumMiniView", album);
-                    }
+        {
+            if (AlbumContainer.Albums.Count > 0)
+            {
+                <div class="post">
+                    <h2 class="title"> <a href="#">@AlbumContainer.Name</a> </h2>
+                    <div class="entry">
+                        @foreach (PhotoHistory.Models.AlbumProfileModel album in AlbumContainer.Albums)
+                        {
+                            Html.RenderPartial("_AlbumMiniView", album);
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         }
         </div>
     }
