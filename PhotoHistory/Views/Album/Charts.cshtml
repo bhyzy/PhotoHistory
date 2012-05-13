@@ -1,66 +1,54 @@
-﻿<div class="left"><h1 class="page-title">Charts</h1></div>
+﻿@model PhotoHistory.Models.HomepageAlbumModel
+
+<div class="left"><h1 class="page-title">Charts</h1></div>
+
 <div class="right">
 	<ul class="nav nav-pills">
-		<li class="active"><a href="#">Most popular</a></li>
-		<li><a href="#">Highest rated</a></li>
-		<li><a href="#">Most commented</a></li>
-		<li><a href="#">The longest</a></li>
+		<li class="@(ViewBag.Chart == ChartCategory.Popular? "active":"")"><a href="@Url.Action("Charts",new {category = ChartCategory.Popular})">Most popular</a></li>
+		<li class="@(ViewBag.Chart == ChartCategory.TopRated ? "active" : "")"><a href="@Url.Action("Charts",new {category = ChartCategory.TopRated})">Highest rated</a></li>
+		<li class="@(ViewBag.Chart == ChartCategory.MostComments ? "active" : "")"><a href="@Url.Action("Charts",new {category = ChartCategory.MostComments})">Most commented</a></li>
+		<li class="@(ViewBag.Chart == ChartCategory.Biggest ? "active" : "")"><a href="@Url.Action("Charts",new {category = ChartCategory.Biggest})">Biggest</a></li>
 	</ul>
 </div>
+
 <div style="clear: both;">&nbsp;</div>	
+
 <div class="post">
-	<h2 class="title"><a href="#">Most popular</a></h2>
+	<h2 class="title">@Model.Name</h2>
+    @{
+        int counter = 0;
+        List<PhotoHistory.Models.AlbumProfileModel> left = new List<PhotoHistory.Models.AlbumProfileModel>();
+        List<PhotoHistory.Models.AlbumProfileModel> right = new List<PhotoHistory.Models.AlbumProfileModel>();
+        foreach (PhotoHistory.Models.AlbumProfileModel album in Model.Albums)
+        {
+            if(counter++ % 2 ==0){left.Add(album);}
+            else{right.Add(album);}
+        }
+        counter = -1;
+    }
+
+    
 	<div id="content-left">
-		<div class="entry">
-			<div class="rank">1.</div>
-			<div class="album-thumb">
-				<a href="#">
-					<img src="@(Url.Content( "~/Content/tmp/photo1.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo2.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo3.jpg" ))" class="photo" />
-				<h3 class="album-title">Noah K. everyday</h3>
-				</a>
-				<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-				<span class="album-label">Views: </span><span class="album-value">117 684</span>
-			</div>
-			<div class="rank">3.</div>
-			<div class="album-thumb">
-				<a href="#">
-					<img src="@(Url.Content( "~/Content/tmp/photo1.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo2.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo3.jpg" ))" class="photo" />
-				<h3 class="album-title">Noah K. everyday</h3>
-				</a>
-				<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-				<span class="album-label">Views: </span><span class="album-value">117 684</span>
-			</div>
-		</div>
-	</div>	
-	<div id="content-right">
-		<div class="entry">
-			<div class="rank">2.</div>
-			<div class="album-thumb">
-				<a href="#">
-					<img src="@(Url.Content( "~/Content/tmp/photo1.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo2.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo3.jpg" ))" class="photo" />
-				<h3 class="album-title">Noah K. everyday</h3>
-				</a>
-				<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-				<span class="album-label">Views: </span><span class="album-value">117 684</span>
-			</div>
-			<div class="rank">4.</div>
-			<div class="album-thumb">
-				<a href="#">
-					<img src="@(Url.Content( "~/Content/tmp/photo1.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo2.jpg" ))" class="photo" />
-					<img src="@(Url.Content( "~/Content/tmp/photo3.jpg" ))" class="photo" />
-				<h3 class="album-title">Noah K. everyday</h3>
-				</a>
-				<span class="album-label">Timespan: </span><span class="album-value">03/01/2003 - 12/04/2012</span><br/>
-				<span class="album-label">Views: </span><span class="album-value">117 684</span>
-			</div>
-		</div>		
-	</div>	
+        @foreach (PhotoHistory.Models.AlbumProfileModel album in left)
+        {
+            <div class="entry">
+			        <div class="rank">@(counter += 2).</div>
+                     @{Html.RenderPartial("_AlbumMiniView", album);}   
+		    </div>
+        }
+    </div>
+		
+    @{counter = 0;}
+	<div id="content-right">		
+        @foreach (PhotoHistory.Models.AlbumProfileModel album in right)
+        {
+            <div class="entry">
+			        <div class="rank">@(counter += 2).</div>
+                     @{Html.RenderPartial("_AlbumMiniView", album);}   
+		    </div>
+        }
+    </div>
+	
+    
+</div>	
 	<div style="clear: both;">&nbsp;</div>				
-</div>

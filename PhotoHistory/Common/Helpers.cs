@@ -177,4 +177,7 @@ namespace PhotoHistory
             end = endD.ToString("dd/MM/yyyy");
         }
     }
+
+    public enum ChartCategory {Popular, TopRated, Biggest, MostComments}
+    public enum MainCategory { Home, Browse, Charts}
 }

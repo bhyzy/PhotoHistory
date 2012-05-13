@@ -15,7 +15,7 @@ namespace PhotoHistory.Controllers
 		[Authorize]
 		public ActionResult Index()
 		{
-            
+            @ViewBag.Category = MainCategory.Home;
             List<HomepageAlbumModel> models = new List<HomepageAlbumModel>();
             AlbumRepository repo = new AlbumRepository();
 

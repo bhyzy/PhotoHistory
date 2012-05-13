@@ -86,13 +86,13 @@ Released   : 20090918
         <div id="menu">
             <ul>
 
-                <li class="current_page_item">
+                <li class="@(ViewBag.Category == MainCategory.Home ? "current_page_item":"" )">
                     <a href="@(Url.Action( "Index", "Home" ))"><i class="icon-home"></i> Home</a>
                 </li>
-                <li>
+                <li class="@(ViewBag.Category == MainCategory.Browse ? "current_page_item":"") ">
                     <a href="@(Url.Action( "Browse", "Album" ))"><i class="icon-folder-open icon-white"></i> Browse</a>
                 </li>
-                <li>
+                <li class="@(ViewBag.Category == MainCategory.Charts ? "current_page_item":"") ">
                     <a href="@(Url.Action( "Charts", "Album" ))"><i class="icon-star icon-white"></i> Charts</a>
                 </li>
             </ul>

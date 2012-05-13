@@ -26,6 +26,7 @@ namespace PhotoHistory.Controllers
 
 		public ActionResult Browse()
 		{
+            @ViewBag.Category = MainCategory.Browse;
 			UserRepository userRepo = new UserRepository();
 
 			UserModel user = new UserModel()
@@ -46,9 +47,25 @@ namespace PhotoHistory.Controllers
 			return View();
 		}
 
-		public ActionResult Charts()
+		public ActionResult Charts(ChartCategory ? category)
 		{
-			return View();
+            const int maxAlbums = 4;
+            
+            HomepageAlbumModel model =null;
+            AlbumRepository repo = new AlbumRepository();
+            @ViewBag.Category = MainCategory.Charts;
+            category = category ?? ChartCategory.Popular;
+            if (!Enum.IsDefined(typeof(ChartCategory), category))
+                category = ChartCategory.Popular;
+            @ViewBag.Chart = category;
+            switch (category)
+            {
+                case ChartCategory.Popular: { model = new HomepageAlbumModel() { Name = "Most popular", Albums = Helpers.Convert(repo.GetMostPopular(maxAlbums)) }; break; }
+                case ChartCategory.Biggest: { model = new HomepageAlbumModel() { Name = "Biggest", Albums = Helpers.Convert(repo.GetBiggest(maxAlbums)) }; break; }
+                case ChartCategory.MostComments: { model = new HomepageAlbumModel() { Name = "Most commented", Albums = Helpers.Convert(repo.GetMostCommented(maxAlbums)) }; break; }
+                case ChartCategory.TopRated: { model = new HomepageAlbumModel() { Name = "Highest rated", Albums = Helpers.Convert(repo.GetTopRated(maxAlbums)) }; break; }
+            }
+			return View(model);
 		}
 
 

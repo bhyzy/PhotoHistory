@@ -197,6 +197,7 @@
     <Content Include="Views\Album\_Form.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Album\Copy of Show.cshtml" />
+    <Content Include="Views\Album\Charts.cshtml" />
     <None Include="Views\Album\Show.cshtml" />
     <None Include="Views\Album\Manage.cshtml" />
     <None Include="Views\Album\ManageAlbum.cshtml" />
@@ -238,9 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Album\Browse.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Album\Charts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\Create.cshtml" />
