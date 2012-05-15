@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Web;
 
 namespace PhotoHistory
 {
@@ -176,6 +177,15 @@ namespace PhotoHistory
             start = startD.ToString("dd/MM/yyyy");
             end = endD.ToString("dd/MM/yyyy");
         }
+
+		  public static string BaseURL()
+		  {
+			  string contentURI = new UrlHelper( HttpContext.Current.Request.RequestContext ).Content( "~" );
+			  return string.Format( "{0}://{1}{2}", 
+				  HttpContext.Current.Request.Url.Scheme, 
+				  HttpContext.Current.Request.Url.Authority,
+				  contentURI.Substring(0, contentURI.Length - 1) );
+		  }
     }
 
     public enum ChartCategory {Popular, TopRated, Biggest, MostComments}

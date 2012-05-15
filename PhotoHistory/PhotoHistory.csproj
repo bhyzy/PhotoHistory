@@ -77,6 +77,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\APIRegistration.cs" />
+    <Compile Include="API\Controllers\API_AlbumsController.cs" />
+    <Compile Include="API\Controllers\API_APIController.cs" />
+    <Compile Include="API\RestHttpVerbFilter.cs" />
     <Compile Include="Common\ActionFilters.cs" />
     <Compile Include="Common\BuildInitializer.cs" />
     <Compile Include="Common\FileHelper.cs" />
@@ -231,6 +235,7 @@
     <Content Include="Views\Shared\_AlbumMiniView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="API\Models\" />
     <Folder Include="App_Data\" />
     <Folder Include="Users\" />
   </ItemGroup>

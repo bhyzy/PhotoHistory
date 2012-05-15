@@ -243,5 +243,12 @@ namespace PhotoHistory.Data
         }
 
 
+		  public ICollection<AlbumModel> GetAll()
+		  {
+			  using ( var session = GetSession() )
+			  {
+				  return session.CreateQuery( "from AlbumModel" ).List<AlbumModel>();
+			  }
+		  }
     }
 }
