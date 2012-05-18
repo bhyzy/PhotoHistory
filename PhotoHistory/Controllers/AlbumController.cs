@@ -326,6 +326,20 @@ namespace PhotoHistory.Controllers
 		}
 
 
+        // AJAX: /Album/Vote/5
+        [HttpPost]
+        public ActionResult Vote(int id, bool up)
+        {
+            string response=id.ToString()+" "+up.ToString();
+            //TODO
+            // check in session if already voted
+            // change album rating 
+            // return reponse
+            return Json(response);
+        }
+
+
+
 		// ------------ PRIVATE METHODS ------------------
 
 		// loads categories as a list
