@@ -78,9 +78,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\APIRegistration.cs" />
+    <Compile Include="API\Authentication\BasicAuthorizeAttribute.cs" />
+    <Compile Include="API\Authentication\BasicUnauthorizedResult.cs" />
+    <Compile Include="API\Authentication\UserAuthentication.cs" />
+    <Compile Include="API\Common\ApiHelpers.cs" />
     <Compile Include="API\Controllers\API_AlbumsController.cs" />
     <Compile Include="API\Controllers\API_APIController.cs" />
-    <Compile Include="API\RestHttpVerbFilter.cs" />
+    <Compile Include="API\Controllers\API_UsersController.cs" />
+    <Compile Include="API\Common\HandleJsonErrorAttribute.cs" />
+    <Compile Include="API\Common\RestHttpVerbFilter.cs" />
     <Compile Include="Common\ActionFilters.cs" />
     <Compile Include="Common\BuildInitializer.cs" />
     <Compile Include="Common\FileHelper.cs" />
