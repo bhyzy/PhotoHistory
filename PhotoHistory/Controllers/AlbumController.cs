@@ -331,11 +331,26 @@ namespace PhotoHistory.Controllers
         [HttpPost]
         public ActionResult Vote(int id, bool up)
         {
-            string response=id.ToString()+" "+up.ToString();
-            //TODO
-            // check in session if already voted
-            // change album rating 
-            // return reponse
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            string[] response = new string[2];
+            // reponse[0] is a new rating
+            // response[1] is a message for a user
+            if (user != null)
+            {
+                //create vote if the user is logged in
+                if (album.CreateVote(user, up))
+                    response[1] = "Your vote has been saved.";
+                else
+                    response[1] = "You have already voted on this album !";
+            }
+            else
+            {
+                response[1] = "You need to be logged in to vote";
+            }            
+            response[0] = album.getRating().ToString();            
             return Json(response);
         }
 
