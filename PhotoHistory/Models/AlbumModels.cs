@@ -81,6 +81,44 @@ namespace PhotoHistory.Models
             }
         }
 
+		  // -------------------------------- VOTES -------------------------
+
+		  // USE THIS INSTEAD OF 'RATING' ATTRIBUTE !
+		  public virtual long getRating()
+		  {
+			  using ( var session = SessionProvider.SessionFactory.OpenSession() )
+			  {
+				  long positive_votes = session.CreateSQLQuery( string.Format( "SELECT count(*) FROM votes WHERE album_id={0} AND up=true", Id ) ).UniqueResult<long>();
+				  long negative_votes = session.CreateSQLQuery( string.Format( "SELECT count(*) FROM votes WHERE album_id={0} AND up=false", Id ) ).UniqueResult<long>();
+				  return positive_votes - negative_votes;
+			  }
+		  }
+
+
+		  // create a vote
+		  public virtual bool CreateVote(UserModel user, bool up)
+		  {
+			  using ( var session = SessionProvider.SessionFactory.OpenSession() )
+			  {
+				  using ( var transaction = session.BeginTransaction() )
+				  {
+					  try
+					  {
+						  IQuery query = session.CreateSQLQuery( string.Format( "insert into votes (album_id,user_id,up) values ({0}, {1}, {2})", Id, user.Id, up ) );
+						  query.ExecuteUpdate();
+						  transaction.Commit();
+					  }
+					  catch ( Exception )
+					  {
+						  // vote was not created
+						  return false;
+					  }
+				  }
+			  }
+			  return true;
+		  }
+
+		 // -------------------------------- END VOTES -------------------------
     }
 
     public class AlbumProfileModel
