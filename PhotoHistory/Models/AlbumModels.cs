@@ -8,9 +8,9 @@ using NHibernate;
 
 namespace PhotoHistory.Models
 {
-    public class AlbumModel
+	 public class AlbumModel : AbstractDataModel<AlbumModel>
     {
-        public virtual int? Id { get; set; }
+       // public virtual int? Id { get; set; }
         public virtual UserModel User { get; set; } 
         [Required]
         public virtual CategoryModel Category { get; set; }

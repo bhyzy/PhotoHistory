@@ -16,6 +16,13 @@ namespace PhotoHistory.API.Authentication
 			set { _RequireSsl = value; }
 		}
 
+		bool _Optional = false;
+		public bool Optional
+		{
+			get { return _Optional; }
+			set { _Optional = value; }
+		}
+
 		private void CacheValidateHandler(HttpContext context, object data, ref HttpValidationStatus validationStatus)
 		{
 			validationStatus = OnCacheAuthorization( new HttpContextWrapper( context ) );
@@ -27,8 +34,10 @@ namespace PhotoHistory.API.Authentication
 
 			if ( !Authenticate( filterContext.HttpContext ) )
 			{
-				filterContext.Result = new HttpBasicUnauthorizedResult();
-				//filterContext.Result = new JsonResult() { Data = new { ok = false, error = "unauthorized" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+				if ( !_Optional )
+				{
+					filterContext.Result = new HttpBasicUnauthorizedResult();
+				}
 			}
 			else
 			{
@@ -43,8 +52,10 @@ namespace PhotoHistory.API.Authentication
 				else
 				{
 					// auth failed, display login
-					filterContext.Result = new HttpBasicUnauthorizedResult();
-					//filterContext.Result = new JsonResult() { Data = new { ok = false, error = "unauthorized" } };
+					if ( !_Optional )
+					{
+						filterContext.Result = new HttpBasicUnauthorizedResult();
+					}
 				}
 			}
 		}

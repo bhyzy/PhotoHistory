@@ -83,12 +83,20 @@ namespace PhotoHistory.Data
 			}
 		}
 
-        public UserModel GetByUsernameWithAlbums(string username)
+        public UserModel GetByUsernameWithAlbums(string username, bool withTrustedUsers = false)
         {
             using (var session = GetSession())
             {
                 UserModel user = session.CreateQuery("from UserModel where Login = :login").SetParameter("login", username).UniqueResult<UserModel>();
-                user.Albums.ToList();
+					 if ( user != null )
+					 {
+						 user.Albums.ToList();
+						 if (withTrustedUsers)
+						 {
+							 foreach ( AlbumModel album in user.Albums )
+								 album.TrustedUsers.ToList();
+						 }
+					 }
                 return user;
             }
         }

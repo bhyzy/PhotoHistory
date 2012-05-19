@@ -26,23 +26,24 @@ namespace PhotoHistory.Controllers
 
 		public ActionResult Browse()
 		{
-            @ViewBag.Category = MainCategory.Browse;
-			UserRepository userRepo = new UserRepository();
+         @ViewBag.Category = MainCategory.Browse;
 
-			UserModel user = new UserModel()
-			{
-				Login = "kasia1337",
-				Password = "tralala",
-				Email = "kasia@buziaczek.pl"
-			};
-			userRepo.Create( user );
+			//UserRepository userRepo = new UserRepository();
 
-			UserModel user2 = userRepo.GetById( user.Id );
-			user2.Login = "Kasia666";
-			userRepo.Update( user2 );
+			//UserModel user = new UserModel()
+			//{
+			//   Login = "kasia1337",
+			//   Password = "tralala",
+			//   Email = "kasia@buziaczek.pl"
+			//};
+			//userRepo.Create( user );
 
-			userRepo.Delete( user2 );
-			UserModel user3 = userRepo.GetById( user2.Id );
+			//UserModel user2 = userRepo.GetById( user.Id );
+			//user2.Login = "Kasia666";
+			//userRepo.Update( user2 );
+
+			//userRepo.Delete( user2 );
+			//UserModel user3 = userRepo.GetById( user2.Id );
 
 			return View();
 		}

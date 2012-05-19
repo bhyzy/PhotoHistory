@@ -26,6 +26,11 @@ namespace PhotoHistory.API
 				new { controller = "API_Users", action = "VerifyCredentials" } );
 
 			context.MapRoute(
+				"API describe user",
+				"api/users/{userName}",
+				new { controller = "API_Users", action = "Describe" } );
+
+			context.MapRoute(
 				"API 404 not found",
 				"api/{*url}",
 				new { controller = "API_API", action = "UnrecognizedCall" } );

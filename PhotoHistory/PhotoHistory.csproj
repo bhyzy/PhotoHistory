@@ -112,6 +112,7 @@
     <Compile Include="Models\AlbumModels.cs" />
     <Compile Include="Models\CategoryModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
+    <Compile Include="Models\AbstractDataModel.cs" />
     <Compile Include="Models\PhotoModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

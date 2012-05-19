@@ -250,5 +250,25 @@ namespace PhotoHistory.Data
 				  return session.CreateQuery( "from AlbumModel" ).List<AlbumModel>();
 			  }
 		  }
+
+		  public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user)
+		  {
+			  if ( album == null )
+				  throw new ArgumentException( "album" );
+
+			  // public album - eveyrone can view it
+			  if ( album.Public )
+				  return true;
+
+			  // given user is the owner of the album
+			  if ( album.User == user )
+				  return true;
+
+			  // given user is among trusted users for this album
+			  if ( album.TrustedUsers != null && album.TrustedUsers.Contains( user ) )
+				  return true;
+
+			  return false;
+		  }
     }
 }
