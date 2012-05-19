@@ -327,23 +327,29 @@ namespace PhotoHistory.Controllers
 
 
         // AJAX: /Album/Vote/5
-        [Authorize]
         [HttpPost]
         public ActionResult Vote(int id, bool up)
         {
-            string response=id.ToString()+" "+up.ToString();
-            //TODO
-            // check if already voted - done (primary keys)
-            // change album rating - done 
-            // return reponse - refresh rating if success, alert if error
-            UserRepository users = new UserRepository();
-            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
-
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetById(id);
-
-            album.CreateVote(user, up);
-
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            string[] response = new string[2];
+            // reponse[0] is a new rating
+            // response[1] is a message for a user
+            if (user != null)
+            {
+                //create vote if the user is logged in
+                if (album.CreateVote(user, up))
+                    response[1] = "Your vote has been saved.";
+                else
+                    response[1] = "You have already voted on this album !";
+            }
+            else
+            {
+                response[1] = "You need to be logged in to vote";
+            }            
+            response[0] = album.getRating().ToString();            
             return Json(response);
         }
 

@@ -95,8 +95,8 @@
             <div id="album-rate">
             <!-- Ajax requests -->
                 Rating: <span class="album-rating">@Model.getRating()</span> 
-                <span class="label label-success"><a class="vote" data-up="true" href="#">+1</a></span>
-                <span class="label label-important"><a class="vote" data-up="false" href="#">-1</a></span>
+                <a class="vote" data-up="true" href="#"><span class="label label-success">+1</span></a>
+                <a class="vote" data-up="false" href="#"><span class="label label-important">-1</span></a>
             </div>
         </div>
         <div id="album-comments">
@@ -153,7 +153,8 @@
                     function (data) {
                         // Successful requests get here
                         // Update the page elements
-                        alert(data)
+                        $(".album-rating").text(data[0])
+                        alert(data[1])
                     });
                     return false;
             });

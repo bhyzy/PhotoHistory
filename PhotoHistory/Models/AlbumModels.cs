@@ -105,9 +105,17 @@ namespace PhotoHistory.Models
             {
                 using (var transaction = session.BeginTransaction())
                 {
-                    IQuery query = session.CreateSQLQuery(string.Format("insert into votes (album_id,user_id,up) values ({0}, {1}, {2})", Id, user.Id,up));
-                    query.ExecuteUpdate();
-                    transaction.Commit();
+                    try
+                    {
+                        IQuery query = session.CreateSQLQuery(string.Format("insert into votes (album_id,user_id,up) values ({0}, {1}, {2})", Id, user.Id, up));
+                        query.ExecuteUpdate();
+                        transaction.Commit();
+                    }
+                    catch(Exception)
+                    {
+                        // vote was not created
+                        return false;
+                    }
                 }
             }
             return true;
