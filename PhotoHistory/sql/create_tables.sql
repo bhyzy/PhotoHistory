@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS TrustedUsers CASCADE;
 DROP TABLE IF EXISTS Comments CASCADE;
 DROP TABLE IF EXISTS Subscriptions CASCADE;
 DROP TABLE IF EXISTS Activations CASCADE;
+DROP TABLE IF EXISTS Votes CASCADE;
 
 CREATE TABLE Users
 (
@@ -95,3 +96,14 @@ CREATE TABLE Subscriptions
 	album_id integer REFERENCES Albums,
 	primary key(user_id, album_id)
 );	
+
+
+
+CREATE TABLE Votes
+(
+	user_id integer REFERENCES Users,
+	album_id integer REFERENCES Albums,
+	primary key(user_id, album_id),
+	up boolean NOT NULL
+);	
+CREATE INDEX vote_album_idx on Votes (album_id);

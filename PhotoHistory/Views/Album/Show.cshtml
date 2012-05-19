@@ -94,7 +94,7 @@
             </div>
             <div id="album-rate">
             <!-- Ajax requests -->
-                Rating: <span class="album-rating">@Model.Rating</span> 
+                Rating: <span class="album-rating">@Model.getRating()</span> 
                 <span class="label label-success"><a class="vote" data-up="true" href="#">+1</a></span>
                 <span class="label label-important"><a class="vote" data-up="false" href="#">-1</a></span>
             </div>
@@ -155,6 +155,7 @@
                         // Update the page elements
                         alert(data)
                     });
+                    return false;
             });
         });
 
