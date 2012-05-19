@@ -31,6 +31,11 @@ namespace PhotoHistory.API
 				new { controller = "API_Albums", action = "Describe" } );
 
 			context.MapRoute(
+				"API describe photo",
+				"api/photos/{id}",
+				new { controller = "API_Photos", action = "Describe" } );
+
+			context.MapRoute(
 				"API 404 not found",
 				"api/{*url}",
 				new { controller = "API_API", action = "UnrecognizedCall" } );

@@ -84,6 +84,7 @@
     <Compile Include="API\Common\ApiHelpers.cs" />
     <Compile Include="API\Controllers\API_AlbumsController.cs" />
     <Compile Include="API\Controllers\API_APIController.cs" />
+    <Compile Include="API\Controllers\API_PhotosController.cs" />
     <Compile Include="API\Controllers\API_UsersController.cs" />
     <Compile Include="API\Common\HandleJsonErrorAttribute.cs" />
     <Compile Include="API\Common\RestHttpVerbFilter.cs" />
