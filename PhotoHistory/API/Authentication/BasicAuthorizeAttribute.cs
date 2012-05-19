@@ -28,6 +28,7 @@ namespace PhotoHistory.API.Authentication
 			if ( !Authenticate( filterContext.HttpContext ) )
 			{
 				filterContext.Result = new HttpBasicUnauthorizedResult();
+				//filterContext.Result = new JsonResult() { Data = new { ok = false, error = "unauthorized" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 			}
 			else
 			{
@@ -43,6 +44,7 @@ namespace PhotoHistory.API.Authentication
 				{
 					// auth failed, display login
 					filterContext.Result = new HttpBasicUnauthorizedResult();
+					//filterContext.Result = new JsonResult() { Data = new { ok = false, error = "unauthorized" } };
 				}
 			}
 		}
