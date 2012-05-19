@@ -16,11 +16,6 @@ namespace PhotoHistory.API
 		public override void RegisterArea(AreaRegistrationContext context)
 		{
 			context.MapRoute(
-				"API list albums",
-				"api/albums",
-				new { controller = "API_Albums", action = "ListAlbums" } );
-
-			context.MapRoute(
 				"API verify credentials",
 				"api/users/verify_credentials",
 				new { controller = "API_Users", action = "VerifyCredentials" } );
@@ -29,6 +24,11 @@ namespace PhotoHistory.API
 				"API describe user",
 				"api/users/{userName}",
 				new { controller = "API_Users", action = "Describe" } );
+
+			context.MapRoute(
+				"API describe album",
+				"api/albums/{id}",
+				new { controller = "API_Albums", action = "Describe" } );
 
 			context.MapRoute(
 				"API 404 not found",

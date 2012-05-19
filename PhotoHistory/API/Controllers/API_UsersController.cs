@@ -34,8 +34,8 @@ namespace PhotoHistory.API.Controllers
 		[BasicAuthorize( Optional = true )]
 		public ActionResult Describe(string userName)
 		{
-			UserModel authUser = ( User.Identity.IsAuthenticated? 
-				new UserRepository().GetByUsername(User.Identity.Name) : null );
+			UserModel authUser = (User.Identity.IsAuthenticated ?
+				new UserRepository().GetByUsername( User.Identity.Name ) : null);
 
 			userName = HttpUtility.UrlDecode( userName ).Trim();
 			if ( userName == string.Empty )
@@ -62,6 +62,7 @@ namespace PhotoHistory.API.Controllers
 				data = new
 				{
 					id = user.Id,
+					username = user.Login,
 					date_of_birth = (user.DateOfBirth.HasValue ? new
 					{
 						day = user.DateOfBirth.Value.Day,

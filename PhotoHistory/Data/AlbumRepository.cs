@@ -27,38 +27,42 @@ namespace PhotoHistory.Data
         {
             using (var session = GetSession())
             {
-                return session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+					return session.CreateQuery( "from AlbumModel where Id = :id" ).SetParameter( "id", id ).UniqueResult<AlbumModel>();
             }
         }
+
+		  public AlbumModel GetById(int? id,
+			  bool withUser = false, bool withPhotos = false, bool withComments = false, 
+			  bool withCategory = false, bool withTrustedUsers = false)
+		  {
+			  using ( var session = GetSession() )
+			  {
+				  AlbumModel album = session.CreateQuery( "from AlbumModel where Id = :id" ).SetParameter( "id", id ).UniqueResult<AlbumModel>();
+				  if ( album != null )
+				  {
+					  if ( withComments ) album.Comments.ToList();
+					  if ( withUser ) album.User.ToString();
+					  if ( withPhotos ) album.Photos.ToString();
+					  if ( withCategory ) album.Category.ToString();
+					  if ( withTrustedUsers ) album.TrustedUsers.ToList();
+				  }
+				  return album;
+			  }
+		  }
 
         public AlbumModel GetWithComments(int? id)
         {
-            using (var session = GetSession())
-            {
-                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.Comments.ToList();
-                return album;
-            }
+			  return GetById( id, withComments: true );
         }
 
-        public AlbumModel GetByIdWithPhotos(int? id)
+        public AlbumModel GetByIdWithPhotos(int? id, bool with)
         {
-            using (var session = GetSession())
-            {
-                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.Photos.ToList();
-                return album;
-            }
+			  return GetById( id, withPhotos: true );
         }
 
         public AlbumModel GetByIdWithUser(int? id)
         {
-            using (var session = GetSession())
-            {
-                var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.User.ToString();
-                return album;
-            }
+			  return GetById( id, withUser: true );
         }
 
         public List<AlbumModel> GetMostPopular(int maxAlbums)
