@@ -36,7 +36,8 @@ namespace PhotoHistory.Data
             using (var session = GetSession())
             {
                 AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.Comments.ToList();
+                if(album!=null)
+                    album.Comments.ToList();
                 return album;
             }
         }
@@ -46,7 +47,8 @@ namespace PhotoHistory.Data
             using (var session = GetSession())
             {
                 AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.Photos.ToList();
+                if (album != null)
+                    album.Photos.ToList();
                 return album;
             }
         }
@@ -56,7 +58,8 @@ namespace PhotoHistory.Data
             using (var session = GetSession())
             {
                 var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.User.ToString();
+                if (album != null)
+                    album.User.ToString();
                 return album;
             }
         }
