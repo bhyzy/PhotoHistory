@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PhotoHistory.API
+namespace PhotoHistory.API.Common
 {
 	public class RestHttpVerbFilter : ActionFilterAttribute
 	{

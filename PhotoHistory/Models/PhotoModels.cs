@@ -6,9 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PhotoHistory.Models
 {
-	public class PhotoModel
+	public class PhotoModel : AbstractDataModel<PhotoModel>
 	{
-		public virtual int? Id { get; set; }
 		public virtual AlbumModel Album { get; set; }
 		public virtual DateTime Date { get; set; }
 		public virtual string Description { get; set; }

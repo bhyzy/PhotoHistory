@@ -16,13 +16,33 @@ namespace PhotoHistory.API
 		public override void RegisterArea(AreaRegistrationContext context)
 		{
 			context.MapRoute(
-				"API list albums",
-				"api/albums",
-				new { controller = "API_Albums", action = "ListAlbums" } );
+				"API verify credentials",
+				"api/users/verify_credentials",
+				new { controller = "API_Users", action = "VerifyCredentials" } );
 
 			context.MapRoute(
-				"API default",
-				"api/*",
+				"API describe user",
+				"api/users/{userName}",
+				new { controller = "API_Users", action = "Describe" } );
+
+			context.MapRoute(
+				"API describe album",
+				"api/albums/{id}",
+				new { controller = "API_Albums", action = "Describe" } );
+
+			context.MapRoute(
+				"API describe photo",
+				"api/photos/{id}",
+				new { controller = "API_Photos", action = "Describe" } );
+
+			context.MapRoute(
+				"API upload photo",
+				"api/photos",
+				new { controller = "API_Photos", action = "UploadNew" } );
+
+			context.MapRoute(
+				"API 404 not found",
+				"api/{*url}",
 				new { controller = "API_API", action = "UnrecognizedCall" } );
 		}
 	}

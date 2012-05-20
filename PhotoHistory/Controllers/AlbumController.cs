@@ -26,23 +26,24 @@ namespace PhotoHistory.Controllers
 
 		public ActionResult Browse()
 		{
-            @ViewBag.Category = MainCategory.Browse;
-			UserRepository userRepo = new UserRepository();
+         @ViewBag.Category = MainCategory.Browse;
 
-			UserModel user = new UserModel()
-			{
-				Login = "kasia1337",
-				Password = "tralala",
-				Email = "kasia@buziaczek.pl"
-			};
-			userRepo.Create( user );
+			//UserRepository userRepo = new UserRepository();
 
-			UserModel user2 = userRepo.GetById( user.Id );
-			user2.Login = "Kasia666";
-			userRepo.Update( user2 );
+			//UserModel user = new UserModel()
+			//{
+			//   Login = "kasia1337",
+			//   Password = "tralala",
+			//   Email = "kasia@buziaczek.pl"
+			//};
+			//userRepo.Create( user );
 
-			userRepo.Delete( user2 );
-			UserModel user3 = userRepo.GetById( user2.Id );
+			//UserModel user2 = userRepo.GetById( user.Id );
+			//user2.Login = "Kasia666";
+			//userRepo.Update( user2 );
+
+			//userRepo.Delete( user2 );
+			//UserModel user3 = userRepo.GetById( user2.Id );
 
 			return View();
 		}
@@ -324,6 +325,35 @@ namespace PhotoHistory.Controllers
 
 			return View( newAlbum );
 		}
+
+
+        // AJAX: /Album/Vote/5
+        [HttpPost]
+        public ActionResult Vote(int id, bool up)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            string[] response = new string[2];
+            // reponse[0] is a new rating
+            // response[1] is a message for a user
+            if (user != null)
+            {
+                //create vote if the user is logged in
+                if (album.CreateVote(user, up))
+                    response[1] = "Your vote has been saved.";
+                else
+                    response[1] = "You have already voted on this album !";
+            }
+            else
+            {
+                response[1] = "You need to be logged in to vote";
+            }            
+            response[0] = album.getRating().ToString();            
+            return Json(response);
+        }
+
 
 
 		// ------------ PRIVATE METHODS ------------------

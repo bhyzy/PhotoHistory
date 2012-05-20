@@ -132,7 +132,7 @@ namespace PhotoHistory.Controllers
 		[HttpPost]
 		public ActionResult SignIn(SignInUserModel signUser, FormCollection form, string returnUrl)
 		{
-			if ( ModelState.IsValid )
+			if ( ModelState.IsValid )	
 			{
 				UserRepository userRepository = new UserRepository();
 				UserModel user = userRepository.GetByUsername( signUser.Login );

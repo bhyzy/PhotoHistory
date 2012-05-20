@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using PhotoHistory.Common;
+using PhotoHistory.API.Authentication;
 
 namespace PhotoHistory
 {
@@ -39,5 +40,15 @@ namespace PhotoHistory
 			RegisterRoutes( RouteTable.Routes );
             BuildInitializer.InitializeBuild();
 		}
+
+		protected void Application_EndRequest()
+		{
+			// hack alert!
+			if ( Context.Response.StatusCode == HttpBasicUnauthorizedResult.AUTHORIZATION_FAILED_STATUS )
+			{
+				Context.Response.StatusCode = 401;
+			}
+		}
+
 	}
 }

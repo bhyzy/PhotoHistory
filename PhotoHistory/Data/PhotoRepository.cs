@@ -51,5 +51,18 @@ namespace PhotoHistory.Data
                 }
             }
         }
+
+		  public PhotoModel GetById(int? id, bool withAlbum = false)
+		  {
+			  using ( var session = GetSession() )
+			  {
+				  PhotoModel photo = session.CreateQuery( "from PhotoModel where Id = :id" ).SetParameter( "id", id ).UniqueResult<PhotoModel>();
+				  if ( photo != null )
+				  {
+					  if ( withAlbum ) photo.Album.ToString();
+				  }
+				  return photo;
+			  }
+		  }
     }
 }

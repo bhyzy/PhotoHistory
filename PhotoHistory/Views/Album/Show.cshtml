@@ -82,13 +82,10 @@
                 </td>
             </tr>
         </table>
-        <!-- 
-            (TODO: next day, previous day, next week, previous week, next month, previous month, next year, previous year)
-            -->
     </div>
 
 
-    <div style="height:50px;"></div>
+    <div style="height:20px;"></div>
 
     <div id="content-left">
         <div id="album-footer">
@@ -96,8 +93,10 @@
                 @Model.Description
             </div>
             <div id="album-rate">
-                Rating: <span class="album-rating">17</span> <span class="label label-success"><a
-                    href="#">+1</a></span> <span class="label label-important"><a href="#">-1</a></span>
+            <!-- Ajax requests -->
+                Rating: <span class="album-rating">@Model.getRating()</span> 
+                <a class="vote" data-up="true" href="#"><span class="label label-success">+1</span></a>
+                <a class="vote" data-up="false" href="#"><span class="label label-important">-1</span></a>
             </div>
         </div>
         <div id="album-comments">
@@ -136,9 +135,28 @@
 
 @section JS {
      <script type="text/javascript">
+        
+        // aktywacja pluginu
         $(document).ready(function () {
             $('ul#roundabout').roundabout({
                 enableDrag: true
+            });
+        });
+
+        
+        // obsluga glosowania
+        $(document).ready(function () {
+            $(".vote").click(function () {
+                    var up = $(this).attr("data-up");
+                    // Perform the ajax post
+                    $.post("/Album/Vote", { "id": @Model.Id, "up" : up},
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        $(".album-rating").text(data[0])
+                        alert(data[1])
+                    });
+                    return false;
             });
         });
 

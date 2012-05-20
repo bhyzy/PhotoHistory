@@ -6,10 +6,8 @@ using PhotoHistory.Data;
 
 namespace PhotoHistory.Models
 {
-    public class CategoryModel
+	public class CategoryModel : AbstractDataModel<CategoryModel>
     {
-
-        public virtual int? Id { get; set; }
         public virtual string Name { get; set; }
 
         
