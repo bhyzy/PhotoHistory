@@ -14,10 +14,10 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-			  //ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
-			  //CreateUsers();
-			  //CreateCategories();
-			  //CreateAlbums();
+			  ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
+			  CreateUsers();
+			  CreateCategories();
+			  CreateAlbums();
         }
 
         private static void CreateAlbums()
@@ -37,8 +37,8 @@ namespace PhotoHistory.Common
                 Category = category,
                 CommentsAllow = true,
                 CommentsAuth = false,
-                Description = "Opis super fajnego albumu nr 1. LOL. ROFTEWRFS saflksjalfrwjlfj alksfdjlasjfl",
-                Name = "Super fajny album nr.1",
+                Description = "Jak zmieniałem się w czasie",
+                Name = "Moja twarz",
                 Public = true,
                 Rating = 10,
                 User = user,
@@ -50,27 +50,60 @@ namespace PhotoHistory.Common
             PhotoModel photo = new PhotoModel()
             {
                 Album = album,
-                Date = DateTime.Today,
-                Description = "Słit focia nr1 album 1",
+                Date = new DateTime(2011, 1, 1, 22, 33, 5),
+                Description = "Oto ja",
                 Path = "/Static/photos/photo_2012051022444645.jpg" 
             };
             list.AddLast(photo);
             photo = new PhotoModel()
             {
                 Album = album,
-                Date = new DateTime(2012,5,1,22,33,5),
-                Description = "Słit focia nr2 album 1",
+                Date = new DateTime(2011,4,30,22,33,5),
+                Description = "Oto ja",
                 Path = "/Static/photos/photo_2012051022450267.jpg"
             };
             list.AddLast(photo);
             photo = new PhotoModel()
             {
                 Album = album,
-                Date = new DateTime(2012, 4,30 , 1, 8, 59),
-                Description = "Słit focia nr3 album 1",
+                Date = new DateTime(2012, 2,28 , 1, 8, 59),
+                Description = "Oto ja",
                 Path = "/Static/photos/photo_2012051022452109.jpg"
             };
             list.AddLast(photo);
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 1, 8, 1, 8, 59),
+                Description = "Oto ja",
+                Path = "/Static/photos/20110108.jpg"
+            };
+            list.AddLast(photo);
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 1, 15, 1, 8, 59),
+                Description = "Oto ja",
+                Path = "/Static/photos/20110115.jpg"
+            };
+            list.AddLast(photo);
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 1, 22, 1, 8, 59),
+                Description = "Oto ja",
+                Path = "/Static/photos/20110122.jpg"
+            };
+            list.AddLast(photo);
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 1, 29, 1, 8, 59),
+                Description = "Oto ja",
+                Path = "/Static/photos/20110129.jpg"
+            };
+            list.AddLast(photo);
+            
             
 
             albums.Create(album);
@@ -80,56 +113,79 @@ namespace PhotoHistory.Common
                 Category = category,
                 CommentsAllow = true,
                 CommentsAuth = false,
-                Description = "Opis super fajnego albumu nr 2. LOL. weratsyhdjufkilokhjgfdscxsZcvnmjkiol8i7u6tgrefcdsvfbgnh",
-                Name = "Super fajny album nr.2!!!!",
+                Description = "",
+                Name = "Widok za moin oknem",
                 Public = true,
                 Rating = 11,
                 User = user,
-                Views = 12334
+                Views = 2
             };
             albums.Create(album);
-            /*
             photo = new PhotoModel()
             {
                 Album = album,
-                Date = DateTime.Today,
-                Description = "Słit focia nr1 album 2",
-                Path = ""
+                Date = new DateTime(2011, 4, 30, 22, 33, 5),
+                Description = "Oto ja",
+                Path = "/Static/photos/2011-12-29 06.48.45.jpg"
             };
             list.AddLast(photo);
             photo = new PhotoModel()
             {
                 Album = album,
-                Date = new DateTime(2012,1,2,22,11,3),
-                Description = "Słit focia nr2 album 2",
-                Path = ""
+                Date = new DateTime(2011, 4, 30, 22, 33, 5),
+                Description = "Oto ja",
+                Path = "/Static/photos/2012-04-30 18.07.20.jpg"
             };
             list.AddLast(photo);
-            */
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 4, 30, 22, 33, 5),
+                Description = "Oto ja",
+                Path = "/Static/photos/2012-04-30 18.07.35.jpg"
+            };
+            list.AddLast(photo);
+
+
             album = new AlbumModel()
             {
                 Category = category,
                 CommentsAllow = true,
                 CommentsAuth = false,
-                Description = "Opis super fajnego albumu nr 3. LOL.fsaerfgt,aem jlejarklfnjgskjafn kqnawfn kasnfk jnbwkanf kgnmwaklenb kjnawk bnkjwan knfskjhfkjna kjnfwkaj nkwanef kjnkja fnkj. Ale sie rozpisalem.",
-                Name = "Super fajny album nr.3 LOL",
+                Description = "Zmieniający się rynek",
+                Name = "Zmieniający się rynek",
                 Public = true,
                 Rating = 1,
                 User = user,
-                Views = 1
+                Views = 111
             };
             albums.Create(album);
-            /*
             photo = new PhotoModel()
             {
                 Album = album,
-                Date = DateTime.Today,
-                Description = "Słit focia nr1 album 3",
-                Path = ""
+                Date = new DateTime(2011, 4, 30, 22, 33, 5),
+                Description = "Oto ja",
+                Path = "/Static/photos/2011-12-29 06.48.45.jpg"
             };
             list.AddLast(photo);
-            */
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 4, 30, 22, 33, 5),
+                Description = "Oto ja",
+                Path = "/Static/photos/2012-04-30 18.07.20.jpg"
+            };
+            list.AddLast(photo);
+            photo = new PhotoModel()
+            {
+                Album = album,
+                Date = new DateTime(2011, 4, 30, 22, 33, 5),
+                Description = "Oto ja",
+                Path = "/Static/photos/2012-04-30 18.07.35.jpg"
+            };
+            list.AddLast(photo);
 
+            /*
             album = new AlbumModel()
             {
                 Category = category,
@@ -144,7 +200,9 @@ namespace PhotoHistory.Common
                 Views = 4444
             };
             albums.Create(album);
-            
+            */
+
+
             using(var session= SessionProvider.SessionFactory.OpenSession())
             using (var trans = session.BeginTransaction())
             {
@@ -204,7 +262,7 @@ namespace PhotoHistory.Common
                 Email = "pierogmichal@gmail.com",
                 ActivationCode = null,
                 DateOfBirth = new DateTime(1989, 10, 15),
-                About = "salrjwelkf jlksadjlkf jlkr jflajs ljoiwej ljal;fjal jlafnl lsfdaa;sl jofiewj laf",
+                About = "Lubię placki.",
                 NotifyComment = true,
                 NotifyPhoto = true,
                 NotifySubscription = true
