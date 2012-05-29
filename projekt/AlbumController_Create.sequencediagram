@@ -1,0 +1,1207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="635cbec9-b475-4f9c-baaa-66e404853424" name="AlbumController_Create" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+  <packagedElements>
+    <packageHasNamedElement>
+      <interaction Id="6a69885c-a609-40b2-bbe6-a9ca1484814c" name="AlbumController_Create" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+        <fragments>
+          <behaviorExecutionSpecification Id="2b90a54e-a0e6-4aa5-a971-4fbb4578ebea" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="515c47be-15f5-44a5-ac68-20ba7cf0c7ec" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="f8ac2c17-e4a8-4732-9bd7-9aa3d208dfaf" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="a37edcf9-3426-4e15-bd59-1c6b55328001" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="876ff0d8-7ca8-4db4-9669-6fa839dd76b7" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="afaecb38-cf4a-407c-ac8f-3d02aab79487" LastKnownName="MessageOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="cdccc2e6-37cc-41e4-bf2c-ef1ebe45a7a0" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="187a61c3-dd7a-4aa6-8571-c6a6f215e53d" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a9cdd7da-1ba8-4a3d-ba84-aee8265a55aa" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="b131eea2-0936-47a4-8bee-22bca431c229" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="94c62b54-64a6-449d-8f3f-cd07035b525e" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="1330c5a6-3a65-493d-a5d7-bc417a11ff80" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="4be3a48a-35c4-468c-817f-e359f5f802a0" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="27eadd4e-bbfe-4de4-a36f-d1a47f27784c" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="7193acf6-c221-4ced-81fd-05d98aef6490" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="4cb46070-9462-412a-9330-2cb424260e3c" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="55e32508-f8a1-4b88-953d-7b180749a8e5" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="62725190-9166-4f3d-ba00-36d7207de93d" LastKnownName="OperandOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="f8ac2c17-e4a8-4732-9bd7-9aa3d208dfaf" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="708c2448-84c3-4ae1-89c8-c93a2cebf9f5" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <lostFoundTarget Id="70e89210-c75a-440c-a301-e5e9fd0e67c9" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="a37edcf9-3426-4e15-bd59-1c6b55328001" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <combinedFragment Id="e6a65acd-f8d5-44b9-8e6a-e7836461c0ed" name="CombinedFragment1" interactionOperator="Opt" customInteractionOperator="If">
+            <coveredLifelines>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="cfc66a72-21fd-402b-acd6-dd1af249cbdc" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                  <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                  <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                </coveredLifelines>
+                <fragments>
+                  <combinedFragment Id="25ea067c-e776-4cd1-a187-bc155c40ac64" name="CombinedFragment1" interactionOperator="Alt" customInteractionOperator="Switch">
+                    <coveredLifelines>
+                      <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                      <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                      <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand Id="136f3453-0390-4330-8660-221b06141aa0" name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                          <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                          <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                        </coveredLifelines>
+                        <guard>
+                          <interactionConstraint Id="69ac2557-9057-4611-9d8e-12cba08629c6" guardText="case &quot;password&quot;:" />
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="21482dce-b925-45cd-b3bc-5f7a2f789d1d" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="6a26a78c-d3d0-4e55-afac-28267226aa8a" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="279fcdf5-d60f-4f5d-b89e-8629c1d2222e" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="59dd76be-f858-49f7-97d0-4b0f686ce77e" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="a2f9d020-5942-4d02-ba60-b87ef2d0d0a1" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="df2d571e-ddfa-4537-95e5-ecd983aae570" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                      <interactionOperand Id="18d69b1e-525a-42cf-82b2-55483dcbc2c0" name="InteractionOperand2">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                          <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                          <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                        </coveredLifelines>
+                        <fragments>
+                          <combinedFragment Id="441f1e32-efc6-4596-b486-49db133ea920" name="CombinedFragment1" interactionOperator="Opt" customInteractionOperator="If">
+                            <coveredLifelines>
+                              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                            </coveredLifelines>
+                            <operands>
+                              <interactionOperand Id="2fc84d94-7b68-4960-91b0-16473ee8d963" name="InteractionOperand1">
+                                <coveredLifelines>
+                                  <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                                </coveredLifelines>
+                                <guard>
+                                  <interactionConstraint Id="5ae5f5ff-8b69-497a-a5fc-9820e4f946ba" guardText="if (string.IsNullOrEmpty( Request[&quot;usersList&quot;] ))" />
+                                </guard>
+                                <operandOccurrenceSpecifications>
+                                  <operandOccurrenceSpecificationMoniker Id="06871c45-6d7d-408f-a11a-1d85f129cec7" LastKnownName="OperandOccurrenceSpecification" />
+                                  <operandOccurrenceSpecificationMoniker Id="d80fc0e5-0134-4c80-8f78-d850340644e9" LastKnownName="OperandOccurrenceSpecification" />
+                                </operandOccurrenceSpecifications>
+                              </interactionOperand>
+                            </operands>
+                          </combinedFragment>
+                          <combinedFragment Id="0b2d95f3-c8e3-44ce-9537-0acd5ed076f5" name="CombinedFragment2" interactionOperator="Loop" customInteractionOperator="Loop">
+                            <coveredLifelines>
+                              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                            </coveredLifelines>
+                            <operands>
+                              <interactionOperand Id="8e1bd367-7cfb-45d7-9122-d2b74d26f870" name="InteractionOperand1">
+                                <coveredLifelines>
+                                  <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                                  <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                                </coveredLifelines>
+                                <fragments>
+                                  <combinedFragment Id="1c1cbb15-733c-4d97-9713-b398c1bd6cb6" name="CombinedFragment1" interactionOperator="Opt" customInteractionOperator="If">
+                                    <coveredLifelines>
+                                      <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                                    </coveredLifelines>
+                                    <operands>
+                                      <interactionOperand Id="32a5614b-fd54-4be0-8e9d-b51572869c10" name="InteractionOperand1">
+                                        <coveredLifelines>
+                                          <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                                        </coveredLifelines>
+                                        <guard>
+                                          <interactionConstraint Id="16b7f964-c440-4efa-a431-3f0972fa9239" guardText="if (user == null)" />
+                                        </guard>
+                                        <operandOccurrenceSpecifications>
+                                          <operandOccurrenceSpecificationMoniker Id="bc700bdf-6ae7-48db-9ae4-bf1d2aaea2e6" LastKnownName="OperandOccurrenceSpecification" />
+                                          <operandOccurrenceSpecificationMoniker Id="37172b91-dabc-4bc2-9564-19391cf5137a" LastKnownName="OperandOccurrenceSpecification" />
+                                        </operandOccurrenceSpecifications>
+                                      </interactionOperand>
+                                    </operands>
+                                  </combinedFragment>
+                                </fragments>
+                                <guard>
+                                  <interactionConstraint Id="8a7ec18e-43d2-4af3-9224-205f8c0c0b3e" guardText="for (int i = 0;i &lt; logins.Length; i++)">
+                                    <maxInt>
+                                      <literalString Id="d50f913a-8cd6-4619-af77-98c30e47b919" name="LiteralString1" />
+                                    </maxInt>
+                                    <minInt>
+                                      <literalString Id="06328256-39ff-4ce3-b3f9-2d89bf36af91" name="LiteralString2" />
+                                    </minInt>
+                                  </interactionConstraint>
+                                </guard>
+                                <operandOccurrenceSpecifications>
+                                  <operandOccurrenceSpecificationMoniker Id="6fd5dbfe-d8f2-4215-95df-d18289101194" LastKnownName="OperandOccurrenceSpecification" />
+                                  <operandOccurrenceSpecificationMoniker Id="d91366fd-91a0-4f65-b383-db630087d27c" LastKnownName="OperandOccurrenceSpecification" />
+                                  <operandOccurrenceSpecificationMoniker Id="a6b932ce-bd04-456e-9ceb-5ba5e2f4a56f" LastKnownName="OperandOccurrenceSpecification" />
+                                  <operandOccurrenceSpecificationMoniker Id="b78835b1-4827-4baa-bab6-679eaa503e62" LastKnownName="OperandOccurrenceSpecification" />
+                                </operandOccurrenceSpecifications>
+                              </interactionOperand>
+                            </operands>
+                          </combinedFragment>
+                        </fragments>
+                        <guard>
+                          <interactionConstraint Id="6b5d7f78-3129-4224-9d58-90f8d0d3bde1" guardText="case &quot;users&quot;:" />
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="d479f345-bd9f-4c13-9794-85fe084c6c0b" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="65935ca8-cc96-4633-8e68-6ab36264196c" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="85e2ab98-dcd3-449b-8bd2-8112714d4472" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="08885ba3-bf84-4fbe-a40f-0530bcc39a7b" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="818e6947-5fc1-4a00-82e6-e37e6f0429f5" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="79411db9-4580-40b2-97dd-399db46a5bf4" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                      <interactionOperand Id="c54e2ba3-fb94-4a61-8c21-f505f2ab1663" name="InteractionOperand3">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                          <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+                          <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+                        </coveredLifelines>
+                        <guard>
+                          <interactionConstraint Id="3d57b048-9a0b-437c-853e-0951040f9e31" guardText="default:" />
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="6622b59e-1899-4573-bcff-3a62731d57da" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="23664820-c54e-4ebc-9018-4bb376572ccd" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="0b39ec22-8dd6-44c1-9932-1c51730984a2" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="149b6d23-05ca-43ea-a0be-886233ea4960" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="383a38a8-326f-4162-b1db-e2da5575e292" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="c9d9f2d1-2f10-4551-a891-69bf32612c81" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                </fragments>
+                <guard>
+                  <interactionConstraint Id="99c295d1-c426-4946-bb51-e44f4fd7d2d7" guardText="if (!newAlbum.Public)" />
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="876ff0d8-7ca8-4db4-9669-6fa839dd76b7" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="a9cdd7da-1ba8-4a3d-ba84-aee8265a55aa" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="8dba878f-e312-40bb-8e01-bc1b7a847e8a" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="44f68847-68d6-4f5a-9eb3-9e1eb1200352" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="63a44fc8-01ff-4713-ab5b-851c4c2d7cab" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="76a6a0ce-79f8-4998-9399-8328ee713fcb" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="876ff0d8-7ca8-4db4-9669-6fa839dd76b7" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="63a44fc8-01ff-4713-ab5b-851c4c2d7cab" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="8dba878f-e312-40bb-8e01-bc1b7a847e8a" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="afaecb38-cf4a-407c-ac8f-3d02aab79487" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="9d0c4f2a-dc6b-428c-8429-8cb9dd64da30" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="187a61c3-dd7a-4aa6-8571-c6a6f215e53d" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="cdccc2e6-37cc-41e4-bf2c-ef1ebe45a7a0" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="53aa0dbc-01d1-4f43-ad4f-030f24de32ed" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="21482dce-b925-45cd-b3bc-5f7a2f789d1d" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="6a26a78c-d3d0-4e55-afac-28267226aa8a" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d479f345-bd9f-4c13-9794-85fe084c6c0b" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="06871c45-6d7d-408f-a11a-1d85f129cec7" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="1e605b3e-71a9-4d47-900a-8334a8c518b3" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d80fc0e5-0134-4c80-8f78-d850340644e9" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="b7c41c57-9b80-4a84-9509-d7e53f099d88" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="102c8c13-6b1e-43c2-afef-8b3251c0f718" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="65935ca8-cc96-4633-8e68-6ab36264196c" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="6622b59e-1899-4573-bcff-3a62731d57da" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="23664820-c54e-4ebc-9018-4bb376572ccd" LastKnownName="OperandOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="cdccc2e6-37cc-41e4-bf2c-ef1ebe45a7a0" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="1fb9f98e-eed5-44f2-93db-7fa42a6f1d66" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="53aa0dbc-01d1-4f43-ad4f-030f24de32ed" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="21482dce-b925-45cd-b3bc-5f7a2f789d1d" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a2f9d020-5942-4d02-ba60-b87ef2d0d0a1" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="279fcdf5-d60f-4f5d-b89e-8629c1d2222e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="6a26a78c-d3d0-4e55-afac-28267226aa8a" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="df2d571e-ddfa-4537-95e5-ecd983aae570" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="59dd76be-f858-49f7-97d0-4b0f686ce77e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d479f345-bd9f-4c13-9794-85fe084c6c0b" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="85e2ab98-dcd3-449b-8bd2-8112714d4472" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="818e6947-5fc1-4a00-82e6-e37e6f0429f5" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="06871c45-6d7d-408f-a11a-1d85f129cec7" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <lostFoundTarget Id="1f1dee24-c59b-492b-b96b-37a2ad469781" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="1e605b3e-71a9-4d47-900a-8334a8c518b3" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d80fc0e5-0134-4c80-8f78-d850340644e9" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="dd9887eb-f579-46b0-aba1-3f0479af03e0" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="9ea91f38-719f-4c7e-8ef4-e63dfde862f0" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="8ec72101-3759-47d4-81fd-14a27ac56e02" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="02f251fd-9b1f-4f3c-becc-ce4a7e402708" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="d53ad1c4-738d-49b1-9c82-74e4809e4d15" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="e6a24cf1-85c2-4eef-a5d1-66d22e6c67db" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="6fd5dbfe-d8f2-4215-95df-d18289101194" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="e810defe-b60b-4633-8479-808fd80b5b3c" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="21fbe210-cf86-4ba9-9599-b8ac31a31ce4" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="bc700bdf-6ae7-48db-9ae4-bf1d2aaea2e6" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="2a376685-d086-4c32-9e90-cb8eab99b37c" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="37172b91-dabc-4bc2-9564-19391cf5137a" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d91366fd-91a0-4f65-b383-db630087d27c" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="d753ddde-1997-4bfe-ad18-fe99a0f7a5a2" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="8ec72101-3759-47d4-81fd-14a27ac56e02" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="cf335d83-f9c6-4827-b863-90dc1b6ade4f" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="02f251fd-9b1f-4f3c-becc-ce4a7e402708" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b7c41c57-9b80-4a84-9509-d7e53f099d88" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="876625f8-858b-4fc5-9b39-86d977c45280" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="d15447bb-d7a8-4037-8838-6f268dac290b" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="0123d3d9-f70c-45e1-a988-5985424a636a" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="0f99047e-a0a9-41b6-b18e-7f06795f99e5" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="b83c5df0-146f-4200-b620-7eefab9c5747" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="0123d3d9-f70c-45e1-a988-5985424a636a" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="031b02a2-877b-481a-b8e3-4b80ce93ade2" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d53ad1c4-738d-49b1-9c82-74e4809e4d15" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0f99047e-a0a9-41b6-b18e-7f06795f99e5" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="e6a24cf1-85c2-4eef-a5d1-66d22e6c67db" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b83c5df0-146f-4200-b620-7eefab9c5747" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="d15447bb-d7a8-4037-8838-6f268dac290b" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="83e3418b-688a-4d53-b4a7-af944c12c6c2" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a6b932ce-bd04-456e-9ceb-5ba5e2f4a56f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="6fd5dbfe-d8f2-4215-95df-d18289101194" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="70c9afbf-9f57-48df-b38c-1750e6f49b69" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="3e0e15a1-69a6-4397-9309-1fdc8c066faa" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="cff7b02d-463c-4e97-bf44-47ccdba6cf55" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="0e5df7be-b1d7-4ab6-92a9-1a09267075c6" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="0fd65039-0b93-4d23-978d-607a7bdc474a" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="68885834-65b1-428e-a9f1-20f8741cc279" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="896f70e1-a4c2-49fa-89e8-aca2b200e133" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="cff7b02d-463c-4e97-bf44-47ccdba6cf55" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="ffd3fb02-4f8a-472f-86d0-848bf8a7c2fa" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="e810defe-b60b-4633-8479-808fd80b5b3c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0e5df7be-b1d7-4ab6-92a9-1a09267075c6" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="f5350e9f-5138-4baa-a65c-8450ff8f09af" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="0fd65039-0b93-4d23-978d-607a7bdc474a" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="ae9e24b3-25b9-413d-bf33-be9f5777c6ff" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="68885834-65b1-428e-a9f1-20f8741cc279" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="896f70e1-a4c2-49fa-89e8-aca2b200e133" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="21fbe210-cf86-4ba9-9599-b8ac31a31ce4" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="3e0e15a1-69a6-4397-9309-1fdc8c066faa" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="371fc37e-4c5b-46d8-ba3a-85151effe089" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="bc700bdf-6ae7-48db-9ae4-bf1d2aaea2e6" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2a376685-d086-4c32-9e90-cb8eab99b37c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="19250660-bfd5-4f8f-bdee-616f65d57188" name="LostFoundTarget" />
+          <operandOccurrenceSpecification Id="37172b91-dabc-4bc2-9564-19391cf5137a" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d91366fd-91a0-4f65-b383-db630087d27c" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="b78835b1-4827-4baa-bab6-679eaa503e62" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d753ddde-1997-4bfe-ad18-fe99a0f7a5a2" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="102c8c13-6b1e-43c2-afef-8b3251c0f718" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="9ea91f38-719f-4c7e-8ef4-e63dfde862f0" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="360e23df-e545-4eb9-bc39-7fde3ed3037b" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="79411db9-4580-40b2-97dd-399db46a5bf4" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="08885ba3-bf84-4fbe-a40f-0530bcc39a7b" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="65935ca8-cc96-4633-8e68-6ab36264196c" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="0b39ec22-8dd6-44c1-9932-1c51730984a2" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="383a38a8-326f-4162-b1db-e2da5575e292" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="6622b59e-1899-4573-bcff-3a62731d57da" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="23664820-c54e-4ebc-9018-4bb376572ccd" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="149b6d23-05ca-43ea-a0be-886233ea4960" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="c9d9f2d1-2f10-4551-a891-69bf32612c81" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="187a61c3-dd7a-4aa6-8571-c6a6f215e53d" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="6c925654-c9f8-4f05-956d-4c048f80462f" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="76a6a0ce-79f8-4998-9399-8328ee713fcb" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="44f68847-68d6-4f5a-9eb3-9e1eb1200352" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" LastKnownName="AlbumModel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a9cdd7da-1ba8-4a3d-ba84-aee8265a55aa" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <combinedFragment Id="ff2cc049-3dc3-47da-8179-1e11004b6c73" name="CombinedFragment2" interactionOperator="Opt" customInteractionOperator="If">
+            <coveredLifelines>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="29f96fd2-f416-441a-ad9e-770c1d40c5ed" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+                  <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+                  <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+                </coveredLifelines>
+                <guard>
+                  <interactionConstraint Id="fef16ce7-3338-424a-99f4-0e4593b648b0" guardText="if (ModelState.IsValid)" />
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="b131eea2-0936-47a4-8bee-22bca431c229" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="62725190-9166-4f3d-ba00-36d7207de93d" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="120377d5-90f3-456f-b1e5-7ee0c3636c0e" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="44b8b74e-e54a-4ed4-b86e-aac7ee1614f7" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="990fdda8-44a8-49e8-b59c-042b37d1d06e" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="ed88dce4-5d24-4086-bf42-4136e65025f1" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="b131eea2-0936-47a4-8bee-22bca431c229" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="990fdda8-44a8-49e8-b59c-042b37d1d06e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="120377d5-90f3-456f-b1e5-7ee0c3636c0e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="4c53527c-87a2-4b16-9b05-c2baecfceb86" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="8f3cc709-bd8a-4272-9d4d-259a5dab31fc" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="5fd1e0d2-e83a-4ff5-a9eb-aea707f71111" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="0897dfa7-7f4e-4534-a89e-e3310cf87d83" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="9211bb25-dbc3-4488-bc29-89d0f1672464" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="c3d9998e-c0cd-4fac-b71b-b5e2d85e7b7b" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="5fd1e0d2-e83a-4ff5-a9eb-aea707f71111" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="1f838809-3800-49b4-9dc3-464444bfc772" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0897dfa7-7f4e-4534-a89e-e3310cf87d83" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="94c62b54-64a6-449d-8f3f-cd07035b525e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="4c92f5f3-8a72-4b77-a8d8-8caa2e7dd305" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="9211bb25-dbc3-4488-bc29-89d0f1672464" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="1330c5a6-3a65-493d-a5d7-bc417a11ff80" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="c3d9998e-c0cd-4fac-b71b-b5e2d85e7b7b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="8f3cc709-bd8a-4272-9d4d-259a5dab31fc" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="b8483030-d968-49fe-b75c-eda6df575014" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="40a18db8-f997-477b-b9df-cd0dff02aaf6" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="1615956d-9277-4b66-b007-342e906b8660" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="d0766109-52a9-4b0b-babc-bc41f9f7df1b" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="18d85058-56dc-4e45-9beb-bb4c5eb028e8" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="7d48c919-89d0-4826-8b8b-4416711db323" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="d0766109-52a9-4b0b-babc-bc41f9f7df1b" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="29ceb31b-834f-4393-b35a-b3335b070ebd" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="4be3a48a-35c4-468c-817f-e359f5f802a0" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="18d85058-56dc-4e45-9beb-bb4c5eb028e8" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7d48c919-89d0-4826-8b8b-4416711db323" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="27eadd4e-bbfe-4de4-a36f-d1a47f27784c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="1615956d-9277-4b66-b007-342e906b8660" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="50da4882-d7aa-44e6-9831-644b634564e7" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="dff9f971-d59c-43c1-8b57-41ffd7bda0ed" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="4d75ac9f-8d5e-4955-8ea2-a6ac5c3fde38" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="8cd8b71a-2635-40b3-a443-7684c08befd5" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="8cc64ab9-d95b-4316-8d42-01b4c3871d2d" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="3edfbe03-9823-4572-9a74-894ebfa4fdc0" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="8cd8b71a-2635-40b3-a443-7684c08befd5" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="0b59c2ea-4389-44ff-bf48-22d2e02b68fe" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="8cc64ab9-d95b-4316-8d42-01b4c3871d2d" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7193acf6-c221-4ced-81fd-05d98aef6490" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3edfbe03-9823-4572-9a74-894ebfa4fdc0" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="4cb46070-9462-412a-9330-2cb424260e3c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="4d75ac9f-8d5e-4955-8ea2-a6ac5c3fde38" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="b384feca-77c9-4820-b641-bb1aa39e2b6c" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <lostFoundTarget Id="b27246ba-003a-40d0-8aa9-f1dc18681bbe" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="55e32508-f8a1-4b88-953d-7b180749a8e5" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="62725190-9166-4f3d-ba00-36d7207de93d" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="ed88dce4-5d24-4086-bf42-4136e65025f1" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="14ad08e8-768e-43c1-9c02-88af392ecc17" LastKnownName="albums : AlbumRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="44b8b74e-e54a-4ed4-b86e-aac7ee1614f7" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" LastKnownName="users : UserRepository" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="515c47be-15f5-44a5-ac68-20ba7cf0c7ec" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="f68595f9-2399-41f0-b8f4-22f877d73b53" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" LastKnownName="this : AlbumController" />
+            </covered>
+          </executionOccurrenceSpecification>
+        </fragments>
+        <lifelines>
+          <lifeline Id="ae121c60-d1ed-4b2a-b527-3d30fc7b618d" name="this : AlbumController" isActor="false" lifelineDisplayName="this : AlbumController" referencedInstance="(Assembly=$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri) Namespace=PhotoHistory.Controllers Type=AlbumController ObjectInstance=&quot;Object instance 2&quot;)" referencedType="PhotoHistory.Controllers.AlbumController">
+            <referencesInternal>
+              <reference Id="2d750cad-adfe-4381-9335-4a95d2c7d7d3" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Controllers)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Controllers Type=AlbumController)&quot;)" tag="DGQL" />
+              <reference Id="d25a3d68-cf04-47a7-b5fd-4b9cc951de0c" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Controllers Type=AlbumController)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="f8ac2c17-e4a8-4732-9bd7-9aa3d208dfaf" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="515c47be-15f5-44a5-ac68-20ba7cf0c7ec" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="75ee0bfb-9b94-4e5f-a569-ca9ca09bad25" name="AlbumModel" isActor="false" lifelineDisplayName="AlbumModel" referencedType="PhotoHistory.Models.AlbumModel">
+            <referencesInternal>
+              <reference Id="4263ca75-c5ce-48ca-a24b-0a9654e0cd08" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Models)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Models Type=AlbumModel)&quot;)" tag="DGQL" />
+              <reference Id="9f271a1c-8a20-4dde-8f8a-73948cf5c7b6" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Models Type=AlbumModel)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="8dba878f-e312-40bb-8e01-bc1b7a847e8a" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="279fcdf5-d60f-4f5d-b89e-8629c1d2222e" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="59dd76be-f858-49f7-97d0-4b0f686ce77e" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="85e2ab98-dcd3-449b-8bd2-8112714d4472" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="8ec72101-3759-47d4-81fd-14a27ac56e02" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="9ea91f38-719f-4c7e-8ef4-e63dfde862f0" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="08885ba3-bf84-4fbe-a40f-0530bcc39a7b" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="0b39ec22-8dd6-44c1-9932-1c51730984a2" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="149b6d23-05ca-43ea-a0be-886233ea4960" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="44f68847-68d6-4f5a-9eb3-9e1eb1200352" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="b40dce6f-78aa-4cfa-b022-3bb7b7cdea7a" name="users : UserRepository" isActor="false" lifelineDisplayName="users : UserRepository" referencedInstance="(Assembly=$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri) Namespace=PhotoHistory.Data Type=UserRepository ObjectInstance=&quot;Object instance 60&quot;)" referencedType="PhotoHistory.Data.UserRepository">
+            <referencesInternal>
+              <reference Id="87f593ce-181a-4e1a-8bac-9ec531415b77" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository)&quot;)" tag="DGQL" />
+              <reference Id="8bb256b1-5fa2-4d6f-a8d5-463fb5c5a629" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=UserRepository)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="63a44fc8-01ff-4713-ab5b-851c4c2d7cab" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a2f9d020-5942-4d02-ba60-b87ef2d0d0a1" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="df2d571e-ddfa-4537-95e5-ecd983aae570" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="818e6947-5fc1-4a00-82e6-e37e6f0429f5" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="0123d3d9-f70c-45e1-a988-5985424a636a" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="d15447bb-d7a8-4037-8838-6f268dac290b" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a6b932ce-bd04-456e-9ceb-5ba5e2f4a56f" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="cff7b02d-463c-4e97-bf44-47ccdba6cf55" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="3e0e15a1-69a6-4397-9309-1fdc8c066faa" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="b78835b1-4827-4baa-bab6-679eaa503e62" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="79411db9-4580-40b2-97dd-399db46a5bf4" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="383a38a8-326f-4162-b1db-e2da5575e292" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="c9d9f2d1-2f10-4551-a891-69bf32612c81" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="76a6a0ce-79f8-4998-9399-8328ee713fcb" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="385dc5c1-da3c-458d-bf45-cef1e9fda50a" name="users : UserRepository" isActor="false" lifelineDisplayName="users : UserRepository" referencedInstance="(Assembly=$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri) Namespace=PhotoHistory.Data Type=UserRepository ObjectInstance=&quot;Object instance 87&quot;)" referencedType="PhotoHistory.Data.UserRepository">
+            <referencesInternal>
+              <reference Id="06ffa5f4-74ea-4921-83c2-dd1d6fb90960" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository)&quot;)" tag="DGQL" />
+              <reference Id="f91b4ad8-81ed-4d0d-86b8-e0e327d953a3" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=UserRepository)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="120377d5-90f3-456f-b1e5-7ee0c3636c0e" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="5fd1e0d2-e83a-4ff5-a9eb-aea707f71111" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="8f3cc709-bd8a-4272-9d4d-259a5dab31fc" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="44b8b74e-e54a-4ed4-b86e-aac7ee1614f7" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="14ad08e8-768e-43c1-9c02-88af392ecc17" name="albums : AlbumRepository" isActor="false" lifelineDisplayName="albums : AlbumRepository" referencedInstance="(Assembly=$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri) Namespace=PhotoHistory.Data Type=AlbumRepository ObjectInstance=&quot;Object instance 102&quot;)" referencedType="PhotoHistory.Data.AlbumRepository">
+            <referencesInternal>
+              <reference Id="33963b13-5a26-4f20-92d7-296b2732cb94" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=AlbumRepository)&quot;)" tag="DGQL" />
+              <reference Id="dbe36e86-5444-451d-ad51-4cac53ed20bc" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=AlbumRepository)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="990fdda8-44a8-49e8-b59c-042b37d1d06e" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="d0766109-52a9-4b0b-babc-bc41f9f7df1b" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="1615956d-9277-4b66-b007-342e906b8660" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="8cd8b71a-2635-40b3-a443-7684c08befd5" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="4d75ac9f-8d5e-4955-8ea2-a6ac5c3fde38" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="ed88dce4-5d24-4086-bf42-4136e65025f1" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+        </lifelines>
+        <messages>
+          <message Id="0e3148ae-a35b-4710-8dc2-b0c7308a85c7" name="Create" messageKind="Found" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="a7f836fe-78c7-4eb3-b4d6-3a449edeb6ac" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Controllers)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Controllers Type=AlbumController)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Controllers Type=AlbumController Member=(Name=Create OverloadingParameters=[(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Models Type=AlbumModel)]))&quot;)" tag="DGQL" />
+              <reference Id="f601dddf-240b-4047-91e8-75705366da3e" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Controllers Type=AlbumController Member=(Name=Create OverloadingParameters=[(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Models Type=AlbumModel)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <lostFoundTargetMoniker Id="70e89210-c75a-440c-a301-e5e9fd0e67c9" LastKnownName="LostFoundTarget" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="a37edcf9-3426-4e15-bd59-1c6b55328001" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c1a3651e-b568-4cf2-b9ea-d6eb752bb17f" name="SetPrivateAccess" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true" signatureText="SetPrivateAccess( newAlbum )">
+            <referencesInternal>
+              <reference Id="eae8eda2-f4f7-4d33-846e-c882656ba0d4" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Controllers)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Controllers Type=AlbumController)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Controllers Type=AlbumController Member=(Name=SetPrivateAccess OverloadingParameters=[(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Models Type=AlbumModel)]))&quot;)" tag="DGQL" />
+              <reference Id="327c4000-0f78-4ab9-be74-ff066c14385f" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Controllers Type=AlbumController Member=(Name=SetPrivateAccess OverloadingParameters=[(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Models Type=AlbumModel)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="afaecb38-cf4a-407c-ac8f-3d02aab79487" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="53aa0dbc-01d1-4f43-ad4f-030f24de32ed" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="eb2df18d-3e02-4023-8673-bced5743c337" name="Break" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="1e605b3e-71a9-4d47-900a-8334a8c518b3" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="1f1dee24-c59b-492b-b96b-37a2ad469781" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="b5b9a269-62c4-4cf2-a1c1-14fc8b3308c6" name="FindUsersByLogins" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="AlbumModel.FindUsersByLogins( userLogins )">
+            <referencesInternal>
+              <reference Id="25be873f-1edf-4693-bc32-e10290ecd808" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Models)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Models Type=AlbumModel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Models Type=AlbumModel Member=(Name=FindUsersByLogins OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.0/mscorlib.dll&amp;quot; Namespace=System Type=(Name=String ArrayRank=1 ParentType=String))]))&quot;)" tag="DGQL" />
+              <reference Id="717ba99b-a089-4978-9f96-5a7d94393e52" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Models Type=AlbumModel Member=(Name=FindUsersByLogins OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=(Name=String ArrayRank=1 ParentType=String))]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="b7c41c57-9b80-4a84-9509-d7e53f099d88" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="02f251fd-9b1f-4f3c-becc-ce4a7e402708" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c47394c2-99ef-4d8c-9bbc-976414e325cc" name="Create UserRepository" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new UserRepository()">
+            <referencesInternal>
+              <reference Id="9e6c0495-cb35-42e9-b561-41672b96d1fc" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository Member=.ctor)&quot;)" tag="DGQL" />
+              <reference Id="0421184c-4c18-4528-834d-a22c64f65f85" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=UserRepository Member=.ctor)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="d53ad1c4-738d-49b1-9c82-74e4809e4d15" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0f99047e-a0a9-41b6-b18e-7f06795f99e5" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="f88ae6dd-7561-4fe4-9a98-3db1a2713800" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="b83c5df0-146f-4200-b620-7eefab9c5747" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="e6a24cf1-85c2-4eef-a5d1-66d22e6c67db" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="72f6c2f4-1ba8-45af-963d-0b5d8f3b8ac6" name="GetByUsername" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="users.GetByUsername(logins[i])">
+            <referencesInternal>
+              <reference Id="c99be613-86c2-442a-9cac-01e59899ccea" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository Member=(Name=GetByUsername OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.0/mscorlib.dll&amp;quot; Namespace=System Type=String)]))&quot;)" tag="DGQL" />
+              <reference Id="116ff418-d772-4854-9a3e-c4800ce2acdd" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=UserRepository Member=(Name=GetByUsername OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=String)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="e810defe-b60b-4633-8479-808fd80b5b3c" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0e5df7be-b1d7-4ab6-92a9-1a09267075c6" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="e0a66db9-9e0b-479c-b667-cfd191f5900c" name="GetSession" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="716919dd-3e26-45eb-b5a3-17708b32c4e0" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=(Name=DataRepository GenericParameterCount=2))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=(Name=DataRepository GenericParameterCount=2) Member=GetSession)&quot;)" tag="DGQL" />
+              <reference Id="2c63dde7-1363-4e58-91f2-6f75f77a29d2" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=(Name=DataRepository GenericParameterCount=2) Member=GetSession)" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAOy9B2AcSZYlJi9tynt/SvVK1+B0oQiAYBMk2JBAEOzBiM3mkuwdaUcjKasqgcplVmVdZhZAzO2dvPfee++999577733ujudTif33/8/XGZkAWz2zkrayZ4hgKrIHz9+fB8/Ih7/Gq9/jfzXqH+N4tfIfo2S/v0B/TX7NU74r/LXeEbfZL/Ggj5Lf427v8bRr/H/BAAA//8DaotELgAAAA==
+
+DataRepository&lt;UserModel,Nullable&lt;Int32&gt;&gt;
+GetSession()</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="0fd65039-0b93-4d23-978d-607a7bdc474a" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="f5350e9f-5138-4baa-a65c-8450ff8f09af" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="997cc985-427b-4c37-8376-2e2f5b1bac8a" name="Return" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false" signatureText="return session.CreateQuery( &quot;from UserModel where Login = :login&quot; ).SetParameter( &quot;login&quot;, username ).UniqueResult&lt;UserModel&gt;()">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="68885834-65b1-428e-a9f1-20f8741cc279" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="ae9e24b3-25b9-413d-bf33-be9f5777c6ff" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="7fac1c23-e583-4afd-a654-0aec84e06641" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="896f70e1-a4c2-49fa-89e8-aca2b200e133" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="21fbe210-cf86-4ba9-9599-b8ac31a31ce4" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="e02f5f5d-c426-49dd-befb-2c4d7bbb4daa" name="Return" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false" signatureText="return null">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="2a376685-d086-4c32-9e90-cb8eab99b37c" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="19250660-bfd5-4f8f-bdee-616f65d57188" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="73dc998b-5cf5-41ea-b1e8-9b3297cf65d8" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="d753ddde-1997-4bfe-ad18-fe99a0f7a5a2" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="102c8c13-6b1e-43c2-afef-8b3251c0f718" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="0235500e-37c1-4f9f-a1df-e1f326bc0348" name="GetByUsername" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="users.GetByUsername( HttpContext.User.Identity.Name )">
+            <referencesInternal>
+              <reference Id="8624d6ca-8bda-4029-ad6f-a45e2886b51d" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=UserRepository Member=(Name=GetByUsername OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.0/mscorlib.dll&amp;quot; Namespace=System Type=String)]))&quot;)" tag="DGQL" />
+              <reference Id="21bdd4fb-1e18-4709-ab16-84ac5c9440dd" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=UserRepository Member=(Name=GetByUsername OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=String)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="94c62b54-64a6-449d-8f3f-cd07035b525e" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0897dfa7-7f4e-4534-a89e-e3310cf87d83" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="dd481d7b-7732-4f6d-a7b0-1fbf872eef89" name="Return" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false" signatureText="return session.CreateQuery( &quot;from UserModel where Login = :login&quot; ).SetParameter( &quot;login&quot;, username ).UniqueResult&lt;UserModel&gt;()">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="9211bb25-dbc3-4488-bc29-89d0f1672464" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="4c92f5f3-8a72-4b77-a8d8-8caa2e7dd305" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="b43581ad-eccd-44fb-8643-f2d40c9adc03" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="c3d9998e-c0cd-4fac-b71b-b5e2d85e7b7b" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="1330c5a6-3a65-493d-a5d7-bc417a11ff80" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="dda3c76d-c203-4c92-aaec-124dca96145c" name="Create AlbumRepository" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new AlbumRepository()">
+            <referencesInternal>
+              <reference Id="ecd4b459-b493-4c14-bf99-1cfe88350d3b" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=AlbumRepository)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=AlbumRepository Member=.ctor)&quot;)" tag="DGQL" />
+              <reference Id="d3642ba1-6cb7-4858-8a5a-47ffb8ae05f9" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=AlbumRepository Member=.ctor)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="4be3a48a-35c4-468c-817f-e359f5f802a0" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="18d85058-56dc-4e45-9beb-bb4c5eb028e8" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="de8c1a54-ab44-40e6-a54b-da2371e8c7e5" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7d48c919-89d0-4826-8b8b-4416711db323" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="27eadd4e-bbfe-4de4-a36f-d1a47f27784c" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="589f055a-6072-45ad-8604-716ef6b890dd" name="Create" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="albums.Create( newAlbum )">
+            <referencesInternal>
+              <reference Id="5fd9d839-ed50-4f51-94a5-c219c641411f" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=PhotoHistory.Data)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=(Name=DataRepository GenericParameterCount=2))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&amp;quot; Namespace=PhotoHistory.Data Type=(Name=DataRepository GenericParameterCount=2) Member=(Name=Create OverloadingParameters=[(Type=DataType)]))&quot;)" tag="DGQL" />
+              <reference Id="988157b6-e7dc-4d61-a6e0-15cbe72be04f" handle="(Assembly=&quot;$(4b54fd47-ada4-4621-a15d-274b803c4fd2.OutputPathUri)&quot; Namespace=PhotoHistory.Data Type=(Name=DataRepository GenericParameterCount=2) Member=(Name=Create OverloadingParameters=[(Type=DataType)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7193acf6-c221-4ced-81fd-05d98aef6490" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="8cc64ab9-d95b-4316-8d42-01b4c3871d2d" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="2c5472ca-9d86-4bfe-ad87-544347dbe9d4" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="3edfbe03-9823-4572-9a74-894ebfa4fdc0" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="4cb46070-9462-412a-9330-2cb424260e3c" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="72f78aef-3699-44e1-874f-aa5408ecc511" name="Return" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false" signatureText="return RedirectToAction( &quot;Show&quot;, new { id = newAlbum.Id } )">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="55e32508-f8a1-4b88-953d-7b180749a8e5" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="b27246ba-003a-40d0-8aa9-f1dc18681bbe" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+        </messages>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="708c2448-84c3-4ae1-89c8-c93a2cebf9f5" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="f68595f9-2399-41f0-b8f4-22f877d73b53" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="1fb9f98e-eed5-44f2-93db-7fa42a6f1d66" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="6c925654-c9f8-4f05-956d-4c048f80462f" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="cf335d83-f9c6-4827-b863-90dc1b6ade4f" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="360e23df-e545-4eb9-bc39-7fde3ed3037b" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="031b02a2-877b-481a-b8e3-4b80ce93ade2" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="83e3418b-688a-4d53-b4a7-af944c12c6c2" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="ffd3fb02-4f8a-472f-86d0-848bf8a7c2fa" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="371fc37e-4c5b-46d8-ba3a-85151effe089" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="1f838809-3800-49b4-9dc3-464444bfc772" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="b8483030-d968-49fe-b75c-eda6df575014" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="29ceb31b-834f-4393-b35a-b3335b070ebd" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="50da4882-d7aa-44e6-9831-644b634564e7" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="0b59c2ea-4389-44ff-bf48-22d2e02b68fe" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="b384feca-77c9-4820-b641-bb1aa39e2b6c" name="ExecutionEvent" />
+    </packageHasNamedElement>
+  </packagedElements>
+</SequenceDesignerModel>
