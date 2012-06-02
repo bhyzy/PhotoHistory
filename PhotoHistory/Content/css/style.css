@@ -485,6 +485,13 @@ div.album-comment {
 	margin-top: 15px;
 	width: 100%;
 }
+div.album-comment h1 {
+	/* background: hsl(140,50%,90%); */
+	font-weight:bold;
+	font-size: 14px;
+	margin-top: 15px;
+	width: 100%;
+}
 h2.album-author {
 	font-size: 14px;
 }

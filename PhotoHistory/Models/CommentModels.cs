@@ -12,4 +12,12 @@ namespace PhotoHistory.Models
         public virtual DateTime Date { get; set; }
         public virtual String Body { get; set; }
     }
+
+    public class NewCommentModel
+    {
+        public String Message { get; set; }
+        public String Body { get; set; }
+        public String Date { get; set; }
+        public String UserName { get; set; }
+    }
 }
