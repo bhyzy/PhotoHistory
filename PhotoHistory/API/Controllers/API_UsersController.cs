@@ -21,13 +21,13 @@ namespace PhotoHistory.API.Controllers
 				throw new Exception( "missing/malformed HTTP Basic Auth header" );
 
 			string authResult = UserAuthentication.TryCredentials( credentials[0], credentials[1] );
-			if ( authResult != string.Empty )
-				throw new Exception( authResult );
+			//if ( authResult != string.Empty )
+			//   throw new Exception( authResult );
 
 			return Json( new
 			{
-				ok = true,
-				data = "credentials successfully authenticated"
+				ok = (authResult == string.Empty),
+				data = authResult
 			}, JsonRequestBehavior.AllowGet );
 		}
 

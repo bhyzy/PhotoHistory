@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:paddingTop="50dip"/>
+    
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:stretchColumns="1"
+	    android:gravity="center"
+	    android:padding="10dip">
+	    
+	    <TableRow>
+            <TextView
+                android:id="@+id/loginLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login" />
+
+            <EditText
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" >
+                <requestFocus />
+            </EditText>
+	    </TableRow>
+	
+	    <TableRow>
+           <TextView
+               android:id="@+id/passwordLabel"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/password" />
+
+           <EditText
+               android:id="@+id/password"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:inputType="textPassword"
+               android:ems="10" />
+	    </TableRow>
+
+	    <Button
+	        android:id="@+id/signin"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/signin" />
+
+	</TableLayout>
+
+</LinearLayout>
