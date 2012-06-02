@@ -350,11 +350,48 @@ namespace PhotoHistory.Controllers
             {
                 response[1] = "You need to be logged in to vote";
             }            
-            response[0] = album.getRating().ToString();            
+            response[0] = album.getRating().ToString();           
             return Json(response);
         }
 
+        // AJAX: /Album/Comment
+        [HttpPost]
+        public ActionResult Comment(int id, String comment)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            CommentModel model = new CommentModel();
+            model.Album = album;
+            model.Body = comment;
+            model.Date = DateTime.Now;
+            model.User = user;
 
+            NewCommentModel newComment = new NewCommentModel();
+            newComment.Body = comment;
+            newComment.Date = model.Date.ToString("dd/MM/yyyy HH:mm:ss");
+            newComment.UserName = user.Login;
+
+            if (user != null)
+            {
+                //create vote if the user is logged in
+                if (albums.AddComment(model))
+                    newComment.Message = "Your comment has been saved.";
+                else
+                {
+                    newComment.Message = "Can't add comment.";
+                    newComment.Body = null;
+                }
+                    
+            }
+            else
+            {
+                newComment.Message = "You need to be logged in to comment";
+            }
+
+            return Json(newComment);
+        }
 
 		// ------------ PRIVATE METHODS ------------------
 

@@ -106,25 +106,27 @@
                     <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
                 </div>
                 <div class="control-group">
-                    <button type="submit" class="btn btn-primary">
+                    <button type=button class="btn btn-primary" id="submit" onclick="false">
                         Add comment</button>
                 </div>
             </fieldset>
             </form>
-            <div class="album-comment">
-                Comment 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
-                eqw
-            </div>
-            <div class="album-comment">
-                Comment 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. eqw
-                eqwe qw eqw eqw eqw
-            </div>
-            <div class="album-comment">
-                Comment 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae
-                odio non diam posuere fermentum. Sed fringilla varius sapien quis vehicula. Dqwdkq
-                podkqwp odkqwp ofkepofk wepofkwe pofewkpo :)
+            <div id="comments">
+                @if (Model.Comments.Count == 0)
+                {
+                    <div class="album-comment" id="empty">
+                        Nothing here! Be first and comment this album!
+                    </div>
+                }
+                @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
+                {
+                    <div class="album-comment">
+                    <h1>@(comment.User.Login + " " + comment.Date.ToString("dd/MM/yyyy HH:mm:ss"))</h1>
+                        @comment.Body
+                    </div>
+
+                }
+                
             </div>
         </div>
     </div>
@@ -136,6 +138,30 @@
 @section JS {
      <script type="text/javascript">
         
+        //komentarze
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                    var val = document.getElementById("comment-body").value;
+                    if(val==null || val==""){
+                        alert("Your comment can't be empty");
+                        return false;
+                    }
+                    // Perform the ajax post
+                    $.post("/Album/Comment", { "id": @Model.Id, "comment" :val },
+                    function (data) {
+                        if(data.Body!=null){
+                        $("#empty").remove();
+                        $("#comment-body").val('');
+                        $("#comments").prepend('<div class="album-comment">\n<h1>'+ data.UserName +' '+data.Date+'</h1>\n'+  data.Body+
+                '</div>');
+                        
+                        } else
+                            alert(data.Message);
+                    });
+                    return false;
+            });
+        });
+
         // aktywacja pluginu
         $(document).ready(function () {
             $('ul#roundabout').roundabout({

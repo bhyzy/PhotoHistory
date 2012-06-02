@@ -484,6 +484,21 @@ div.album-comment {
 	/* background: hsl(140,50%,90%); */
 	margin-top: 15px;
 	width: 100%;
+	padding: 0px 10px 5px 10px;
+}
+div.album-comment h1 {
+	/* background: hsl(140,50%,90%); */
+	font-weight:bold;
+	font-size: 14px;
+	margin-top: 15px;
+	width: 100%;
+}
+
+div.album-comment:hover {
+	/* background: hsl(140,50%,90%); */
+	background-color: #EEEEEE;
+	padding: 0px 10px 5px 10px;
+	border-radius:5px 5px 5px 5px;
 }
 h2.album-author {
 	font-size: 14px;

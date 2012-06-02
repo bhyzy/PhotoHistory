@@ -93,8 +93,6 @@ namespace PhotoHistory.Models
 				  return positive_votes - negative_votes;
 			  }
 		  }
-
-
 		  // create a vote
 		  public virtual bool CreateVote(UserModel user, bool up)
 		  {

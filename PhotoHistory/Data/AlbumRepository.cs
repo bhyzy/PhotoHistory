@@ -23,6 +23,28 @@ namespace PhotoHistory.Data
             }
         }
 
+        public bool AddComment(CommentModel comment)
+        {
+            if (string.IsNullOrEmpty(comment.Body))
+                return false;
+            try
+            {
+                using (var session = GetSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.Save(comment);
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public override AlbumModel GetById(int? id)
         {
             using (var session = GetSession())
@@ -40,7 +62,10 @@ namespace PhotoHistory.Data
 				  AlbumModel album = session.CreateQuery( "from AlbumModel where Id = :id" ).SetParameter( "id", id ).UniqueResult<AlbumModel>();
 				  if ( album != null )
 				  {
-					  if ( withComments ) album.Comments.ToList();
+                      if (withComments) album.Comments.ToList().Sort(delegate(CommentModel a, CommentModel b)
+                          {
+                              return a.Date.CompareTo(b.Date);
+                          });
 					  if ( withUser ) album.User.ToString();
 					  if ( withPhotos ) album.Photos.ToString();
 					  if ( withCategory ) album.Category.ToString();
@@ -198,15 +223,16 @@ namespace PhotoHistory.Data
 
         public AlbumModel GetByIdForShow(int? id)
         {
-            using (var session = GetSession())
-            {
-                var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+            //using (var session = GetSession())
+           // {
+              /*  var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                 album.Category.ToString();
                 album.TrustedUsers.ToString();
                 album.Photos.ToList();
-                album.User.ToString();
-                return album;
-            }
+                album.User.ToString();*/
+                return GetById(id, true, true, true, true, true);
+               // return album;
+            //}
         }
 
 
