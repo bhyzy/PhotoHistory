@@ -10,9 +10,13 @@ namespace PhotoHistory.API.Controllers
 	[HandleJsonError]
 	public class API_APIController : Controller
 	{
-		public ActionResult UnrecognizedCall()
+		public ActionResult Hello()
 		{
-			throw new Exception( "404: unrecognized call" );
+			return Json( new { 
+				ok = true, 
+				data = "Hello! Everything's working fine :)" 
+				}, 
+				JsonRequestBehavior.AllowGet );
 		}
 	}
 }

@@ -16,6 +16,11 @@ namespace PhotoHistory.API
 		public override void RegisterArea(AreaRegistrationContext context)
 		{
 			context.MapRoute(
+				"API test",
+				"api/test",
+				new { controller = "API_API", action = "Hello" } );
+
+			context.MapRoute(
 				"API verify credentials",
 				"api/users/verify_credentials",
 				new { controller = "API_Users", action = "VerifyCredentials" } );
