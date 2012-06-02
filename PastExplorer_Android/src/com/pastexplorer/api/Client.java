@@ -1,18 +1,15 @@
 package com.pastexplorer.api;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.StringWriter;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import org.apache.http.HttpConnection;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,7 +33,7 @@ public class Client {
 	
 	public boolean verifyCredentials() throws APIException {
 		try {
-			String resultRaw = callService("users", "verify_credentials");
+			String resultRaw = callService("users", "verify_credentials", null);
 			JSONObject result = new JSONObject(resultRaw);
 			boolean valid = result.getBoolean("ok");
 			if (!valid) {
@@ -50,22 +47,118 @@ public class Client {
 	}
 
 	public User getUser(String userName) throws APIException {
-		throw new APIException("not implemented");
+		try {
+			String resultRaw = callService("users", null, userName);
+			Log.d(DEBUG_TAG, "getUser raw result: " + resultRaw);
+			JSONObject result = new JSONObject(resultRaw);
+			if (!result.getBoolean("ok")) {
+				throw new Exception(result.getString("error"));
+			}
+			
+			JSONObject userRaw = result.getJSONObject("data");
+			User user = new User();
+			
+			user.id = userRaw.getInt("id");
+			user.userName = userRaw.getString("username");
+			user.dateOfBirth = convertJSONObjectToDate(userRaw.getJSONObject("date_of_birth"));
+			user.about = userRaw.getString("about");
+			user.albums = convertJSONArrayToResourceIDs(userRaw.getJSONArray("albums"));
+			
+			return user;
+		}
+		catch (Exception e) {
+			throw new APIException("failed to get user '" + userName + "'", e);
+		}
+	}
+	
+	public Album getAlbum(int id) throws APIException {
+		try {
+			String resultRaw = callService("albums", null, String.valueOf(id));
+			Log.d(DEBUG_TAG, "getAlbum raw result: " + resultRaw);
+			JSONObject result = new JSONObject(resultRaw);
+			if (!result.getBoolean("ok")) {
+				throw new Exception(result.getString("error"));
+			}
+			
+			JSONObject albumRaw = result.getJSONObject("data");
+			Album album = new Album();
+			
+			album.id = albumRaw.getInt("id");
+			album.name = albumRaw.getString("name");
+			album.description = albumRaw.getString("description");
+			album.category = albumRaw.getString("category");
+			album.isPublic = albumRaw.getBoolean("is_public");
+			album.rating = albumRaw.getInt("rating");
+			album.views = albumRaw.getInt("views");
+			album.photos = convertJSONArrayToResourceIDs(albumRaw.getJSONArray("photos"));
+			
+			return album;
+		}
+		catch (Exception e) {
+			throw new APIException("failed to get album '" + id + "'", e);
+		}		
+	}
+	
+	public Photo getPhoto(int id) throws APIException {
+		try {
+			String resultRaw = callService("photos", null, String.valueOf(id));
+			Log.d(DEBUG_TAG, "getPhoto raw result: " + resultRaw);
+			JSONObject result = new JSONObject(resultRaw);
+			if (!result.getBoolean("ok")) {
+				throw new Exception(result.getString("error"));
+			}
+			
+			JSONObject photoRaw = result.getJSONObject("data");
+			Photo photo = new Photo();
+			
+			photo.id = photoRaw.getInt("id");
+			photo.album = extractResourceID(photoRaw.getString("album"));
+			photo.date = convertJSONObjectToDate(photoRaw.getJSONObject("date"));
+			photo.description = photoRaw.getString("description");
+			photo.image = photoRaw.getString("image");
+			photo.thumbnail = photoRaw.getString("thumbnail");
+			photo.latitude = photoRaw.isNull("latitude") == false? photoRaw.getDouble("latitude") : null;
+			photo.longitude = photoRaw.isNull("longitude") == false? photoRaw.getDouble("longitude") : null;
+			
+			return photo;
+		}
+		catch (Exception e) {
+			throw new APIException("failed to get photo '" + id + "'", e);
+		}	
 	}
 
-	private String buildServiceQuery(String resource, String action, String id) {
+	private int extractResourceID(String resourceUri) throws JSONException {
+		return Integer.parseInt( resourceUri.substring(resourceUri.lastIndexOf('/') + 1) );
+	}
+
+	private Date convertJSONObjectToDate(JSONObject json) throws JSONException {
+		return new Date( json.getInt("year"), json.getInt("month"), json.getInt("day") );
+	}
+	
+	private List<Integer> convertJSONArrayToResourceIDs(JSONArray array) throws JSONException {
+		List<Integer> ids = new ArrayList<Integer>();
+		for (int i = 0; i < array.length(); i++) {
+			ids.add( extractResourceID(array.getString(i)) );
+		}
+		return ids;
+	}
+
+	private String buildServiceQuery(String resource, String action, String id) throws Exception {
 		if (resource == null)
-			throw new NullPointerException("resource");
-		if (action == null)
-			throw new NullPointerException("action");
+			throw new NullPointerException("resource is missing");
+		if (action == null && id == null)
+			throw new Exception("either action or id has to be specified");
 
 		StringBuilder sb = new StringBuilder();
-
 		sb.append(API_SERVICE_URI);
+		
 		sb.append("/");
 		sb.append(resource);
-		sb.append("/");
-		sb.append(action);
+		
+		if (action != null) {
+			sb.append("/");
+			sb.append(action);	
+		}
 
 		if (id != null) {
 			sb.append("/");
@@ -73,10 +166,6 @@ public class Client {
 		}
 
 		return sb.toString();
-	}
-
-	private String callService(String resource, String action) throws Exception {
-		return callService(resource, action, null);
 	}
 	
 	private String callService(String resource, String action, String id) throws Exception {
@@ -93,7 +182,7 @@ public class Client {
 		connection.setConnectTimeout(5000);
 		//connection.setDoOutput(true);
 		connection.setAllowUserInteraction(false);
-		//connection.setRequestProperty("User-Agent", "Mozilla/5.0 (compatible)");
+		connection.setRequestProperty("User-Agent", "PastExplorer Android Application");
 		connection.setRequestProperty("Accept", "*/*");
 		connection.setRequestProperty("Host", API_SERVICE_HOST);
 		connection.setRequestProperty("Authorization",
