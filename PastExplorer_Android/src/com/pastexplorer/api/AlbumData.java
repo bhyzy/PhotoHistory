@@ -2,7 +2,7 @@ package com.pastexplorer.api;
 
 import java.util.List;
 
-public class Album {
+public class AlbumData {
 	public int id;
 	public String name;
 	public String description;

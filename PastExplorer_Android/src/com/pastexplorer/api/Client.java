@@ -46,7 +46,7 @@ public class Client {
 		} 
 	}
 
-	public User getUser(String userName) throws APIException {
+	public UserData getUser(String userName) throws APIException {
 		try {
 			String resultRaw = callService("users", null, userName);
 			Log.d(DEBUG_TAG, "getUser raw result: " + resultRaw);
@@ -56,7 +56,7 @@ public class Client {
 			}
 			
 			JSONObject userRaw = result.getJSONObject("data");
-			User user = new User();
+			UserData user = new UserData();
 			
 			user.id = userRaw.getInt("id");
 			user.userName = userRaw.getString("username");
@@ -71,7 +71,7 @@ public class Client {
 		}
 	}
 	
-	public Album getAlbum(int id) throws APIException {
+	public AlbumData getAlbum(int id) throws APIException {
 		try {
 			String resultRaw = callService("albums", null, String.valueOf(id));
 			Log.d(DEBUG_TAG, "getAlbum raw result: " + resultRaw);
@@ -81,7 +81,7 @@ public class Client {
 			}
 			
 			JSONObject albumRaw = result.getJSONObject("data");
-			Album album = new Album();
+			AlbumData album = new AlbumData();
 			
 			album.id = albumRaw.getInt("id");
 			album.name = albumRaw.getString("name");
@@ -99,7 +99,7 @@ public class Client {
 		}		
 	}
 	
-	public Photo getPhoto(int id) throws APIException {
+	public PhotoData getPhoto(int id) throws APIException {
 		try {
 			String resultRaw = callService("photos", null, String.valueOf(id));
 			Log.d(DEBUG_TAG, "getPhoto raw result: " + resultRaw);
@@ -109,7 +109,7 @@ public class Client {
 			}
 			
 			JSONObject photoRaw = result.getJSONObject("data");
-			Photo photo = new Photo();
+			PhotoData photo = new PhotoData();
 			
 			photo.id = photoRaw.getInt("id");
 			photo.album = extractResourceID(photoRaw.getString("album"));
