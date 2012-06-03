@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class PastExplorer extends Activity implements OnClickListener {
+public class PastExplorerActivity extends Activity implements OnClickListener {
 	
 	private Button _signInButton;
 	private EditText _loginEditBox;
