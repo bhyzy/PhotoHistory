@@ -5,12 +5,14 @@ import pastexplorer.util.StackTraceUtil;
 import com.pastexplorer.api.APIException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class PastExplorerActivity extends Activity implements OnClickListener {
 	
@@ -32,13 +34,45 @@ public class PastExplorerActivity extends Activity implements OnClickListener {
         _loginEditBox = (EditText)findViewById(R.id.login);
         _passwordEditBox = (EditText)findViewById(R.id.password);
     }
+    
+    @Override
+    protected void onResume() {
+       super.onResume();
+       
+       if (User.isSignedIn()) {
+    	   try {
+			User.signOut();
+		} catch (APIException e) {
+			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
+		}
+       }
+       _loginEditBox.setText("");
+       _passwordEditBox.setText("");
+       _loginEditBox.requestFocus();
+    }
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.signin:
 			try {
-				User.signIn(_loginEditBox.getText().toString(), _passwordEditBox.getText().toString());
+				String userName = _loginEditBox.getText().toString();
+				String password = _passwordEditBox.getText().toString();
+				
+				if (userName.isEmpty()) {
+					Toast.makeText(this, getString(R.string.signInEmptyUsername), Toast.LENGTH_SHORT).show();
+				}
+				else if (password.isEmpty()) {
+					Toast.makeText(this, getString(R.string.signInEmptyPassword), Toast.LENGTH_SHORT).show();
+				}
+				else {
+					if (User.signIn(userName, password)) {
+						startActivity(new Intent(this, DashboardActivity.class));
+					}
+					else {
+						Toast.makeText(this, getString(R.string.signInFailed), Toast.LENGTH_SHORT).show();
+					}
+				}
 			} catch (APIException e) {
 				Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
 			}

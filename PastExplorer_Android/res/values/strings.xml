@@ -6,5 +6,8 @@
     <string name="login">Login:</string>
     <string name="password">Password:</string>
     <string name="signin">Sign in</string>
+    <string name="signInFailed">Invalid username or password.\nPlease try again.</string>
+    <string name="signInEmptyUsername">Please enter your username</string>
+    <string name="signInEmptyPassword">Please enter your password</string>
 
 </resources>
