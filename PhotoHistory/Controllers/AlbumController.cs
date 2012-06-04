@@ -69,7 +69,7 @@ namespace PhotoHistory.Controllers
 			return View(model);
 		}
 
-
+        [Authorize]
 		public ActionResult Show(int id)
 		{
 			AlbumRepository albums = new AlbumRepository();
@@ -83,7 +83,7 @@ namespace PhotoHistory.Controllers
 				album.Views += 1;
 				albums.Update( album );
 			}
-
+            @ViewBag.user = user;
 			return View( album );
 		}
 

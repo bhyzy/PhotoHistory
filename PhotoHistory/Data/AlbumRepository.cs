@@ -229,6 +229,7 @@ namespace PhotoHistory.Data
             {
                 var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                 album.TrustedUsers.ToList();
+                album.Category.ToString();
                 return album;
             }
         }

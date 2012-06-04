@@ -13,14 +13,22 @@
     <div id="album-header">
         <h1 class="page-title">
             <a href="#">@Model.Name</a>
-            <!-- jesli nie jest wlascicielem: follow/unfollow -->
+            
+            
+            
+            <!-- follow/unfollow - zawsze -->
             <button class="btn btn-info">
                 <i class="icon-ok icon-white"></i>Follow</button>
+            
+            @if (Model.User == @ViewBag.user)
+            {
             <!-- jesli jest wlascicielem: manage this album -->
             <a href="@Url.Action("ManageAlbum", new { id = Model.Id })">
                 <button class="btn btn-primary">
                     <i class="icon-edit icon-white"></i>Manage this album</button>
             </a>
+            }
+
         </h1>
         <h2 class="album-author">
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
