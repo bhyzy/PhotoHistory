@@ -419,6 +419,7 @@ namespace PhotoHistory.Controllers
             }
             else
             {
+                newComment.Body = null;
                 newComment.Message = "You need to be logged in to comment";
             }
 
