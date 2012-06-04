@@ -33,4 +33,11 @@ public class User {
 		}
 		return new Client(_userName, _password);
 	}
+	
+	public static String getUserName() throws APIException {
+		if (!isSignedIn()) {
+			throw new APIException("tried get name of signed-in user withoug signing in");
+		}
+		return _userName;
+	}
 }
