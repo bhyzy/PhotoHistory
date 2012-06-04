@@ -9,5 +9,7 @@
     <string name="signInFailed">Invalid username or password.\nPlease try again.</string>
     <string name="signInEmptyUsername">Please enter your username</string>
     <string name="signInEmptyPassword">Please enter your password</string>
+    <string name="confirmSignOutTitle">Sign out</string>
+    <string name="confirmSignOutMessage">Are you sure you want to sign out?</string>
 
 </resources>
