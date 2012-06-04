@@ -24,28 +24,28 @@ namespace PhotoHistory.Controllers
 			return View();
 		}
 
-		public ActionResult Browse()
+		public ActionResult Browse(int? catId)
 		{
-         @ViewBag.Category = MainCategory.Browse;
+            @ViewBag.Category = MainCategory.Browse;
+            BrowseAlbumModel model = new BrowseAlbumModel();
+            CategoryRepository catRepo = new CategoryRepository();
+            model.Categories = catRepo.getCategories();
+            model.SelectedCategory = model.Categories.First().Id??0;
+            foreach (CategoryModel category in model.Categories)
+            {
+                if (category.Id == catId)
+                {
+                    model.SelectedCategory = category.Id ?? 0;
+                    break;
+                }
+            }
 
-			//UserRepository userRepo = new UserRepository();
+            AlbumRepository albumRepo = new AlbumRepository();
+            model.Albums = Helpers.Convert( albumRepo.GetByCategory(catRepo.GetById(catId ?? model.Categories.First().Id),true,true,true,true,false) );
+            
 
-			//UserModel user = new UserModel()
-			//{
-			//   Login = "kasia1337",
-			//   Password = "tralala",
-			//   Email = "kasia@buziaczek.pl"
-			//};
-			//userRepo.Create( user );
 
-			//UserModel user2 = userRepo.GetById( user.Id );
-			//user2.Login = "Kasia666";
-			//userRepo.Update( user2 );
-
-			//userRepo.Delete( user2 );
-			//UserModel user3 = userRepo.GetById( user2.Id );
-
-			return View();
+			return View(model);
 		}
 
 		public ActionResult Charts(ChartCategory ? category)
@@ -281,7 +281,7 @@ namespace PhotoHistory.Controllers
 		[Authorize]
 		public ActionResult Create()
 		{
-			CategoryModel.EnsureStartingData();
+			//CategoryModel.EnsureStartingData();
 			PrepareCategories();
 			return View();
 		}

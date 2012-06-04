@@ -45,6 +45,30 @@ namespace PhotoHistory.Data
             }
         }
 
+        public List<AlbumModel> GetByCategory(CategoryModel category, bool withUser = false, bool withPhotos = false, bool withComments = false,
+              bool withCategory = false, bool withTrustedUsers = false)
+        {
+            using (var session = GetSession())
+            {
+                List<AlbumModel> albums =session.CreateQuery("from AlbumModel where Category = :cat").SetParameter("cat", category).Enumerable<AlbumModel>().ToList<AlbumModel>();
+                if (albums != null)
+                {
+                    foreach (AlbumModel album in albums)
+                    {
+                        if (withComments) album.Comments.ToList().Sort(delegate(CommentModel a, CommentModel b)
+                        {
+                            return a.Date.CompareTo(b.Date);
+                        });
+                        if (withUser) album.User.ToString();
+                        if (withPhotos) album.Photos.ToString();
+                        if (withCategory) album.Category.ToString();
+                        if (withTrustedUsers) album.TrustedUsers.ToList();
+                    }
+                }
+                return albums;
+            }
+        }
+
         public override AlbumModel GetById(int? id)
         {
             using (var session = GetSession())
@@ -129,7 +153,7 @@ namespace PhotoHistory.Data
             using (var session = GetSession())
             {
                 var sql = session.CreateSQLQuery("select album_id,count(album_id) albums from Albums join Photos using(album_id) group by album_id order by albums desc;");
-                IList<object[]> list = sql.List<object[]>();
+                List<object[]> list = sql.List<object[]>().Take<object[]>(maxAlbums).ToList<object[]>();
                 AlbumModel album;
                 foreach (object[] item in list)
                 {
@@ -234,19 +258,6 @@ namespace PhotoHistory.Data
                // return album;
             //}
         }
-
-
-
-        /*public IEnumerable<AlbumModel> GetByUser(int ?userID)
-        {
-            using (var session = GetSession())
-            {
-                UserRepository repo = new UserRepository();
-                UserModel user = repo.GetById(userID);
-                return session.CreateQuery("from AlbumModel where User= :user").SetParameter("user", userID).Enumerable<AlbumModel>();
-            }
-
-        }*/
 
         public override void Update(AlbumModel obj)
         {
