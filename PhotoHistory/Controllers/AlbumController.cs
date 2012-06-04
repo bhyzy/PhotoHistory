@@ -24,28 +24,60 @@ namespace PhotoHistory.Controllers
 			return View();
 		}
 
-		public ActionResult Browse()
+		public ActionResult Browse(int? catId, int? pageNbr)
 		{
-         @ViewBag.Category = MainCategory.Browse;
+            int maxItemsPerPage = 6;
+            int nbr = pageNbr ?? 1;
+            if (nbr < 1)
+                nbr = 1;
+            @ViewBag.Category = MainCategory.Browse;
+            BrowseAlbumModel model = new BrowseAlbumModel();
+            CategoryRepository catRepo = new CategoryRepository();
+            model.Categories = catRepo.getCategories();
+            model.SelectedCategory = model.Categories.First().Id??0;
+            
+            
+            foreach (CategoryModel category in model.Categories)
+            {
+                if (category.Id == catId)
+                {
+                    model.SelectedCategory = category.Id ?? 0;
+                    break;
+                }
+            }
 
-			//UserRepository userRepo = new UserRepository();
+            AlbumRepository albumRepo = new AlbumRepository();
+            AlbumModel[] albums = albumRepo.GetByCategory(catRepo.GetById(catId ?? model.Categories.First().Id), true, true, true, true, false).ToArray();
+            model.PageCount = (int)Math.Ceiling(albums.Length / (double)maxItemsPerPage);
+            if (nbr > model.PageCount)
+                nbr = model.PageCount;
+            int start = (nbr - 1) * maxItemsPerPage;
+            int end = nbr * maxItemsPerPage;
+            model.CurrentPage = nbr;
+           
+            end = (end >= albums.Length) ? albums.Length : end;
+            model.Albums = new List<AlbumProfileModel>();
+            string startS,endS;
+            for (int i = start; i < end; ++i)
+            {
+                AlbumModel al = albums[i];
+                Helpers.AlbumDateRange(al, out startS, out endS);
 
-			//UserModel user = new UserModel()
-			//{
-			//   Login = "kasia1337",
-			//   Password = "tralala",
-			//   Email = "kasia@buziaczek.pl"
-			//};
-			//userRepo.Create( user );
-
-			//UserModel user2 = userRepo.GetById( user.Id );
-			//user2.Login = "Kasia666";
-			//userRepo.Update( user2 );
-
-			//userRepo.Delete( user2 );
-			//UserModel user3 = userRepo.GetById( user2.Id );
-
-			return View();
+                AlbumProfileModel album = new AlbumProfileModel
+                {
+                    Comments = al.Comments.Count,
+                    Id = al.Id,
+                    Name = al.Name,
+                    Rating = al.Rating,
+                    Views = al.Views,
+                    StartDate = startS,
+                    EndDate = endS,
+                    Thumbnails = Helpers.AlbumThumbnails(al)
+                };
+                model.Albums.Add(album);
+            }
+            model.Albums.Reverse();
+			return View(model);
 		}
 
 		public ActionResult Charts(ChartCategory ? category)
@@ -69,7 +101,7 @@ namespace PhotoHistory.Controllers
 			return View(model);
 		}
 
-
+        [Authorize]
 		public ActionResult Show(int id)
 		{
 			AlbumRepository albums = new AlbumRepository();
@@ -83,7 +115,7 @@ namespace PhotoHistory.Controllers
 				album.Views += 1;
 				albums.Update( album );
 			}
-
+            @ViewBag.user = user;
 			return View( album );
 		}
 
@@ -281,7 +313,7 @@ namespace PhotoHistory.Controllers
 		[Authorize]
 		public ActionResult Create()
 		{
-			CategoryModel.EnsureStartingData();
+			//CategoryModel.EnsureStartingData();
 			PrepareCategories();
 			return View();
 		}
@@ -387,6 +419,7 @@ namespace PhotoHistory.Controllers
             }
             else
             {
+                newComment.Body = null;
                 newComment.Message = "You need to be logged in to comment";
             }
 

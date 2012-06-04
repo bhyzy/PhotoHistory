@@ -101,6 +101,7 @@
     <Compile Include="Data\AlbumMapping.cs" />
     <Compile Include="Data\AlbumRepository.cs" />
     <Compile Include="Data\CategoryMapping.cs" />
+    <Compile Include="Data\CategoryRepository.cs" />
     <Compile Include="Data\CommentMapping.cs" />
     <Compile Include="Data\DataRepository.cs" />
     <Compile Include="Data\PhotoMapping.cs" />
@@ -211,6 +212,7 @@
     <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Album\Copy of Show.cshtml" />
     <Content Include="Views\Album\Charts.cshtml" />
+    <Content Include="Views\Album\Browse.cshtml" />
     <None Include="Views\Album\Show.cshtml" />
     <None Include="Views\Album\Manage.cshtml" />
     <None Include="Views\Album\ManageAlbum.cshtml" />
@@ -249,9 +251,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Album\Browse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\Create.cshtml" />

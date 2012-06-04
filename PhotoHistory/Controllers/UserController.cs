@@ -24,7 +24,8 @@ namespace PhotoHistory.Controllers
         {
             if(string.IsNullOrEmpty(userName))
                  userName = HttpContext.User.Identity.Name;
-
+            if(string.IsNullOrEmpty(userName))
+                return View();
             UserRepository repo = new UserRepository();
             UserModel user = repo.GetByUsernameWithPhotos(userName);
             UserProfileModel profile = null;

@@ -177,4 +177,15 @@ namespace PhotoHistory.Models
             SortedPhotos.Sort((x, y) => x.Date.CompareTo(y.Date));
         }
     }
+
+    public class BrowseAlbumModel
+    {
+        public int SelectedCategory { get; set; }
+        public int CurrentPage { get; set; } 
+        public int PageCount { get; set; }
+        public List<CategoryModel> Categories { get; set; }
+        public List<AlbumProfileModel> Albums { get; set; }
+
+
+    }
 }
