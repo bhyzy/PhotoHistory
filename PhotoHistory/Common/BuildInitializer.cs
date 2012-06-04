@@ -14,10 +14,10 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-			  ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
-			  CreateUsers();
-			  CreateCategories();
-			  CreateAlbums();
+			 // ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
+			 // CreateUsers();
+			 // CreateCategories();
+		     // CreateAlbums();
         }
 
         private static void CreateAlbums()
@@ -44,6 +44,23 @@ namespace PhotoHistory.Common
                 User = user,
                 Views = 1234
             };
+
+            for (int i = 0; i < 10; ++i)
+            {
+                album = new AlbumModel()
+                {
+                    Category = category,
+                    CommentsAllow = true,
+                    CommentsAuth = false,
+                    Description = "Jak zmieniałem się w czasie"+i,
+                    Name = "Moja twarz"+i,
+                    Public = true,
+                    Rating = 10+i,
+                    User = user,
+                    Views = 1234+i
+                };
+                albums.Create(album);
+            }
 
             //Zdjecia byly tworzone bez linku, usuniecie kodu
             LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();

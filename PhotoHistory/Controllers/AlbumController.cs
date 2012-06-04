@@ -24,13 +24,19 @@ namespace PhotoHistory.Controllers
 			return View();
 		}
 
-		public ActionResult Browse(int? catId)
+		public ActionResult Browse(int? catId, int? pageNbr)
 		{
+            int maxItemsPerPage = 6;
+            int nbr = pageNbr ?? 1;
+            if (nbr < 1)
+                nbr = 1;
             @ViewBag.Category = MainCategory.Browse;
             BrowseAlbumModel model = new BrowseAlbumModel();
             CategoryRepository catRepo = new CategoryRepository();
             model.Categories = catRepo.getCategories();
             model.SelectedCategory = model.Categories.First().Id??0;
+            
+            
             foreach (CategoryModel category in model.Categories)
             {
                 if (category.Id == catId)
@@ -41,10 +47,36 @@ namespace PhotoHistory.Controllers
             }
 
             AlbumRepository albumRepo = new AlbumRepository();
-            model.Albums = Helpers.Convert( albumRepo.GetByCategory(catRepo.GetById(catId ?? model.Categories.First().Id),true,true,true,true,false) );
-            
+            AlbumModel[] albums = albumRepo.GetByCategory(catRepo.GetById(catId ?? model.Categories.First().Id), true, true, true, true, false).ToArray();
+            model.PageCount = (int)Math.Ceiling(albums.Length / (double)maxItemsPerPage);
+            if (nbr > model.PageCount)
+                nbr = model.PageCount;
+            int start = (nbr - 1) * maxItemsPerPage;
+            int end = nbr * maxItemsPerPage;
+            model.CurrentPage = nbr;
+           
+            end = (end >= albums.Length) ? albums.Length : end;
+            model.Albums = new List<AlbumProfileModel>();
+            string startS,endS;
+            for (int i = start; i < end; ++i)
+            {
+                AlbumModel al = albums[i];
+                Helpers.AlbumDateRange(al, out startS, out endS);
 
-
+                AlbumProfileModel album = new AlbumProfileModel
+                {
+                    Comments = al.Comments.Count,
+                    Id = al.Id,
+                    Name = al.Name,
+                    Rating = al.Rating,
+                    Views = al.Views,
+                    StartDate = startS,
+                    EndDate = endS,
+                    Thumbnails = Helpers.AlbumThumbnails(al)
+                };
+                model.Albums.Add(album);
+            }
+            model.Albums.Reverse();
 			return View(model);
 		}
 

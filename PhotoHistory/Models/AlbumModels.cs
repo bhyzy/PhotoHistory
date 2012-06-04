@@ -181,6 +181,8 @@ namespace PhotoHistory.Models
     public class BrowseAlbumModel
     {
         public int SelectedCategory { get; set; }
+        public int CurrentPage { get; set; } 
+        public int PageCount { get; set; }
         public List<CategoryModel> Categories { get; set; }
         public List<AlbumProfileModel> Albums { get; set; }
 
