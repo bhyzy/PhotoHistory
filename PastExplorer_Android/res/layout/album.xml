@@ -2,14 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="5dip" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Album"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="Album name" />
 
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Album description. To jest tylko test. Elo elo. Album description. To jest tylko test. dkqwpo dkqwpod kqwpod kqwpod qwk. Elo elo. Album description. To jest tylko test. Elo elo."
+        android:singleLine="false" />
+        
+    <TextView android:id="@+id/noPhotos"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/albumItemPhotos" />
+    <TextView android:id="@+id/views"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/albumItemViews" />
+    <TextView android:id="@+id/rating"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/albumItemRating" />
+    
+    <GridView android:id="@+id/photos"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:columnWidth="90dp"
+	    android:numColumns="auto_fit"
+	    android:verticalSpacing="10dp"
+	    android:horizontalSpacing="10dp"
+	    android:stretchMode="columnWidth"
+	    android:gravity="center" />
+    
 </LinearLayout>

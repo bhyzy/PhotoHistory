@@ -14,6 +14,7 @@
     <string name="dashboardNoAlbums">No albums</string>
     <string name="pleaseWait">Please wait</string>
     <string name="retrievingAlbums">Retrieving albums &#8230;</string>
+    <string name="retrievingPhotos">Retrieving photos &#8230;</string>
     <string name="albumItemViews">views: </string>
     <string name="albumItemRating">rating: </string>
     <string name="albumItemPhotos">photos: </string>

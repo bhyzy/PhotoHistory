@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import pastexplorer.util.HttpUtil;
 import pastexplorer.util.StackTraceUtil;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,7 +47,7 @@ public class DashboardActivity extends ListActivity {
         Thread thread = new Thread(null, new Runnable() {
 			@Override
 			public void run() {
-				getAlbums();	
+				retrieveAlbums();	
 			}
 		}, "RetrieveAlbums");
         thread.start();
@@ -74,7 +74,15 @@ public class DashboardActivity extends ListActivity {
 				.show();
 	}
 	
-	private void getAlbums() {
+	@Override
+	protected void onListItemClick(android.widget.ListView l, View v, int position, long id) {
+		 super.onListItemClick(l, v, position, id);
+		 Intent albumIntent = new Intent(this, AlbumActivity.class);
+		 albumIntent.putExtra("album_id", _albums.get(position).album.id);
+		 startActivity(albumIntent);
+	}
+	
+	private void retrieveAlbums() {
 		
 		try {
 			_albums = new ArrayList<AlbumWithThumbnail>();
@@ -100,7 +108,7 @@ public class DashboardActivity extends ListActivity {
 				
 				_albums.add(albumItem);
 			}
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 			
 		} catch (APIException e) {
 			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
@@ -171,6 +179,7 @@ public class DashboardActivity extends ListActivity {
 			}
 			return v;
 		}
+
 	}
 	
 	private class AlbumWithThumbnail {
