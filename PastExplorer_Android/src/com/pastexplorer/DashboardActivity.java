@@ -2,28 +2,36 @@ package com.pastexplorer;
 
 import java.util.ArrayList;
 
+import pastexplorer.util.HttpUtil;
+import pastexplorer.util.StackTraceUtil;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pastexplorer.api.APIException;
 import com.pastexplorer.api.AlbumData;
 import com.pastexplorer.api.Client;
+import com.pastexplorer.api.PhotoData;
 import com.pastexplorer.api.UserData;
 
 public class DashboardActivity extends ListActivity {
 
+	private static final String DEBUG_TAG = "PE Dashboard";
+	
 	private ProgressDialog _progressDialog = null;
-	private ArrayList<AlbumData> _albums = null;
-	//private Runnable _generateAlbumList;
+	private ArrayList<AlbumWithThumbnail> _albums = null;
 	private AlbumAdapter _adapter;
 
 	/** Called when the activity is first created. */
@@ -32,7 +40,7 @@ public class DashboardActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dashboard);
 
-		_albums = new ArrayList<AlbumData>();
+		_albums = new ArrayList<AlbumWithThumbnail>();
 		_adapter = new AlbumAdapter(this, R.layout.album_item, _albums);
 		setListAdapter(_adapter);
 		
@@ -43,7 +51,10 @@ public class DashboardActivity extends ListActivity {
 			}
 		}, "RetrieveAlbums");
         thread.start();
-        _progressDialog = ProgressDialog.show(this, "Please wait...", "Retrieving data ...", true);
+		_progressDialog = ProgressDialog.show(this,
+				getString(R.string.pleaseWait),
+				getString(R.string.retrievingAlbums), 
+				true, true);
 	}
 
 	@Override
@@ -66,18 +77,35 @@ public class DashboardActivity extends ListActivity {
 	private void getAlbums() {
 		
 		try {
+			_albums = new ArrayList<AlbumWithThumbnail>();
+			
 			Client client = User.createClient();
-			_albums = new ArrayList<AlbumData>();
 			UserData user = client.getUser(User.getUserName());
+			
 			for (int albumId : user.albums) {
-				AlbumData album = client.getAlbum(albumId);
-				_albums.add(album);
+				AlbumWithThumbnail albumItem = new AlbumWithThumbnail();
+				albumItem.album = client.getAlbum(albumId);
+				
+				if (albumItem.album.photos.size() > 0) {
+					PhotoData firstPhoto = client.getPhoto(albumItem.album.photos.get(0));
+					if (firstPhoto.thumbnail != null && !firstPhoto.thumbnail.isEmpty()) {
+						try {
+							albumItem.thumbnail = HttpUtil.downloadImage(firstPhoto.thumbnail);
+						}
+						catch (Exception e) {
+							Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
+						}
+					}
+				}
+				
+				_albums.add(albumItem);
 			}
-			Thread.sleep(5000);
+			Thread.sleep(2000);
+			
 		} catch (APIException e) {
-			//
+			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
 		} catch (Exception e) {
-			//
+			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
 		}
 		
 		runOnUiThread(_updateAlbumList);
@@ -88,7 +116,7 @@ public class DashboardActivity extends ListActivity {
 		public void run() {
 			if (_albums != null && _albums.size() > 0) {
 				_adapter.notifyDataSetChanged();
-				for (AlbumData album : _albums)
+				for (AlbumWithThumbnail album : _albums)
 					_adapter.add(album);
 			}
 			_progressDialog.dismiss();
@@ -96,11 +124,11 @@ public class DashboardActivity extends ListActivity {
 		}
 	};
 
-	private class AlbumAdapter extends ArrayAdapter<AlbumData> {
-		private ArrayList<AlbumData> _items;
+	private class AlbumAdapter extends ArrayAdapter<AlbumWithThumbnail> {
+		private ArrayList<AlbumWithThumbnail> _items;
 
 		public AlbumAdapter(Context context, int textViewResourceId,
-				ArrayList<AlbumData> items) {
+				ArrayList<AlbumWithThumbnail> items) {
 			super(context, textViewResourceId, items);
 			this._items = items;
 		}
@@ -112,18 +140,41 @@ public class DashboardActivity extends ListActivity {
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				v = vi.inflate(R.layout.album_item, null);
 			}
-			AlbumData a = _items.get(position);
+			AlbumWithThumbnail a = _items.get(position);
 			if (a != null) {
-				TextView tt = (TextView) v.findViewById(R.id.toptext);
-				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
-				if (tt != null) {
-					tt.setText(a.name);
+				
+				TextView nameLabel = (TextView) v.findViewById(R.id.name);
+				TextView descriptionLabel = (TextView) v.findViewById(R.id.description);
+				TextView photosLabel = (TextView) v.findViewById(R.id.noPhotos);
+				TextView viewsLabel = (TextView) v.findViewById(R.id.views);
+				TextView ratingLabel = (TextView) v.findViewById(R.id.rating);
+				ImageView thumbnailImage = (ImageView) v.findViewById(R.id.thumbnail);
+				
+				if (nameLabel != null) {
+					nameLabel.setText(a.album.name);
 				}
-				if (bt != null) {
-					bt.setText(a.description);
+				if (descriptionLabel != null) {
+					descriptionLabel.setText(a.album.description);
+				}
+				if (photosLabel != null) {
+					photosLabel.setText( getString(R.string.albumItemPhotos) + " " + a.album.photos.size() );
+				}
+				if (viewsLabel != null) {
+					viewsLabel.setText( getString(R.string.albumItemViews) + " " + a.album.views );
+				}
+				if (ratingLabel != null) {
+					ratingLabel.setText( getString(R.string.albumItemRating) + " " + a.album.rating );
+				}
+				if (thumbnailImage != null && a.thumbnail != null) {
+					thumbnailImage.setImageBitmap(a.thumbnail);
 				}
 			}
 			return v;
 		}
+	}
+	
+	private class AlbumWithThumbnail {
+		public AlbumData album;
+		public Bitmap thumbnail;
 	}
 }

@@ -3,12 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
-
+    
     <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginRight="6dip"
+        android:id="@+id/thumbnail"
+        android:layout_width="70dip"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:layout_marginRight="5dip"
+        android:contentDescription="@string/albumThumbnailDesc"
         android:src="@drawable/ic_launcher" />
 
     <LinearLayout
@@ -18,21 +20,45 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/toptext"
+            android:id="@+id/name"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Test item" />
+            android:text="Album name" />
 
         <TextView
-            android:id="@+id/bottomtext"
+            android:id="@+id/description"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:text="Ala ma kota Filemona. To jest tylko test. Elo elo."
+            android:text="Album description. To jest tylko test. Elo elo."
             android:ellipsize="end"
             android:singleLine="true" />
+        
+        <TableLayout android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView android:id="@+id/noPhotos"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/albumItemPhotos" />
+                <TextView android:id="@+id/views"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/albumItemViews" />
+                <TextView android:id="@+id/rating"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/albumItemRating" />
+            </TableRow>
+        </TableLayout>
+        
     </LinearLayout>
 
 </LinearLayout>

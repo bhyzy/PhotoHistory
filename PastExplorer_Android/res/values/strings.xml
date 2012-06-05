@@ -12,6 +12,11 @@
     <string name="confirmSignOutTitle">Sign out</string>
     <string name="confirmSignOutMessage">Are you sure you want to sign out?</string>
     <string name="dashboardNoAlbums">No albums</string>
-    
+    <string name="pleaseWait">Please wait</string>
+    <string name="retrievingAlbums">Retrieving albums &#8230;</string>
+    <string name="albumItemViews">views: </string>
+    <string name="albumItemRating">rating: </string>
+    <string name="albumItemPhotos">photos: </string>
+    <string name="albumThumbnailDesc">album thumbnail</string>
 
 </resources>

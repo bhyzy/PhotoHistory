@@ -21,9 +21,9 @@ public class Client {
 	private String _userName;
 	private String _password;
 	
-	//public static final String API_SERVICE_URI = "http://localhost:3518/api";
-	public static final String API_SERVICE_HOST = "localhost:3518";
-	public static final String API_SERVICE_URI = "http://10.0.2.2:3518/api";
+	public static final String API_SERVICE_HOST_HEADER = "localhost:3518";
+	public static final String API_SERVICE_HOST_REAL = "10.0.2.2:3518";
+	public static final String API_SERVICE_URI = "http://" + API_SERVICE_HOST_REAL + "/api";
 	public static final String DEBUG_TAG = "PE Client";
 
 	public Client(String userName, String password) {
@@ -115,8 +115,8 @@ public class Client {
 			photo.album = extractResourceID(photoRaw.getString("album"));
 			photo.date = convertJSONObjectToDate(photoRaw.getJSONObject("date"));
 			photo.description = photoRaw.getString("description");
-			photo.image = photoRaw.getString("image");
-			photo.thumbnail = photoRaw.getString("thumbnail");
+			photo.image = photoRaw.getString("image").replace(API_SERVICE_HOST_HEADER, API_SERVICE_HOST_REAL);
+			photo.thumbnail = photoRaw.getString("thumbnail").replace(API_SERVICE_HOST_HEADER, API_SERVICE_HOST_REAL);
 			photo.latitude = photoRaw.isNull("latitude") == false? photoRaw.getDouble("latitude") : null;
 			photo.longitude = photoRaw.isNull("longitude") == false? photoRaw.getDouble("longitude") : null;
 			
@@ -184,7 +184,7 @@ public class Client {
 		connection.setAllowUserInteraction(false);
 		connection.setRequestProperty("User-Agent", "PastExplorer Android Application");
 		connection.setRequestProperty("Accept", "*/*");
-		connection.setRequestProperty("Host", API_SERVICE_HOST);
+		connection.setRequestProperty("Host", API_SERVICE_HOST_HEADER);
 		connection.setRequestProperty("Authorization",
 				"Basic "+ Base64.encodeToString((_userName+":"+_password).getBytes(), Base64.DEFAULT));
 
