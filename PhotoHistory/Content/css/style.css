@@ -368,6 +368,7 @@ h2 a {
 #search-form {
     float: left;
     padding: 15px;
+    display:none;
 }
 #search-form .well {
     background-color: transparent;
@@ -683,4 +684,14 @@ table.controls tbody
 
 #photo-desc-replace
 {
+    width:700px;
     }
+    
+    .toggle-autoplay
+    {
+        float:right;
+        cursor:pointer;}
+        
+        .toggle-autoplay:hover
+        {
+            text-decoration:underline;}

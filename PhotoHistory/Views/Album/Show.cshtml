@@ -13,9 +13,7 @@
     <div id="album-header">
         <h1 class="page-title">
             <a href="#">@Model.Name</a>
-            
-            
-            
+
             <!-- follow/unfollow - zawsze -->
             <button class="btn btn-info">
                 <i class="icon-ok icon-white"></i>Follow</button>
@@ -55,8 +53,15 @@
     </div>
 
     
+    <div class="toggle-autoplay"  >
+    <img src="../../Content/img/Play Icon.jpg" />
+    Start/stop autoplay
+    </div>
+
     <div id="photo-desc-replace">
     </div>
+
+    
 
 
     <div>
@@ -173,7 +178,9 @@
         // aktywacja pluginu
         $(document).ready(function () {
             $('ul#roundabout').roundabout({
-                enableDrag: true
+                enableDrag: true,
+                btnToggleAutoplay: ".toggle-autoplay",
+                autoplayDuration: 1000
             });
         });
 
