@@ -14,16 +14,16 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-			 // ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
-			 // CreateUsers();
-			 // CreateCategories();
-		     // CreateAlbums();
+			  ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
+			  CreateUsers();
+			  CreateCategories();
+		      CreateAlbums();
         }
 
         private static void CreateAlbums()
         {
             UserRepository users = new UserRepository();
-            UserModel user = users.GetByUsername("Pierogu");
+            UserModel user = users.GetByUsername("Klocu");
             AlbumRepository albums = new AlbumRepository();
             
             CategoryModel category=null;
@@ -45,22 +45,21 @@ namespace PhotoHistory.Common
                 Views = 1234
             };
 
-            for (int i = 0; i < 10; ++i)
+
+            album = new AlbumModel()
             {
-                album = new AlbumModel()
-                {
-                    Category = category,
-                    CommentsAllow = true,
-                    CommentsAuth = false,
-                    Description = "Jak zmieniałem się w czasie"+i,
-                    Name = "Moja twarz"+i,
-                    Public = true,
-                    Rating = 10+i,
-                    User = user,
-                    Views = 1234+i
-                };
-                albums.Create(album);
-            }
+                Category = category,
+                CommentsAllow = true,
+                CommentsAuth = false,
+                Description = "Jak zmieniałem się w czasie",
+                Name = "Moja twarz",
+                Public = true,
+                Rating = 10,
+                User = user,
+                Views = 1234
+            };
+            albums.Create(album);
+            
 
             //Zdjecia byly tworzone bez linku, usuniecie kodu
             LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
@@ -280,9 +279,9 @@ namespace PhotoHistory.Common
                 ActivationCode = null,
                 DateOfBirth = new DateTime(1989, 10, 15),
                 About = "Lubię placki.",
-                NotifyComment = true,
-                NotifyPhoto = true,
-                NotifySubscription = true
+                NotifyComment = false,
+                NotifyPhoto = false,
+                NotifySubscription = false
             };
             users.Create(user);
 
