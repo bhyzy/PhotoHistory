@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PhotoHistory.Models.AlbumModel>
+﻿@model List<PhotoHistory.Models.AlbumProfileModel>
 <style>
     .post .entry
     {
@@ -15,21 +15,13 @@
     <h3>
         My albums</h3>
     <div id="content-left" style="width: 900px; margin-right: 0;">
-        @foreach (var item in Model)
+        @foreach (var album in Model)
         {
             <div class="post" style="width: 450px; float: left;">
                 <div class="entry">
-                    <div class="album-thumb">
-                        <a href="@(Url.Action("Show", new { id = item.Id }))">
-                            <img src="@(Url.Content("~/Content/tmp/photo1.jpg"))" class="photo" />
-                            <img src="@(Url.Content("~/Content/tmp/photo2.jpg"))" class="photo" />
-                            <img src="@(Url.Content("~/Content/tmp/photo3.jpg"))" class="photo" />
-                            <h3 class="album-title">
-                                @item.Name</h3>
-                        </a><span class="album-label">Timespan: </span><span class="album-value">TODO </span>
-                        <br />
-                        <span class="album-label">Views: </span><span class="album-value">@item.Views</span>
-                    </div>
+
+                    @{Html.RenderPartial("_AlbumMiniView", album);}
+  
                 </div>
             </div> 
         }
