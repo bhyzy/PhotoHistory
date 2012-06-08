@@ -19,5 +19,7 @@ namespace PhotoHistory.Models
         public String Body { get; set; }
         public String Date { get; set; }
         public String UserName { get; set; }
+        public String Link { get; set; }
+        public int Id { get; set; }
     }
 }

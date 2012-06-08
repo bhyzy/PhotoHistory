@@ -133,8 +133,9 @@
                 }
                 @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
                 {
-                    <div class="album-comment">
-                    <h1>@(comment.User.Login + " " + comment.Date.ToString("dd/MM/yyyy HH:mm:ss"))</h1>
+                    <div class="album-comment" >
+                    <h1><a href = @Url.Action("ViewProfile","User", new {userName= comment.User.Login}) name="@("comment"+comment.Id)">@comment.User.Login</a>
+                      @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")</h1>
                         @comment.Body
                     </div>
 
@@ -165,9 +166,8 @@
                         if(data.Body!=null){
                         $("#empty").remove();
                         $("#comment-body").val('');
-                        $("#comments").prepend('<div class="album-comment">\n<h1>'+ data.UserName +' '+data.Date+'</h1>\n'+  data.Body+
-                '</div>');
-                        
+                        $("#comments").prepend('<div class="album-comment">\n<h1><a name=comment'+data.Id+' href ="'+ data.Link + '" > ' + data.UserName + ' </a>'
+                        +data.Date+'</h1>\n'+  data.Body+'</div>');
                         } else
                             alert(data.Message);
                     });

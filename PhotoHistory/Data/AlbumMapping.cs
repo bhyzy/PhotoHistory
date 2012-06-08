@@ -104,6 +104,13 @@ namespace PhotoHistory.Data
                 m => { m.Column ("user_id");  }
                 ));
 
+            Bag(x => x.Followers, map =>
+            {
+                map.Table("subscriptions");
+                map.Key(c => c.Column("album_id"));
+            }, a => a.ManyToMany(
+                m => { m.Column("user_id"); }
+                ));
         }
     }
 }

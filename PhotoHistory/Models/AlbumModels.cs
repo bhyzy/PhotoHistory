@@ -31,7 +31,7 @@ namespace PhotoHistory.Models
         public virtual ICollection<PhotoModel> Photos { get; set; }
         public virtual ICollection<CommentModel> Comments { get; set; }
         public virtual ICollection<UserModel> TrustedUsers{ get; set; }
-
+        public virtual ICollection<UserModel> Followers { get; set; }
   
 
         // transforms an array with logins into an array of UserModels

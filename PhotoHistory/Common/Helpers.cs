@@ -40,6 +40,28 @@ namespace PhotoHistory
 			WebMail.Send( to, subject, body, isBodyHtml: true );
 		}
 
+        public static void NotifyAlbumObservers(AlbumModel album)
+        {
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            foreach (UserModel follower in album.Followers)
+            {
+                if(follower.NotifySubscription)
+                    SendEmail(follower.Email, string.Format("{0} has added new photo",album.User.Login),
+                        string.Format("Dear {0},<br/>{1} has added new photo. If you want to see updates please follow this link:<br/><a href=\"{2}\">here</a>",
+                            follower.Login, album.User.Login, url.Action("Show","Album", new {id=album.Id}  )
+                        ) 
+                   );
+            }
+        }
+
+        public static void NotifyCommentObserver(AlbumModel album)
+        {
+        }
+
+        public static void RemindPhoto(AlbumModel album)
+        {
+        }
+
 		public static MvcHtmlString MyValidationMessage(this HtmlHelper helper, string fieldName)
 		{
 			MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage( helper, fieldName );

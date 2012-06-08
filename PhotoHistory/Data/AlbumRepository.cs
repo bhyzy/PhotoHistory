@@ -46,7 +46,7 @@ namespace PhotoHistory.Data
         }
 
         public List<AlbumModel> GetByCategory(CategoryModel category, bool withUser = false, bool withPhotos = false, bool withComments = false,
-              bool withCategory = false, bool withTrustedUsers = false)
+              bool withCategory = false, bool withTrustedUsers = false, bool withFollowers = false)
         {
             using (var session = GetSession())
             {
@@ -63,6 +63,7 @@ namespace PhotoHistory.Data
                         if (withPhotos) album.Photos.ToString();
                         if (withCategory) album.Category.ToString();
                         if (withTrustedUsers) album.TrustedUsers.ToList();
+                        if (withFollowers) album.Followers.ToList();
                     }
                 }
                 return albums;
