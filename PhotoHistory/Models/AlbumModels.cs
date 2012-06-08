@@ -83,7 +83,7 @@ namespace PhotoHistory.Models
 
 		  // -------------------------------- VOTES -------------------------
 
-		  // USE THIS INSTEAD OF 'RATING' ATTRIBUTE !
+		  // the most up-to-date rating
 		  public virtual long getRating()
 		  {
 			  using ( var session = SessionProvider.SessionFactory.OpenSession() )
@@ -113,6 +113,12 @@ namespace PhotoHistory.Models
 					  }
 				  }
 			  }
+
+              // update ranking
+              Rating = (int)getRating();
+              AlbumRepository albums = new AlbumRepository();
+              albums.Update(this);
+
 			  return true;
 		  }
 

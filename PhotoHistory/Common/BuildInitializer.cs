@@ -40,7 +40,7 @@ namespace PhotoHistory.Common
                 Description = "Jak zmieniałem się w czasie",
                 Name = "Moja twarz",
                 Public = true,
-                Rating = 10,
+                Rating = 0,
                 User = user,
                 Views = 1234
             };
@@ -54,7 +54,7 @@ namespace PhotoHistory.Common
                 Description = "Jak zmieniałem się w czasie",
                 Name = "Moja twarz",
                 Public = true,
-                Rating = 10,
+                Rating = 0,
                 User = user,
                 Views = 1234
             };
@@ -132,7 +132,7 @@ namespace PhotoHistory.Common
                 Description = "",
                 Name = "Widok za moin oknem",
                 Public = true,
-                Rating = 11,
+                Rating = 0,
                 User = user,
                 Views = 2
             };
@@ -171,7 +171,7 @@ namespace PhotoHistory.Common
                 Description = "Zmieniający się rynek",
                 Name = "Zmieniający się rynek",
                 Public = true,
-                Rating = 1,
+                Rating = 0,
                 User = user,
                 Views = 111
             };
