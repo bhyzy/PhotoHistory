@@ -83,7 +83,7 @@ namespace PhotoHistory.Data
 			}
 		}
 
-        public UserModel GetByUsernameWithAlbums(string username, bool withTrustedUsers = false)
+        public UserModel GetByUsernameWithAlbums(string username, bool withTrustedUsers = false,bool withFollowers=false)
         {
             using (var session = GetSession())
             {
@@ -96,6 +96,11 @@ namespace PhotoHistory.Data
 							 foreach ( AlbumModel album in user.Albums )
 								 album.TrustedUsers.ToList();
 						 }
+                         if (withFollowers)
+                         {
+                             foreach (AlbumModel album in user.Albums)
+                                 album.Followers.ToList();
+                         }
 					 }
                 return user;
             }

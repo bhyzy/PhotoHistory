@@ -23,7 +23,7 @@ namespace PhotoHistory.Data
             }
         }
 
-        public void Subscribe(AlbumModel album, UserModel user, bool unsubscribe=false)
+        public void Subscribe(AlbumModel album, UserModel user, bool unsubscribe = false)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace PhotoHistory.Data
         {
             using (var session = GetSession())
             {
-                List<AlbumModel> albums =session.CreateQuery("from AlbumModel where Category = :cat").SetParameter("cat", category).Enumerable<AlbumModel>().ToList<AlbumModel>();
+                List<AlbumModel> albums = session.CreateQuery("from AlbumModel where Category = :cat").SetParameter("cat", category).Enumerable<AlbumModel>().ToList<AlbumModel>();
                 if (albums != null)
                 {
                     foreach (AlbumModel album in albums)
@@ -105,48 +105,48 @@ namespace PhotoHistory.Data
         {
             using (var session = GetSession())
             {
-					return session.CreateQuery( "from AlbumModel where Id = :id" ).SetParameter( "id", id ).UniqueResult<AlbumModel>();
+                return session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
             }
         }
 
-		  public AlbumModel GetById(int? id,
-			  bool withUser = false, bool withPhotos = false, bool withComments = false,
-              bool withCategory = false, bool withTrustedUsers = false, bool withFollowers = false)
-		  {
-			  using ( var session = GetSession() )
-			  {
-				  AlbumModel album = session.CreateQuery( "from AlbumModel where Id = :id" ).SetParameter( "id", id ).UniqueResult<AlbumModel>();
-				  if ( album != null )
-				  {
-                      if (withComments) album.Comments.ToList().Sort(delegate(CommentModel a, CommentModel b)
-                          {
-                              return a.Date.CompareTo(b.Date);
-                          });
-                      foreach (CommentModel comment in album.Comments)
-                          comment.User.ToString();
-					  if ( withUser ) album.User.ToString();
-					  if ( withPhotos ) album.Photos.ToString();
-					  if ( withCategory ) album.Category.ToString();
-					  if ( withTrustedUsers ) album.TrustedUsers.ToList();
-                      if (withFollowers) album.Followers.ToList();
-				  }
-				  return album;
-			  }
-		  }
+        public AlbumModel GetById(int? id,
+            bool withUser = false, bool withPhotos = false, bool withComments = false,
+            bool withCategory = false, bool withTrustedUsers = false, bool withFollowers = false)
+        {
+            using (var session = GetSession())
+            {
+                AlbumModel album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+                if (album != null)
+                {
+                    if (withComments) album.Comments.ToList().Sort(delegate(CommentModel a, CommentModel b)
+                        {
+                            return a.Date.CompareTo(b.Date);
+                        });
+                    foreach (CommentModel comment in album.Comments)
+                        comment.User.ToString();
+                    if (withUser) album.User.ToString();
+                    if (withPhotos) album.Photos.ToString();
+                    if (withCategory) album.Category.ToString();
+                    if (withTrustedUsers) album.TrustedUsers.ToList();
+                    if (withFollowers) album.Followers.ToList();
+                }
+                return album;
+            }
+        }
 
         public AlbumModel GetWithComments(int? id)
         {
-			  return GetById( id, withComments: true );
+            return GetById(id, withComments: true);
         }
 
         public AlbumModel GetByIdWithPhotos(int? id, bool with)
         {
-			  return GetById( id, withPhotos: true );
+            return GetById(id, withPhotos: true);
         }
 
         public AlbumModel GetByIdWithUser(int? id)
         {
-			  return GetById( id, withUser: true );
+            return GetById(id, withUser: true);
         }
 
         public List<AlbumModel> GetMostPopular(int maxAlbums)
@@ -157,11 +157,11 @@ namespace PhotoHistory.Data
                 var criteria = session.CreateCriteria<AlbumModel>().SetMaxResults(maxAlbums).AddOrder(Order.Desc("Views"));
                 models = criteria.List<AlbumModel>().ToList();
                 foreach (AlbumModel album in models)
-                { 
+                {
                     album.Photos.ToList();
                     album.Comments.ToList();
                 }
-                    
+
             }
             return models;
         }
@@ -181,7 +181,7 @@ namespace PhotoHistory.Data
             }
             return models;
         }
-        
+
         public List<AlbumModel> GetBiggest(int maxAlbums)
         {
             List<AlbumModel> models = new List<AlbumModel>();
@@ -223,7 +223,7 @@ namespace PhotoHistory.Data
             using (var session = GetSession())
             {
                 var albumQuery = session.CreateSQLQuery(String.Format("select distinct album_id from (select album_id,date_posted  from Comments c order by c.date_posted ) a limit {0};", maxAlbums));
-                var albumsId =albumQuery.List<int>();
+                var albumsId = albumQuery.List<int>();
 
                 AlbumModel album;
                 foreach (int id in albumsId)
@@ -284,14 +284,14 @@ namespace PhotoHistory.Data
         public AlbumModel GetByIdForShow(int? id)
         {
             //using (var session = GetSession())
-           // {
-              /*  var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
-                album.Category.ToString();
-                album.TrustedUsers.ToString();
-                album.Photos.ToList();
-                album.User.ToString();*/
-                return GetById(id, true, true, true, true, true,true);
-               // return album;
+            // {
+            /*  var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
+              album.Category.ToString();
+              album.TrustedUsers.ToString();
+              album.Photos.ToList();
+              album.User.ToString();*/
+            return GetById(id, true, true, true, true, true, true);
+            // return album;
             //}
         }
 
@@ -320,32 +320,32 @@ namespace PhotoHistory.Data
         }
 
 
-		  public ICollection<AlbumModel> GetAll()
-		  {
-			  using ( var session = GetSession() )
-			  {
-				  return session.CreateQuery( "from AlbumModel" ).List<AlbumModel>();
-			  }
-		  }
+        public ICollection<AlbumModel> GetAll()
+        {
+            using (var session = GetSession())
+            {
+                return session.CreateQuery("from AlbumModel").List<AlbumModel>();
+            }
+        }
 
-		  public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user)
-		  {
-			  if ( album == null )
-				  throw new ArgumentException( "album" );
+        public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user)
+        {
+            if (album == null)
+                throw new ArgumentException("album");
 
-			  // public album - eveyrone can view it
-			  if ( album.Public )
-				  return true;
+            // public album - eveyrone can view it
+            if (album.Public)
+                return true;
 
-			  // given user is the owner of the album
-			  if ( album.User == user )
-				  return true;
+            // given user is the owner of the album
+            if (album.User == user)
+                return true;
 
-			  // given user is among trusted users for this album
-			  if ( album.TrustedUsers != null && album.TrustedUsers.Contains( user ) )
-				  return true;
+            // given user is among trusted users for this album
+            if (album.TrustedUsers != null && album.TrustedUsers.Contains(user))
+                return true;
 
-			  return false;
-		  }
+            return false;
+        }
     }
 }

@@ -1,11 +1,9 @@
 ﻿@model PhotoHistory.Models.AlbumModel
-
 @{    
     // no nie moglem tego inaczej zrobic
     List<PhotoHistory.Models.PhotoModel> photosSorted = new List<PhotoHistory.Models.PhotoModel>(Model.Photos);
     photosSorted.Sort((x, y) => x.Date.CompareTo(y.Date));
-    }           
-
+}
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.roundabout.js"))"></script>
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drag-2.0.min.js"))"></script>
 <script src="@(Url.Content("~/Scripts/roundabout/jquery.event.drop-2.0.min.js"))"></script>
@@ -13,37 +11,34 @@
     <div id="album-header">
         <h1 class="page-title">
             <a href="#">@Model.Name</a>
-
             <!-- follow/unfollow - brak dla wlasciciela -->
             @if (Model.User != @ViewBag.user)
             {
                 if (Helpers.isFollower(Model, ViewBag.user))
                 {
-                      <button class="btn btn-warning" name="follow_button" value="true">
-                        <i class="icon-ok icon-white"></i>Unfollow</button>
+                <button class="btn btn-warning" name="follow_button" value="true">
+                    <i class="icon-remove icon-white"></i> Unfollow</button>
                 }
                 else
                 {
-                    <button class="btn btn-info" name="follow_button" value="false">
-                        <i class="icon-ok icon-white"></i>Follow</button>
+                <button class="btn btn-info" name="follow_button" value="false">
+                    <i class="icon-ok icon-white"></i> Follow</button>
                 }
 
             }
-            
             @if (Model.User == @ViewBag.user)
             {
-            <!-- jesli jest wlascicielem: manage this album -->
-            <a href="@Url.Action("ManageAlbum", new { id = Model.Id })">
-                <button class="btn btn-primary">
-                    <i class="icon-edit icon-white"></i>Manage this album</button>
-            </a>
+                <!-- jesli jest wlascicielem: manage this album -->
+                <a href="@Url.Action("ManageAlbum", new { id = Model.Id })">
+                    <button class="btn btn-primary">
+                        <i class="icon-edit icon-white"></i> Manage this album</button>
+                </a>
             }
-
         </h1>
         <h2 class="album-author">
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
-    <div style="height: 430px; overflow:hidden;">
+    <div style="height: 430px; overflow: hidden;">
         @if (Model.Photos.Count() >= 3)
         {
             <ul id="roundabout" style="width: 450px;">
@@ -63,19 +58,12 @@
             </h3>
         }
     </div>
-
-    
-    <div class="toggle-autoplay"  >
-    <img src="../../Content/img/Play Icon.jpg" />
-    Start/stop autoplay
+    <div class="toggle-autoplay">
+        <img src="../../Content/img/Play Icon.jpg" />
+        Start/stop autoplay
     </div>
-
     <div id="photo-desc-replace">
     </div>
-
-    
-
-
     <div>
         <table class="controls" cellpadding="6">
             <tr>
@@ -108,20 +96,18 @@
             </tr>
         </table>
     </div>
-
-
-    <div style="height:20px;"></div>
-
+    <div style="height: 20px;">
+    </div>
     <div id="content-left">
         <div id="album-footer">
             <div id="album-desc">
                 @Model.Description
             </div>
             <div id="album-rate">
-            <!-- Ajax requests -->
-                Rating: <span class="album-rating">@Model.getRating()</span> 
-                <a class="vote" data-up="true" href="#"><span class="label label-success">+1</span></a>
-                <a class="vote" data-up="false" href="#"><span class="label label-important">-1</span></a>
+                <!-- Ajax requests -->
+                Rating: <span class="album-rating">@Model.getRating()</span> <a class="vote" data-up="true"
+                    href="#"><span class="label label-success">+1</span></a> <a class="vote" data-up="false"
+                        href="#"><span class="label label-important">-1</span></a>
             </div>
         </div>
         <div id="album-comments">
@@ -131,7 +117,7 @@
                     <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
                 </div>
                 <div class="control-group">
-                    <button type=button class="btn btn-primary" id="submit" onclick="false">
+                    <button type="button" class="btn btn-primary" id="submit" onclick="false">
                         Add comment</button>
                 </div>
             </fieldset>
@@ -145,24 +131,24 @@
                 }
                 @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
                 {
-                    <div class="album-comment" >
-                    <h1><a href = @Url.Action("ViewProfile", "User", new { userName = comment.User.Login }) name="@("comment" + comment.Id)">@comment.User.Login</a>
-                      @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")</h1>
+                    <div class="album-comment">
+                        <h1>
+                            <a href = @Url.Action("ViewProfile", "User", new { userName = comment.User.Login }) name="@("comment" + comment.Id)">@comment.User.Login</a>
+                            @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")</h1>
                         @comment.Body
                     </div>
 
                 }
-                
             </div>
         </div>
     </div>
     <div id="content-right">
-        <div id="map-canvas"></div>
+        <div id="map-canvas">
+        </div>
     </div>
 </div>
-
 @section JS {
-     <script type="text/javascript">
+    <script type="text/javascript">
         
 
         //subskrypcje
@@ -173,19 +159,23 @@
                     $.post("/Album/Subscribe", { "albumId": @Model.Id, "unsubscribe" :val },
                     function (data) {
                         if(data!=null){
-                            var button= $('[name="follow_button"]');
-                            if(data[0]=="subscribed"){
-                                button.attr("class","btn btn-warning");
-                                button.attr("value","true");
-                                button.html('<i class="icon-ok icon-white"></i>Unfollow</button>');
-                            } else {
-                                button.attr("class","btn btn-info");
-                                button.attr("value","false");
-                                button.html('<i class="icon-ok icon-white"></i>Follow</button>');
-                            }
-                            
-                        }
-                        alert(data[1]);
+                            if(data!="error"){
+                                var button= $('[name="follow_button"]');
+                                if(data[0]=="subscribed"){
+                                    button.attr("class","btn btn-warning");
+                                    button.attr("value","true");
+                                    button.html('<i class="icon-remove icon-white"></i> Unfollow</button>');
+                                } else {
+                                    button.attr("class","btn btn-info");
+                                    button.attr("value","false");
+                                    button.html('<i class="icon-ok icon-white"></i> Follow</button>');
+                                }
+                            } else
+                                alert(data[1]);
+                        } else
+                            alert("Error, wrong response from server. Try again later.");
+
+                        
                     });
                     return false;
             });
@@ -271,7 +261,6 @@
             $('ul#roundabout').roundabout("animateToDelta", (active_photo - closest_photo) * deg)
         }
     </script>
-
     <script type="text/javascript">
 
         function CenterControl(controlDiv, map, bounds, center) {

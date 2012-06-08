@@ -14,31 +14,32 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Web;
+using System.Security.Policy;
 
 namespace PhotoHistory
 {
-	public static class Helpers
-	{
-		public static string HashMD5(this string stringToHash)
-		{
-			MD5 md5 = new MD5CryptoServiceProvider();
-			Byte[] originalBytes = ASCIIEncoding.Default.GetBytes( stringToHash );
-			Byte[] encodedBytes = md5.ComputeHash( originalBytes );
-			return BitConverter.ToString( encodedBytes ).Replace( "-", "" );
-		}
+    public static class Helpers
+    {
+        public static string HashMD5(this string stringToHash)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(stringToHash);
+            Byte[] encodedBytes = md5.ComputeHash(originalBytes);
+            return BitConverter.ToString(encodedBytes).Replace("-", "");
+        }
 
-		public static void SendEmail(string to, string subject, string body)
-		{
-			WebMail.SmtpServer = "smtp.gmail.com";
-			WebMail.SmtpPort = 587;
-			WebMail.EnableSsl = true;
-			WebMail.UserName = "pastexplorer@gmail.com";
-			WebMail.Password = "pastexplorer666";
-			WebMail.From = "pastexplorer@gmail.com";
-			WebMail.SmtpUseDefaultCredentials = false;
+        public static void SendEmail(string to, string subject, string body)
+        {
+            WebMail.SmtpServer = "smtp.gmail.com";
+            WebMail.SmtpPort = 587;
+            WebMail.EnableSsl = true;
+            WebMail.UserName = "pastexplorer@gmail.com";
+            WebMail.Password = "pastexplorer666";
+            WebMail.From = "pastexplorer@gmail.com";
+            WebMail.SmtpUseDefaultCredentials = false;
 
-			WebMail.Send( to, subject, body, isBodyHtml: true );
-		}
+            WebMail.Send(to, subject, body, isBodyHtml: true);
+        }
 
         public static bool isFollower(AlbumModel album, UserModel user)
         {
@@ -53,14 +54,18 @@ namespace PhotoHistory
         public static void NotifyAlbumObservers(AlbumModel album)
         {
             UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
             foreach (UserModel follower in album.Followers)
             {
-                if(follower.NotifySubscription)
-                    SendEmail(follower.Email, string.Format("{0} has added new photo",album.User.Login),
-                        string.Format("Dear {0},<br/>{1} has added new photo. If you want to see updates please follow this link:<br/><a href=\"{2}\">here</a>",
-                            follower.Login, album.User.Login, url.Action("Show","Album", new {id=album.Id}  )
-                        ) 
+                if (follower.NotifySubscription)
+                {
+                    string link = string.Format( "{0}://{1}{2}", requestUrl.Scheme, requestUrl.Authority,
+					url.Action("Show", "Album", new { id = album.Id }) );
+                    SendEmail(follower.Email, string.Format("{0} has added new photo", album.User.Login),
+                        string.Format("Dear {0},<br/>{1} has added new photo. If you want to see updates please follow this <a href=\"{2}\">link</a>",
+                            follower.Login, album.User.Login, link)
                    );
+                }
             }
         }
 
@@ -72,29 +77,29 @@ namespace PhotoHistory
         {
         }
 
-		public static MvcHtmlString MyValidationMessage(this HtmlHelper helper, string fieldName)
-		{
-			MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage( helper, fieldName );
-			if ( validationMsg != null )
-			{
-				return new MvcHtmlString( string.Format( "<span class=\"help-inline\">{0}</span>", validationMsg.ToString() ) );
-			}
+        public static MvcHtmlString MyValidationMessage(this HtmlHelper helper, string fieldName)
+        {
+            MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage(helper, fieldName);
+            if (validationMsg != null)
+            {
+                return new MvcHtmlString(string.Format("<span class=\"help-inline\">{0}</span>", validationMsg.ToString()));
+            }
 
-			return new MvcHtmlString( string.Empty );
-		}
+            return new MvcHtmlString(string.Empty);
+        }
 
-		public static MvcHtmlString MyValidationMark(this HtmlHelper helper, string fieldName)
-		{
-			MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage( helper, fieldName );
-			if ( validationMsg != null )
-			{
-				return new MvcHtmlString( "error" );
-			}
+        public static MvcHtmlString MyValidationMark(this HtmlHelper helper, string fieldName)
+        {
+            MvcHtmlString validationMsg = System.Web.Mvc.Html.ValidationExtensions.ValidationMessage(helper, fieldName);
+            if (validationMsg != null)
+            {
+                return new MvcHtmlString("error");
+            }
 
-			return new MvcHtmlString( string.Empty );
-		}
+            return new MvcHtmlString(string.Empty);
+        }
 
-        public static Image TransformWithAspectRatio(Image image, int maxWidth, int maxHeight,bool thumbnail)
+        public static Image TransformWithAspectRatio(Image image, int maxWidth, int maxHeight, bool thumbnail)
         {
             if (image == null)
                 return null;
@@ -148,7 +153,7 @@ namespace PhotoHistory
             photos.Sort(delegate(PhotoModel a, PhotoModel b)
             {
                 return a.Date.CompareTo(b.Date);
-            }); 
+            });
             List<string> result = new List<string>(photos.Count);
             foreach (PhotoModel photo in photos)
             {
@@ -165,7 +170,7 @@ namespace PhotoHistory
         public static List<AlbumProfileModel> Convert(List<AlbumModel> albums)
         {
             List<AlbumProfileModel> list = new List<AlbumProfileModel>();
-            string start,end;
+            string start, end;
 
             foreach (AlbumModel album in albums)
             {
@@ -185,9 +190,9 @@ namespace PhotoHistory
                 list.Add(profileAlbum);
             }
             return list;
-            
+
         }
-        
+
         public static void AlbumDateRange(AlbumModel album, out string start, out  string end)
         {
             start = "";
@@ -210,16 +215,16 @@ namespace PhotoHistory
             end = endD.ToString("dd/MM/yyyy");
         }
 
-		  public static string BaseURL()
-		  {
-			  string contentURI = new UrlHelper( HttpContext.Current.Request.RequestContext ).Content( "~" );
-			  return string.Format( "{0}://{1}{2}", 
-				  HttpContext.Current.Request.Url.Scheme, 
-				  HttpContext.Current.Request.Url.Authority,
-				  contentURI.Substring(0, contentURI.Length - 1) );
-		  }
+        public static string BaseURL()
+        {
+            string contentURI = new UrlHelper(HttpContext.Current.Request.RequestContext).Content("~");
+            return string.Format("{0}://{1}{2}",
+                HttpContext.Current.Request.Url.Scheme,
+                HttpContext.Current.Request.Url.Authority,
+                contentURI.Substring(0, contentURI.Length - 1));
+        }
     }
 
-    public enum ChartCategory {Popular, TopRated, Biggest, MostComments}
-    public enum MainCategory { Home, Browse, Charts}
+    public enum ChartCategory { Popular, TopRated, Biggest, MostComments }
+    public enum MainCategory { Home, Browse, Charts }
 }
