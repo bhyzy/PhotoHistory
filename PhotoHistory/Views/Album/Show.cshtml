@@ -14,9 +14,21 @@
         <h1 class="page-title">
             <a href="#">@Model.Name</a>
 
-            <!-- follow/unfollow - zawsze -->
-            <button class="btn btn-info">
-                <i class="icon-ok icon-white"></i>Follow</button>
+            <!-- follow/unfollow - brak dla wlasciciela -->
+            @if (Model.User != @ViewBag.user)
+            {
+                if (Helpers.isFollower(Model, ViewBag.user))
+                {
+                      <button class="btn btn-warning" name="follow_button" value="true">
+                        <i class="icon-ok icon-white"></i>Unfollow</button>
+                }
+                else
+                {
+                    <button class="btn btn-info" name="follow_button" value="false">
+                        <i class="icon-ok icon-white"></i>Follow</button>
+                }
+
+            }
             
             @if (Model.User == @ViewBag.user)
             {
@@ -35,10 +47,10 @@
         @if (Model.Photos.Count() >= 3)
         {
             <ul id="roundabout" style="width: 450px;">
-                @for (int i = 0; i < photosSorted.Count();i++ )
+                @for (int i = 0; i < photosSorted.Count(); i++)
                 {
                     var photo = photosSorted[i];
-                    <li description="@photo.Description" title="@(i+1). @photo.Date.ToLongDateString() ">
+                    <li description="@photo.Description" title="@(i + 1). @photo.Date.ToLongDateString() ">
                         <img src="@photo.Path" date="@photo.Date.ToShortDateString()"   />
                     </li>
                 }
@@ -134,7 +146,7 @@
                 @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
                 {
                     <div class="album-comment" >
-                    <h1><a href = @Url.Action("ViewProfile","User", new {userName= comment.User.Login}) name="@("comment"+comment.Id)">@comment.User.Login</a>
+                    <h1><a href = @Url.Action("ViewProfile", "User", new { userName = comment.User.Login }) name="@("comment" + comment.Id)">@comment.User.Login</a>
                       @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")</h1>
                         @comment.Body
                     </div>
@@ -152,6 +164,33 @@
 @section JS {
      <script type="text/javascript">
         
+
+        //subskrypcje
+        $(document).ready(function () {
+            $('[name="follow_button"]').click(function () {
+                    var val = $('[name="follow_button"]').val();
+                    // Perform the ajax post
+                    $.post("/Album/Subscribe", { "albumId": @Model.Id, "unsubscribe" :val },
+                    function (data) {
+                        if(data!=null){
+                            var button= $('[name="follow_button"]');
+                            if(data[0]=="subscribed"){
+                                button.attr("class","btn btn-warning");
+                                button.attr("value","true");
+                                button.html('<i class="icon-ok icon-white"></i>Unfollow</button>');
+                            } else {
+                                button.attr("class","btn btn-info");
+                                button.attr("value","false");
+                                button.html('<i class="icon-ok icon-white"></i>Follow</button>');
+                            }
+                            
+                        }
+                        alert(data[1]);
+                    });
+                    return false;
+            });
+        });
+
         //komentarze
         $(document).ready(function () {
             $("#submit").click(function () {

@@ -40,6 +40,16 @@ namespace PhotoHistory
 			WebMail.Send( to, subject, body, isBodyHtml: true );
 		}
 
+        public static bool isFollower(AlbumModel album, UserModel user)
+        {
+            foreach (UserModel follower in album.Followers)
+            {
+                if (follower.Id == user.Id)
+                    return true;
+            }
+            return false;
+        }
+
         public static void NotifyAlbumObservers(AlbumModel album)
         {
             UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);

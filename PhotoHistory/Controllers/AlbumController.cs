@@ -359,6 +359,40 @@ namespace PhotoHistory.Controllers
 		}
 
 
+        // AJAX: /Album/Subscribe
+        [HttpPost]
+        public ActionResult Subscribe(int albumId,bool unsubscribe)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(albumId,withFollowers:true);
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            string[] response = new string[2];
+            // reponse[0] is an operation code
+            // response[1] is a message for a user
+            if (user != null)
+            {
+                //subscribe if the user is logged in
+                albums.Subscribe(album, user,unsubscribe);
+                if (unsubscribe)
+                {
+                    response[0] = "unsubscribed";
+                    response[1] = "You stopped following this album";
+                }
+                else
+                {
+                    response[0] = "subscribed";
+                    response[1] = "You are now following this album";
+                }
+            }
+            else
+            {
+                response[0] = "error"; //error
+                response[1] = "You need to be logged in to vote";
+            }
+            return Json(response);
+        }
+
         // AJAX: /Album/Vote/5
         [HttpPost]
         public ActionResult Vote(int id, bool up)

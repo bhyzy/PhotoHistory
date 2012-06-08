@@ -23,6 +23,37 @@ namespace PhotoHistory.Data
             }
         }
 
+        public void Subscribe(AlbumModel album, UserModel user, bool unsubscribe=false)
+        {
+            try
+            {
+                using (var session = GetSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        if (unsubscribe)
+                        {
+                            UserModel found = album.Followers.Single(delegate(UserModel model)
+                            {
+                                return model.Id == user.Id;
+                            });
+                            if (found != null)
+                            {
+                                album.Followers.Remove(found);
+                            }
+                        }
+                        else
+                        {
+                            album.Followers.Add(user);
+                        }
+                        session.Update(album);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception ex) { }
+        }
+
         public bool AddComment(CommentModel comment)
         {
             if (string.IsNullOrEmpty(comment.Body))
@@ -79,8 +110,8 @@ namespace PhotoHistory.Data
         }
 
 		  public AlbumModel GetById(int? id,
-			  bool withUser = false, bool withPhotos = false, bool withComments = false, 
-			  bool withCategory = false, bool withTrustedUsers = false)
+			  bool withUser = false, bool withPhotos = false, bool withComments = false,
+              bool withCategory = false, bool withTrustedUsers = false, bool withFollowers = false)
 		  {
 			  using ( var session = GetSession() )
 			  {
@@ -91,10 +122,13 @@ namespace PhotoHistory.Data
                           {
                               return a.Date.CompareTo(b.Date);
                           });
+                      foreach (CommentModel comment in album.Comments)
+                          comment.User.ToString();
 					  if ( withUser ) album.User.ToString();
 					  if ( withPhotos ) album.Photos.ToString();
 					  if ( withCategory ) album.Category.ToString();
 					  if ( withTrustedUsers ) album.TrustedUsers.ToList();
+                      if (withFollowers) album.Followers.ToList();
 				  }
 				  return album;
 			  }
@@ -256,7 +290,7 @@ namespace PhotoHistory.Data
                 album.TrustedUsers.ToString();
                 album.Photos.ToList();
                 album.User.ToString();*/
-                return GetById(id, true, true, true, true, true);
+                return GetById(id, true, true, true, true, true,true);
                // return album;
             //}
         }

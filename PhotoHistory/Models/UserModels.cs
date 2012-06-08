@@ -21,12 +21,6 @@ namespace PhotoHistory.Models
 
         public virtual ICollection<AlbumModel> Albums { get; set; }
         
-        /*
-        public UserModel()
-        {
-            Albums = new List<AlbumModel>();
-        }*/
-         
 	}
 
 	public class NewUserModel
