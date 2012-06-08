@@ -439,6 +439,7 @@ namespace PhotoHistory.Controllers
             newComment.Body = comment;
             newComment.Date = model.Date.ToString("dd/MM/yyyy HH:mm:ss");
             newComment.UserName = user.Login;
+
             newComment.Link = @Url.Action("ViewProfile", "User", new { userName = model.User.Login });
 
             if (user != null)
@@ -448,6 +449,7 @@ namespace PhotoHistory.Controllers
                 {
                     newComment.Id = model.Id ?? 1;
                     newComment.Message = "Your comment has been saved.";
+                    Helpers.NotifyCommentObserver(model);
                 }
                 else
                 {

@@ -190,6 +190,10 @@
                         return false;
                     }
                     // Perform the ajax post
+                    $("#submit").attr("class","btn btn-primary disabled");
+                    $("#submit").attr("disabled","disabled");
+                    $("#submit").html("Please wait");
+
                     $.post("/Album/Comment", { "id": @Model.Id, "comment" :val },
                     function (data) {
                         if(data.Body!=null){
@@ -197,6 +201,9 @@
                         $("#comment-body").val('');
                         $("#comments").prepend('<div class="album-comment">\n<h1><a name=comment'+data.Id+' href ="'+ data.Link + '" > ' + data.UserName + ' </a>'
                         +data.Date+'</h1>\n'+  data.Body+'</div>');
+                        $("#submit").attr("class","btn btn-primary");
+                        $("#submit").removeAttr("disabled");
+                        $("#submit").html("Add comment");
                         } else
                             alert(data.Message);
                     });

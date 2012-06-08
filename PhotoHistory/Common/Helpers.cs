@@ -15,6 +15,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Web;
 using System.Security.Policy;
+using System.Threading;
 
 namespace PhotoHistory
 {
@@ -69,8 +70,21 @@ namespace PhotoHistory
             }
         }
 
-        public static void NotifyCommentObserver(AlbumModel album)
+
+        public static void NotifyCommentObserver(CommentModel comment)
         {
+            AlbumModel album = comment.Album;
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
+            //Don't send notification if comment belongs to album's owner or if notification is turned off
+            if (album.User.NotifyComment && album.User.Id!= comment.User.Id)
+            {
+                string link = string.Format("{0}://{1}{2}", requestUrl.Scheme, requestUrl.Authority,
+                    url.Action("Show", "Album", new { id = album.Id })) +"#comment"+comment.Id;
+                string body = string.Format("{0} has added comment to your album {1}:</br><i>{2}</i></br></br> To see your album visit this <a href='{3}'>link.</a>",
+                    comment.User.Login, album.Name, comment.Body,link);
+                SendEmail(album.User.Email, string.Format("{0} has added comment to your album", comment.User.Login),body);
+            }
         }
 
         public static void RemindPhoto(AlbumModel album)
