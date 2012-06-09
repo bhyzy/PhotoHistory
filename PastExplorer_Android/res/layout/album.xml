@@ -33,11 +33,11 @@
     
     <GridView android:id="@+id/photos"
 	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content"
-	    android:columnWidth="90dp"
+	    android:layout_height="fill_parent"
+	    android:columnWidth="100dip"
 	    android:numColumns="auto_fit"
-	    android:verticalSpacing="10dp"
-	    android:horizontalSpacing="10dp"
+	    android:verticalSpacing="0dip"
+	    android:horizontalSpacing="0dip"
 	    android:stretchMode="columnWidth"
 	    android:gravity="center" />
     

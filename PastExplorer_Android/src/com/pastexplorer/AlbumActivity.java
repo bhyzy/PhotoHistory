@@ -81,7 +81,7 @@ public class AlbumActivity extends Activity {
 				
 				_photos.add(photoItem);
 			}
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 			
 		} catch (APIException e) {
 			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
@@ -147,9 +147,9 @@ public class AlbumActivity extends Activity {
             ImageView imageView;
             if (convertView == null) {
                 imageView = new ImageView(_context);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
+                //imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                //imageView.setPadding(8, 8, 8, 8);
             } else {
                 imageView = (ImageView) convertView;
             }
