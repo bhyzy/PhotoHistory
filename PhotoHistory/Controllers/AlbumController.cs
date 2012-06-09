@@ -130,9 +130,10 @@ namespace PhotoHistory.Controllers
 
         [Authorize]
 
-        public ActionResult AddPhoto()
+        public ActionResult AddPhoto(int? albumId)
         {
             ViewBag.Albums = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name).Albums;
+            ViewBag.selected = albumId;
             return View();
         }
 

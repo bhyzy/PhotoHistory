@@ -36,11 +36,9 @@ namespace PhotoHistory
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
-
 			RegisterGlobalFilters( GlobalFilters.Filters );
 			RegisterRoutes( RouteTable.Routes );
             BuildInitializer.InitializeBuild();
-            SchedulerManager.InitScheduler();
 		}
 
 		protected void Application_EndRequest()
@@ -52,5 +50,13 @@ namespace PhotoHistory
 			}
 		}
 
+        
+        protected void Application_BeginRequest()
+        {
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
+            string link = string.Format( "{0}://{1}", requestUrl.Scheme, requestUrl.Authority);
+            //Scheduler.SchedulerManager.InitScheduler(link); scheduler wylaczony
+        }
 	}
 }
