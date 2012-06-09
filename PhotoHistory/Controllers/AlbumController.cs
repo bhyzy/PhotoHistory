@@ -123,8 +123,8 @@ namespace PhotoHistory.Controllers
         public ActionResult Manage()
         {
             UserRepository users = new UserRepository();
-            UserModel user = users.GetByUsernameWithAlbums(HttpContext.User.Identity.Name);
-            return View(user.Albums);
+            UserModel user = users.GetByUsernameWithAlbums(HttpContext.User.Identity.Name, false,false,true,true);
+            return View(Helpers.Convert(user.Albums.ToList()));
         }
 
         [Authorize]
