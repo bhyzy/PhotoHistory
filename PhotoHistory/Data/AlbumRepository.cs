@@ -76,6 +76,18 @@ namespace PhotoHistory.Data
             }
         }
 
+        public List<AlbumModel> GetAll()
+        {
+            using (var session = GetSession())
+            {
+                List<AlbumModel> albums= session.CreateQuery("from AlbumModel").Enumerable<AlbumModel>().ToList<AlbumModel>();
+                foreach (AlbumModel album in albums)
+                    album.User.ToString();
+                return albums;
+            }
+
+        }
+
         public List<AlbumModel> GetByCategory(CategoryModel category, bool withUser = false, bool withPhotos = false, bool withComments = false,
               bool withCategory = false, bool withTrustedUsers = false, bool withFollowers = false)
         {
@@ -316,15 +328,6 @@ namespace PhotoHistory.Data
                     session.Delete(obj);
                     transaction.Commit();
                 }
-            }
-        }
-
-
-        public ICollection<AlbumModel> GetAll()
-        {
-            using (var session = GetSession())
-            {
-                return session.CreateQuery("from AlbumModel").List<AlbumModel>();
             }
         }
 

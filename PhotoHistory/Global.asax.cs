@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using PhotoHistory.Common;
 using PhotoHistory.API.Authentication;
+using PhotoHistory.Scheduler;
 
 namespace PhotoHistory
 {
@@ -39,6 +40,7 @@ namespace PhotoHistory
 			RegisterGlobalFilters( GlobalFilters.Filters );
 			RegisterRoutes( RouteTable.Routes );
             BuildInitializer.InitializeBuild();
+            SchedulerManager.InitScheduler();
 		}
 
 		protected void Application_EndRequest()
