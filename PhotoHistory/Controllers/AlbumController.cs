@@ -124,6 +124,7 @@ namespace PhotoHistory.Controllers
         {
             UserRepository users = new UserRepository();
             UserModel user = users.GetByUsernameWithAlbums(HttpContext.User.Identity.Name, false,false,true,true);
+            ViewBag.Action = new string[] { "Album","ManageAlbum"};
             return View(Helpers.Convert(user.Albums.ToList()));
         }
 

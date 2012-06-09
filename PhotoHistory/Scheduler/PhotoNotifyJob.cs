@@ -20,7 +20,7 @@ namespace PhotoHistory.Scheduler
             List<AlbumModel> albums = repo.GetAll();
             foreach(AlbumModel album in albums)
             {
-                if (album.User.NotifyPhoto)
+                if (album.User.NotifyPhoto && album.NotificationPeriod!=null)
                 {
                     DateTime time = album.NextNotification ?? DateTime.Today;
                     time = time.Date.AddDays(album.NotificationPeriod??1);
