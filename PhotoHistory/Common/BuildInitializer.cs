@@ -17,7 +17,7 @@ namespace PhotoHistory.Common
 			  //ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
 			  //CreateUsers();
 			  //CreateCategories();
-			  // CreateAlbums();
+			  //CreateAlbums();
         }
 
         private static void CreateAlbums()

@@ -154,8 +154,8 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 		
 		if (mImage != null) {
 			// TODO: set last photo overlay
-			mImage.setImageResource(R.drawable.ic_launcher);
-	    	mImage.setAlpha(80);
+			mImage.setImageResource(R.drawable.photo);
+	    	mImage.setAlpha(130);
 		}
 
         mWakeLock.acquire();
