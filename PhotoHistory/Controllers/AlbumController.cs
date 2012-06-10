@@ -284,7 +284,7 @@ namespace PhotoHistory.Controllers
         [HttpPost]
         public ActionResult Edit(AlbumModel album)
         {
-            //TODO access control
+            SetNextNotification(album);
 
             if (!album.Public)
                 SetPrivateAccess(album);
@@ -325,20 +325,8 @@ namespace PhotoHistory.Controllers
         {
             PrepareCategories();
 
-            //next notification 
-            if (Request["reminder"] == "remindYes")
-            {
-                System.DateTime today = System.DateTime.Now;
-                try
-                {
-                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NotificationPeriod"]));
-                    newAlbum.NextNotification = answer;
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("NotificationPeriod", "Number of days is incorrect");
-                }
-            }
+            SetNextNotification(album);
+
             // private access 
             if (!newAlbum.Public)
                 SetPrivateAccess(newAlbum);
@@ -511,6 +499,28 @@ namespace PhotoHistory.Controllers
                     break;
             }
             return userModels;
+        }
+
+        private void SetNextNotification(AlbumModel album)
+        {
+            //next notification 
+            if (Request["reminder"] == "remindYes")
+            {
+                System.DateTime today = System.DateTime.Now;
+                try
+                {
+                    System.DateTime answer = today.AddDays(Int32.Parse(Request["NotificationPeriod"]));
+                    album.NextNotification = answer;
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("NotificationPeriod", "Number of days is incorrect");
+                }
+            }
+            else
+            {
+                album.NextNotification = null;
+            }
         }
 
     }
