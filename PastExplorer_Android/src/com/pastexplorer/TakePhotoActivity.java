@@ -1,5 +1,9 @@
 package com.pastexplorer;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import pastexplorer.util.StackTraceUtil;
 import android.app.Activity;
 import android.content.Context;
@@ -136,8 +140,13 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 			takePhoto();
 			break;
 		case R.id.confirm_photo:
-			// send photo to upload activity
 			Intent intent = new Intent(this, UploadPhotoActivity.class);
+			try {
+				intent.putExtra("photo", saveBitmapToPrivateStorage(mTakenPhoto));
+			} catch (IOException e) {
+				Log.e(DEBUG_TAG, "failed to save photo bitmap to private internal storage: " 
+						+ StackTraceUtil.getStackTrace(e));
+			}
 			startActivity(intent);
 			break;
 		case R.id.retake_photo:
@@ -146,6 +155,15 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 			break;
 		}
 	};
+	
+	private String saveBitmapToPrivateStorage(Bitmap bitmap) throws IOException {
+		final String FILENAME = "tmp";
+		FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+		fos.flush();
+		fos.close();
+		return FILENAME;
+	}
 	
 	private void prepareToTakePhoto() {
 		mTakePhotoButton.setVisibility(View.VISIBLE);
