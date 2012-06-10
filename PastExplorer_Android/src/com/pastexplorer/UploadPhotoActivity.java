@@ -30,8 +30,11 @@ public class UploadPhotoActivity extends Activity {
     private TextView mDateDisplay;
     private Button mChangeDate;
     private ProgressDialog mProgressDialog;
-
+    
     private static final int DATE_DIALOG_ID = 0;
+    
+    private Bitmap mPhoto = null;
+    private String mPhotoFilename = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -50,7 +53,6 @@ public class UploadPhotoActivity extends Activity {
         
         Button uploadButton = (Button)findViewById(R.id.upload);
         uploadButton.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				startUploadingPhoto();
 			}
@@ -66,16 +68,19 @@ public class UploadPhotoActivity extends Activity {
         updateDateDisplay();
         
         // read photo thumbnail bitmap from file (passed by TakePhoto activity)
-        String photo = getIntent().getStringExtra("photo");
-        if (photo != null) {
+        //mPhotoFilename = getIntent().getStringExtra("photo");
+        mPhotoFilename = ""; // TODO: tmp
+        if (mPhotoFilename != null) {
+        	mPhoto = BitmapFactory.decodeResource(getResources(), R.drawable.photo); // TODO: tmp
+//    		try {
+//				mPhoto = loadBitmapFromPrivateStorage(mPhotoFilename);
+//			} catch (IOException e) {
+//				Log.e(DEBUG_TAG, "failed to load photo bitmap from file " + mPhotoFilename + ": " 
+//					+ StackTraceUtil.getStackTrace(e));
+//			}
         	ImageView photoPreview = (ImageView)findViewById(R.id.photoPreview);
         	if (photoPreview != null) {
-        		try {
-					photoPreview.setImageBitmap( loadBitmapFromPrivateStorage(photo) );
-				} catch (IOException e) {
-					Log.e(DEBUG_TAG, "failed to load photo bitmap from file " + photo + ": " 
-						+ StackTraceUtil.getStackTrace(e));
-				}
+        		photoPreview.setImageBitmap(mPhoto);
         	}
         }
     }
@@ -121,7 +126,6 @@ public class UploadPhotoActivity extends Activity {
 				"Uploading photo...", 
 				true, true);
 		new Thread(new Runnable() {
-			@Override
 			public void run() {
 				uploadPhoto();
 			}
@@ -134,11 +138,10 @@ public class UploadPhotoActivity extends Activity {
 		
 		// finished:
 		runOnUiThread(new Runnable() {
-			@Override
 			public void run() {
 				mProgressDialog.dismiss();
 				//Intent intent = new Intent(this, AlbumActivity.class);
 			}
-		})
+		});
 	}
 }

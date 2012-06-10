@@ -49,9 +49,10 @@ public class PastExplorerActivity extends Activity implements OnClickListener {
        //_loginEditBox.setText("");
        //_passwordEditBox.setText("");
        _loginEditBox.requestFocus();
+       
+       startActivity(new Intent(this, UploadPhotoActivity.class)); // TODO: tmp
     }
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.signin:

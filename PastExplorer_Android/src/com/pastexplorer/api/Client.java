@@ -22,7 +22,8 @@ public class Client {
 	private String _password;
 	
 	public static final String API_SERVICE_HOST_HEADER = "localhost:3518";
-	public static final String API_SERVICE_HOST_REAL = "192.168.1.13:5000";
+	//public static final String API_SERVICE_HOST_REAL = "192.168.1.13:5000";
+	public static final String API_SERVICE_HOST_REAL = "10.0.2.2:3518";
 	public static final String API_SERVICE_URI = "http://" + API_SERVICE_HOST_REAL + "/api";
 	public static final String DEBUG_TAG = "PE Client";
 
@@ -36,7 +37,7 @@ public class Client {
 			String resultRaw = callService("users", "verify_credentials", null);
 			JSONObject result = new JSONObject(resultRaw);
 			boolean valid = result.getBoolean("ok");
-			if (!valid) {
+			if (!valid) {                    
 				Log.d(DEBUG_TAG, "verification error: " + result.getString("data"));
 			}
 			return valid;

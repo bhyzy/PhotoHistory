@@ -133,7 +133,6 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
         }
     }
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.take_photo:
@@ -191,7 +190,6 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 	
 	private void takePhoto() {
 		mCamera.takePicture(null, null, new Camera.PictureCallback() {
-			@Override
 			public void onPictureTaken(byte[] data, Camera camera) {
 				//new SavePhotoTask().execute(data);
 				

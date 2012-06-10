@@ -53,7 +53,6 @@ public class AlbumActivity extends Activity implements OnClickListener {
 		photosGridView.setAdapter(_adapter);
 		
         Thread thread = new Thread(null, new Runnable() {
-			@Override
 			public void run() {
 				retrievePhotos();	
 			}
@@ -65,7 +64,6 @@ public class AlbumActivity extends Activity implements OnClickListener {
 				true, true);
     }
     
-    @Override 
     public void onClick(View v) {
     	switch (v.getId()) {
     	case R.id.add_photo:
@@ -110,7 +108,6 @@ public class AlbumActivity extends Activity implements OnClickListener {
 	}
 	
 	private Runnable _updateAlbumContent = new Runnable() {
-		@Override
 		public void run() {
 			TextView nameLabel = (TextView)findViewById(R.id.name);
 			TextView descriptionLabel = (TextView)findViewById(R.id.description);
