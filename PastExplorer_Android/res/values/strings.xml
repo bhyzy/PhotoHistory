@@ -19,5 +19,8 @@
     <string name="albumItemRating">rating: </string>
     <string name="albumItemPhotos">photos: </string>
     <string name="albumThumbnailDesc">album thumbnail</string>
+    <string name="add_photo">Add photo</string>
+    <string name="take_photo">Take photo!</string>
+    <string name="retake_photo">Retake photo</string>
 
 </resources>

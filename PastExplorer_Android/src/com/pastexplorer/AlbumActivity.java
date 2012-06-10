@@ -7,12 +7,15 @@ import pastexplorer.util.StackTraceUtil;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +25,7 @@ import com.pastexplorer.api.AlbumData;
 import com.pastexplorer.api.Client;
 import com.pastexplorer.api.PhotoData;
 
-public class AlbumActivity extends Activity {
+public class AlbumActivity extends Activity implements OnClickListener {
 	
 	private static final String DEBUG_TAG = "PE Album";
 	
@@ -37,6 +40,9 @@ public class AlbumActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.album);
+        
+       Button addPhotoBtn = (Button)findViewById(R.id.add_photo);
+       addPhotoBtn.setOnClickListener(this);
         
     	Bundle extras = getIntent().getExtras();
     	_albumID = extras.getInt("album_id");
@@ -57,6 +63,17 @@ public class AlbumActivity extends Activity {
 				getString(R.string.pleaseWait),
 				getString(R.string.retrievingPhotos), 
 				true, true);
+    }
+    
+    @Override 
+    public void onClick(View v) {
+    	switch (v.getId()) {
+    	case R.id.add_photo:
+    		Log.d(DEBUG_TAG, "onClick add_photo");
+    		Intent intent = new Intent(this, TakePhotoActivity.class);
+    		startActivity(intent);
+    		break;
+    	}
     }
     
 	private void retrievePhotos() {
@@ -81,7 +98,7 @@ public class AlbumActivity extends Activity {
 				
 				_photos.add(photoItem);
 			}
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 			
 		} catch (APIException e) {
 			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
@@ -147,9 +164,9 @@ public class AlbumActivity extends Activity {
             ImageView imageView;
             if (convertView == null) {
                 imageView = new ImageView(_context);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
+                //imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                //imageView.setPadding(8, 8, 8, 8);
             } else {
                 imageView = (ImageView) convertView;
             }

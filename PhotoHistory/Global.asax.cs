@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using PhotoHistory.Common;
 using PhotoHistory.API.Authentication;
+using PhotoHistory.Scheduler;
 
 namespace PhotoHistory
 {
@@ -35,7 +36,6 @@ namespace PhotoHistory
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
-
 			RegisterGlobalFilters( GlobalFilters.Filters );
 			RegisterRoutes( RouteTable.Routes );
             BuildInitializer.InitializeBuild();
@@ -50,5 +50,13 @@ namespace PhotoHistory
 			}
 		}
 
+        
+        protected void Application_BeginRequest()
+        {
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
+            string link = string.Format( "{0}://{1}", requestUrl.Scheme, requestUrl.Authority);
+            //Scheduler.SchedulerManager.InitScheduler(link); scheduler wylaczony
+        }
 	}
 }
