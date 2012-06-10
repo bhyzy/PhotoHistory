@@ -45,7 +45,6 @@ public class DashboardActivity extends ListActivity {
 		setListAdapter(_adapter);
 		
         Thread thread = new Thread(null, new Runnable() {
-			@Override
 			public void run() {
 				retrieveAlbums();	
 			}
@@ -120,7 +119,6 @@ public class DashboardActivity extends ListActivity {
 	}
 	
 	private Runnable _updateAlbumList = new Runnable() {
-		@Override
 		public void run() {
 			if (_albums != null && _albums.size() > 0) {
 				_adapter.notifyDataSetChanged();
