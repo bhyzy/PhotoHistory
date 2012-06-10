@@ -6,7 +6,7 @@
 		    <select class="input-normal" id="AlbumId" name="AlbumId">
                 @foreach (PhotoHistory.Models.AlbumModel album in ViewBag.Albums)
                 { 
-                    <option value="@album.Id" @(Model!=null&&Model.AlbumId==album.Id? "selected":"") > @album.Name</option>             
+                    <option value="@album.Id" @(Model!=null&&Model.AlbumId==album.Id||(ViewBag.selected!=null&&ViewBag.selected==album.Id)? "selected":"") > @album.Name</option>             
                 }
 		    </select>
             @Html.MyValidationMessage("AlbumId")

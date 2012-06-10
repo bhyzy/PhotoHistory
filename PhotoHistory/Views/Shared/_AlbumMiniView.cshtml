@@ -1,7 +1,19 @@
 ﻿@model PhotoHistory.Models.AlbumProfileModel
            
 <div class="album-thumb">
-	<a href="@Url.Action("Show", "Album", new { id = Model.Id })">
+	
+    @{
+        string link = "";    
+    } 
+	@if(ViewBag.Action==null)
+    {
+        link = Url.Action("Show", "Album", new { id = Model.Id });
+    }
+    else
+    {
+        link= Url.Action(ViewBag.Action[1], ViewBag.Action[0], new { id = Model.Id });
+    }
+    <a href="@link">
 		@{
             int thumbCount = Model.Thumbnails.Count;
             List<string> thumbs = new List<string>();
