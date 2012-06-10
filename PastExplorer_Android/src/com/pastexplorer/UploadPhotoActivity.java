@@ -1,8 +1,14 @@
 package com.pastexplorer;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
+
+import com.pastexplorer.api.APIException;
+import com.pastexplorer.api.Client;
 
 import pastexplorer.util.StackTraceUtil;
 import android.app.Activity;
@@ -134,8 +140,30 @@ public class UploadPhotoActivity extends Activity {
 	
 	private void uploadPhoto() {
 	
-		// upload photo
+		// read photo into byte[] array
+		byte[] photoData = null;
+		try {
+			File photoFile = new File(mPhotoFilename);
+			photoData = new byte[(int)photoFile.length()];
+			FileInputStream photo = new FileInputStream(photoFile);
+			photo.read(photoData);
+			photo.close();	
+		} catch (IOException e) {
+			Log.e(DEBUG_TAG, "failed to read photo pixels from file: " + StackTraceUtil.getStackTrace(e));
+			photoData = null;
+		}
 		
+		if (photoData != null) {
+			// upload photo
+			try {
+				User.signIn("BH", "qwe");
+				Client client = User.createClient();
+				client.uploadPhoto(photoData, 1, "test", new Date());
+			} catch (APIException e) {
+				Log.e(DEBUG_TAG, "failed to upload photo: " + StackTraceUtil.getStackTrace(e));
+			}			
+		}
+
 		// finished:
 		runOnUiThread(new Runnable() {
 			public void run() {

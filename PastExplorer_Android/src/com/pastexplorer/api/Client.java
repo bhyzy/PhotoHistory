@@ -3,6 +3,7 @@ package com.pastexplorer.api;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,8 +35,7 @@ public class Client {
 	
 	public boolean verifyCredentials() throws APIException {
 		try {
-			String resultRaw = callService("users", "verify_credentials", null);
-			JSONObject result = new JSONObject(resultRaw);
+			JSONObject result = callService("users", "verify_credentials", null, null, false);
 			boolean valid = result.getBoolean("ok");
 			if (!valid) {                    
 				Log.d(DEBUG_TAG, "verification error: " + result.getString("data"));
@@ -49,16 +49,10 @@ public class Client {
 
 	public UserData getUser(String userName) throws APIException {
 		try {
-			String resultRaw = callService("users", null, userName);
-			Log.d(DEBUG_TAG, "getUser raw result: " + resultRaw);
-			JSONObject result = new JSONObject(resultRaw);
-			if (!result.getBoolean("ok")) {
-				throw new Exception(result.getString("error"));
-			}
-			
+			JSONObject result = callService("users", null, userName, null, true);
 			JSONObject userRaw = result.getJSONObject("data");
-			UserData user = new UserData();
 			
+			UserData user = new UserData();	
 			user.id = userRaw.getInt("id");
 			user.userName = userRaw.getString("username");
 			user.dateOfBirth = convertJSONObjectToDate(userRaw.getJSONObject("date_of_birth"));
@@ -74,16 +68,10 @@ public class Client {
 	
 	public AlbumData getAlbum(int id) throws APIException {
 		try {
-			String resultRaw = callService("albums", null, String.valueOf(id));
-			Log.d(DEBUG_TAG, "getAlbum raw result: " + resultRaw);
-			JSONObject result = new JSONObject(resultRaw);
-			if (!result.getBoolean("ok")) {
-				throw new Exception(result.getString("error"));
-			}
-			
+			JSONObject result = callService("albums", null, String.valueOf(id), null, true);
 			JSONObject albumRaw = result.getJSONObject("data");
-			AlbumData album = new AlbumData();
 			
+			AlbumData album = new AlbumData();
 			album.id = albumRaw.getInt("id");
 			album.name = albumRaw.getString("name");
 			album.description = albumRaw.getString("description");
@@ -102,16 +90,10 @@ public class Client {
 	
 	public PhotoData getPhoto(int id) throws APIException {
 		try {
-			String resultRaw = callService("photos", null, String.valueOf(id));
-			Log.d(DEBUG_TAG, "getPhoto raw result: " + resultRaw);
-			JSONObject result = new JSONObject(resultRaw);
-			if (!result.getBoolean("ok")) {
-				throw new Exception(result.getString("error"));
-			}
-			
+			JSONObject result = callService("photos", null, String.valueOf(id), null, true);
 			JSONObject photoRaw = result.getJSONObject("data");
-			PhotoData photo = new PhotoData();
 			
+			PhotoData photo = new PhotoData();
 			photo.id = photoRaw.getInt("id");
 			photo.album = extractResourceID(photoRaw.getString("album"));
 			photo.date = convertJSONObjectToDate(photoRaw.getJSONObject("date"));
@@ -126,6 +108,31 @@ public class Client {
 		catch (Exception e) {
 			throw new APIException("failed to get photo '" + id + "'", e);
 		}	
+	}
+	
+	public int uploadPhoto(byte[] photoData, int albumId, String description, Date date) throws APIException {
+		try {
+			// prepare JSON query object
+			JSONObject query = new JSONObject();
+			query.put("AlbumID", albumId);
+			query.put("Date", date.toGMTString());	
+			query.put("Description", description);
+			query.put("Image", Base64.encodeToString(photoData, Base64.DEFAULT));
+			
+			// prepare query string
+			String queryString = query.toString();
+			Log.d(DEBUG_TAG, "uploadPhoto query string: " + queryString);
+			
+			// send POST upload request
+			JSONObject result = callService("photos", null, null, queryString, true);
+			int photoId = extractResourceID( result.getJSONObject("data").getString("photo") );
+			Log.d(DEBUG_TAG, "uploaded photo id: " + photoId);
+			
+			return photoId;
+		}
+		catch (Exception e) {
+			throw new APIException("failed to upload photo", e);
+		}
 	}
 
 	private int extractResourceID(String resourceUri) throws JSONException {
@@ -169,30 +176,41 @@ public class Client {
 		return sb.toString();
 	}
 	
-	private String callService(String resource, String action, String id) throws Exception {
+	private JSONObject callService(String resource, String action, String id, String postData, boolean throwOnError) throws Exception {
 
 		// build query URL
 		String address = buildServiceQuery(resource, action, id);
 		Log.d(DEBUG_TAG, "callService URL: " + address);
 		URL url = new URL(address);
 
-		// make connection
+		// Android-specific HTTP bug workaround
 		System.setProperty("http.keepAlive", "false");
+		
+		// make and configure connection
 		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 		connection.setUseCaches(false); 
 		connection.setConnectTimeout(5000);
-		//connection.setDoOutput(true);
 		connection.setAllowUserInteraction(false);
 		connection.setRequestProperty("User-Agent", "PastExplorer Android Application");
 		connection.setRequestProperty("Accept", "*/*");
 		connection.setRequestProperty("Host", API_SERVICE_HOST_HEADER);
 		connection.setRequestProperty("Authorization",
 				"Basic "+ Base64.encodeToString((_userName+":"+_password).getBytes(), Base64.DEFAULT));
+		
+		// send POST data if any
+		if (postData != null) {
+			connection.setDoOutput(true);
+			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+			writer.write(postData);
+			writer.flush();
+		}
 
+		// establish connection
 		Log.d(DEBUG_TAG, "connecting...");
 		connection.connect();
 		Log.d(DEBUG_TAG, "response code: " + connection.getResponseCode());	
 		
+		// read response from the server
 		try {
 			if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				String errorMsg = convertStreamToString(connection.getErrorStream());
@@ -205,11 +223,6 @@ public class Client {
 				}
 				throw new APIException("service call resulted in response code " + connection.getResponseCode());
 			}
-		
-			// send query
-			//PrintStream ps = new PrintStream(connection.getOutputStream());
-			//ps.print("");
-			//ps.close();
 
 			// retrieve result
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -224,7 +237,13 @@ public class Client {
 			
 			String response = sb.toString();
 			Log.d(DEBUG_TAG, "callService response: " + response);
-			return response;
+			
+			JSONObject result = new JSONObject(response);
+			if (throwOnError && !result.getBoolean("ok")) {
+				throw new Exception(result.getString("error"));
+			}
+			
+			return result;
 		}
 		catch (Exception e) {
 			throw e;
