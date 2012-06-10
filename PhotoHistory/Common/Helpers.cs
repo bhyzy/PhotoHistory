@@ -70,6 +70,31 @@ namespace PhotoHistory
             }
         }
 
+        public static void SendEmailContextFree(String to, String subject, String body)
+        {
+            var fromAddress = new MailAddress("pastexplorer@gmail.com", "PastExplorer");
+            var toAddress = new MailAddress(to, to);
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, "pastexplorer666")
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+            {
+                smtp.Send(message);
+            }
+
+        }
 
         public static void NotifyCommentObserver(CommentModel comment)
         {
@@ -83,7 +108,14 @@ namespace PhotoHistory
                     url.Action("Show", "Album", new { id = album.Id })) +"#comment"+comment.Id;
                 string body = string.Format("{0} has added comment to your album {1}:</br><i>{2}</i></br></br> To see your album visit this <a href='{3}'>link.</a>",
                     comment.User.Login, album.Name, comment.Body,link);
-                SendEmail(album.User.Email, string.Format("{0} has added comment to your album", comment.User.Login),body);
+                MailSendJob mail = new MailSendJob();
+                mail.to = album.User.Email;
+                mail.subject = string.Format("{0} has added comment to your album" , comment.User.Login);
+                mail.body = body;
+                ThreadStart job = new ThreadStart(mail.send);
+                Thread thread = new Thread(job);
+                thread.Start();
+
             }
         }
 
@@ -241,4 +273,17 @@ namespace PhotoHistory
 
     public enum ChartCategory { Popular, TopRated, Biggest, MostComments }
     public enum MainCategory { Home, Browse, Charts }
+
+    public class MailSendJob
+    {
+        public string to { get; set; }
+        public string body { get; set; }
+        public string subject { get; set; }
+
+        public void send()
+        {
+            Helpers.SendEmailContextFree(to, subject, body);
+        }
+
+    }
 }

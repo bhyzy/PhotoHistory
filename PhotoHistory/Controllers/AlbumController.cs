@@ -417,7 +417,7 @@ namespace PhotoHistory.Controllers
         public ActionResult Comment(int id, String comment)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetById(id);
+            AlbumModel album = albums.GetById(id,withUser:true);
             UserRepository users = new UserRepository();
             UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
             CommentModel model = new CommentModel();

@@ -15,33 +15,8 @@ namespace PhotoHistory.Scheduler
     public class PhotoNotifyJob : IJob
     {
         public PhotoNotifyJob() { }
-        private int unit = 1;
 
-        private void SendEmail(String to, String subject,String body)
-        {
-            var fromAddress = new MailAddress("pastexplorer@gmail.com", "PastExplorer");
-            var toAddress = new MailAddress(to, to);
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, "pastexplorer666")
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            })
-            {
-                smtp.Send(message);
-            }
-
-        }
+        
 
         public void Execute(IJobExecutionContext context)
         {
@@ -67,7 +42,7 @@ namespace PhotoHistory.Scheduler
 
                         string body = string.Format("Hello {0},</br>It's time to add new photo to your album <a href='{1}'>{2}</a>",
                             album.User.Login,link,album.Name);
-                        SendEmail(album.User.Email, "Photo notification", body);
+                        Helpers.SendEmailContextFree(album.User.Email, "Photo notification", body);
                         System.Diagnostics.Debug.WriteLine("Sending email");
                     }
                 
