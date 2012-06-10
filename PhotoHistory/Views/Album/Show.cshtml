@@ -17,12 +17,12 @@
                 if (Helpers.isFollower(Model, ViewBag.user))
                 {
                 <button class="btn btn-warning" name="follow_button" value="true">
-                    <i class="icon-remove icon-white"></i> Unfollow</button>
+                    <i class="icon-remove icon-white"></i>Unfollow</button>
                 }
                 else
                 {
                 <button class="btn btn-info" name="follow_button" value="false">
-                    <i class="icon-ok icon-white"></i> Follow</button>
+                    <i class="icon-ok icon-white"></i>Follow</button>
                 }
 
             }
@@ -31,16 +31,18 @@
                 <!-- jesli jest wlascicielem: manage this album -->
                 <a href="@Url.Action("ManageAlbum", new { id = Model.Id })">
                     <button class="btn btn-primary">
-                        <i class="icon-edit icon-white"></i> Manage this album</button>
+                        <i class="icon-edit icon-white"></i>Manage this album</button>
                 </a>
             }
         </h1>
         <h2 class="album-author">
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
-    <div style="height: 430px; overflow: hidden;">
-        @if (Model.Photos.Count() >= 3)
-        {
+
+    <!-- SLIDESHOW -->
+    @if (Model.Photos.Count() >= 3)
+    {
+        <div style="height: 430px; overflow: hidden;">
             <ul id="roundabout" style="width: 450px;">
                 @for (int i = 0; i < photosSorted.Count(); i++)
                 {
@@ -50,52 +52,58 @@
                     </li>
                 }
             </ul>
-        }
-        else
-        {
-            <h3>
-                You need at least 3 photos to see a presentation.
-            </h3>
-        }
-    </div>
-    <div class="toggle-autoplay">
-        <img src="../../Content/img/Play Icon.jpg" />
-        Start/stop autoplay
-    </div>
-    <div id="photo-desc-replace">
-    </div>
-    <div>
-        <table class="controls" cellpadding="6">
-            <tr>
-                <td onclick="move(-365);">
-                    Previous year <<<<
-                </td>
-                <td onclick="move(-30);">
-                    Previous month <<<
-                </td>
-                <td onclick="move(-7);">
-                    Previous week <<
-                </td>
-                <td onclick="move(-1);">
-                    Previous day <
-                </td>
-                <td>
-                </td>
-                <td onclick="move(1);">
-                    Next day >
-                </td>
-                <td onclick="move(7);">
-                    Next week >>
-                </td>
-                <td onclick="move(30);">
-                    Next month >>>
-                </td>
-                <td onclick="move(365);">
-                    Next year >>>>
-                </td>
-            </tr>
-        </table>
-    </div>
+        </div>
+            
+                
+        <div class="toggle-autoplay">
+            <img src="../../Content/img/Play Icon.jpg" />
+            Start/stop autoplay
+        </div>
+        <div id="photo-desc-replace">
+        </div>
+        <div>
+            <table class="controls" cellpadding="6">
+                <tr>
+                    <td onclick="move(-365);">
+                        Previous year <<<<
+                    </td>
+                    <td onclick="move(-30);">
+                        Previous month <<<
+                    </td>
+                    <td onclick="move(-7);">
+                        Previous week <<
+                    </td>
+                    <td onclick="move(-1);">
+                        Previous day <
+                    </td>
+                    <td>
+                    </td>
+                    <td onclick="move(1);">
+                        Next day >
+                    </td>
+                    <td onclick="move(7);">
+                        Next week >>
+                    </td>
+                    <td onclick="move(30);">
+                        Next month >>>
+                    </td>
+                    <td onclick="move(365);">
+                        Next year >>>>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div style="height: 300px; ">
+        <h3>
+            You need at least 3 photos to see a presentation.
+        </h3>
+        </div>
+    }
+    <!-- END SLIDESHOW -->
+
     <div style="height: 20px;">
     </div>
     <div id="content-left">
