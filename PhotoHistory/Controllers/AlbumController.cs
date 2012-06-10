@@ -298,12 +298,13 @@ namespace PhotoHistory.Controllers
                 dbAlbum.Name = album.Name;
                 dbAlbum.Description = album.Description;
                 dbAlbum.Category = album.Category;
-                dbAlbum.NotificationPeriod = album.NotificationPeriod;
                 dbAlbum.Public = album.Public;
                 dbAlbum.Password = album.Password;
                 dbAlbum.CommentsAllow = album.CommentsAllow;
                 dbAlbum.CommentsAuth = album.CommentsAuth;
                 dbAlbum.TrustedUsers = album.TrustedUsers;
+                dbAlbum.NotificationPeriod = album.NotificationPeriod;
+                dbAlbum.NextNotification = album.NextNotification;
                 albums.Update(dbAlbum);
 
                 return RedirectToAction("Show", new { id = dbAlbum.Id });
@@ -327,7 +328,7 @@ namespace PhotoHistory.Controllers
         {
             PrepareCategories();
 
-            SetNextNotification(album);
+            SetNextNotification(newAlbum);
 
             // private access 
             if (!newAlbum.Public)
@@ -522,6 +523,7 @@ namespace PhotoHistory.Controllers
             else
             {
                 album.NextNotification = null;
+                album.NotificationPeriod = null;
             }
         }
 
