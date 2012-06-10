@@ -8,11 +8,13 @@ import pastexplorer.util.StackTraceUtil;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ public class UploadPhotoActivity extends Activity {
     
     private TextView mDateDisplay;
     private Button mChangeDate;
+    private ProgressDialog mProgressDialog;
 
     private static final int DATE_DIALOG_ID = 0;
 	
@@ -45,6 +48,14 @@ public class UploadPhotoActivity extends Activity {
             }
         });
         
+        Button uploadButton = (Button)findViewById(R.id.upload);
+        uploadButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startUploadingPhoto();
+			}
+		});
+        
         // get the current date
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -54,6 +65,7 @@ public class UploadPhotoActivity extends Activity {
         // display the current date (this method is below)
         updateDateDisplay();
         
+        // read photo thumbnail bitmap from file (passed by TakePhoto activity)
         String photo = getIntent().getStringExtra("photo");
         if (photo != null) {
         	ImageView photoPreview = (ImageView)findViewById(R.id.photoPreview);
@@ -101,5 +113,32 @@ public class UploadPhotoActivity extends Activity {
 		Bitmap bitmap = BitmapFactory.decodeStream(fis);
 		fis.close();
 		return bitmap;
+	}
+	
+	private void startUploadingPhoto() {
+		mProgressDialog = ProgressDialog.show(this,
+				getString(R.string.pleaseWait),
+				"Uploading photo...", 
+				true, true);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				uploadPhoto();
+			}
+		}).start();
+	}
+	
+	private void uploadPhoto() {
+	
+		// upload photo
+		
+		// finished:
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mProgressDialog.dismiss();
+				//Intent intent = new Intent(this, AlbumActivity.class);
+			}
+		})
 	}
 }
