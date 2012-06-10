@@ -17,12 +17,12 @@
                 if (Helpers.isFollower(Model, ViewBag.user))
                 {
                 <button class="btn btn-warning" name="follow_button" value="true">
-                    <i class="icon-remove icon-white"></i>Unfollow</button>
+                    <i class="icon-remove icon-white"></i> Unfollow</button>
                 }
                 else
                 {
                 <button class="btn btn-info" name="follow_button" value="false">
-                    <i class="icon-ok icon-white"></i>Follow</button>
+                    <i class="icon-ok icon-white"></i> Follow</button>
                 }
 
             }
@@ -139,10 +139,21 @@
                 }
                 @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
                 {
-                    <div class="album-comment">
+                    <div class="album-comment" id="@("comment"+comment.Id)">
                         <h1>
                             <a href = @Url.Action("ViewProfile", "User", new { userName = comment.User.Login }) name="@("comment" + comment.Id)">@comment.User.Login</a>
-                            @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")</h1>
+                            @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")
+                            <span id="comment-control">
+                                 <span class="comment-admin" action="accept" comment="@comment.Id">
+                                    <span class="label label-success"> <i class="icon-ok icon-white"></i> </span>
+                                 </span>  
+
+                                 <span class="comment-admin" action="delete" comment="@comment.Id">
+                                    <span class="label label-important"> <i class="icon-remove icon-white"></i> </span>
+                                 </span>
+                            </span>
+                            
+                        </h1>
                         @comment.Body
                     </div>
 
