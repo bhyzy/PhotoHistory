@@ -119,47 +119,70 @@
             </div>
         </div>
         <div id="album-comments">
-            <form class="form-horizontal" action="#" method="post">
-            <fieldset>
-                <div class="control-group">
-                    <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
-                </div>
-                <div class="control-group">
-                    <button type="button" class="btn btn-primary" id="submit" onclick="false">
-                        Add comment</button>
-                </div>
-            </fieldset>
-            </form>
-            <div id="comments">
-                @if (Model.Comments.Count == 0)
-                {
-                    <div class="album-comment" id="empty">
-                        Nothing here! Be first and comment this album!
-                    </div>
-                }
-                @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
-                {
-                    <div class="album-comment" id="@("comment"+comment.Id)">
-                        <h1>
-                            <a href = @Url.Action("ViewProfile", "User", new { userName = comment.User.Login }) name="@("comment" + comment.Id)">@comment.User.Login</a>
-                            @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")
-                            <span id="comment-control">
-                                 <span class="comment-admin" action="accept" comment="@comment.Id">
-                                    <span class="label label-success"> <i class="icon-ok icon-white"></i> </span>
-                                 </span>  
-
-                                 <span class="comment-admin" action="delete" comment="@comment.Id">
-                                    <span class="label label-important"> <i class="icon-remove icon-white"></i> </span>
-                                 </span>
-                            </span>
+            
+            @if (Model.CommentsAllow)
+            {
+            
+                    <form class="form-horizontal" action="#" method="post">
+                        <fieldset>
+                            <div class="control-group">
+                                <textarea class="input-xxlarge" id="comment-body" rows="3" placeholder="Enter your comment here..."></textarea>
+                            </div>
+                            <div class="control-group">
+                                <button type="button" class="btn btn-primary" id="submit" onclick="false">
+                                    Add comment</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <h3>Comments:</h3><br/>
+                    <div id="comments">
+            
+                        @if (Model.Comments.Count == 0)
+                        {
+                            <div class="album-comment" id="empty">
+                                Nothing here! Be first and comment this album!
+                            </div>
+                        }
+                    
+                        @foreach (PhotoHistory.Models.CommentModel comment in Model.Comments)
+                        {
+                            //Jesli user nie jest wlascicielem albumu lub komentarza i komentarz niezaakceptowany to nie wyswietlaj
+                            if ( !(ViewBag.User.Id == Model.User.Id || ViewBag.User.Id == comment.User.Id ) && !comment.Accepted)
+                            {
+                                continue;
+                            }
+                            <div class="album-comment @((comment.Accepted??false)?"":"comment-pending-moderation")" id="@("comment" + comment.Id)">
+                            <h1>
+                                <a href = @Url.Action("ViewProfile", "User", new { userName = comment.User.Login }) name="@("comment" + comment.Id)">@comment.User.Login</a>
+                                @comment.Date.ToString("dd/MM/yyyy HH:mm:ss")
+                                <span class="comment-control">
+                                    @if (ViewBag.User.Id == comment.User.Id || ViewBag.User.Id == Model.User.Id)
+                                    {
+                                        <span class="comment-admin label label-important" action="delete" comment="@comment.Id">
+                                         <i class="icon-remove icon-white"></i> </span>
+                                    }
+                                    @if (ViewBag.User.Id == Model.User.Id && !comment.Accepted)
+                                    {
+                                        <span class="comment-admin label label-success" action="accept" comment="@comment.Id">
+                                         <i class="icon-ok icon-white"></i> </span>
+                                      
+                                    }
+                                </span>
                             
-                        </h1>
-                        @comment.Body
+                            </h1>
+                            @comment.Body
+                        </div>
+                        }
                     </div>
-
-                }
+               
+            }
+            else
+            { 
+              <h3>Comments:</h3><br/> 
+              <div class="comments-disabled">Comments are disabled for this album.</div>
+            }
             </div>
-        </div>
+        
     </div>
     <div id="content-right">
         <div id="map-canvas">

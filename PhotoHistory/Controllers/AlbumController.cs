@@ -420,13 +420,24 @@ namespace PhotoHistory.Controllers
             AlbumModel album = albums.GetById(id,withUser:true);
             UserRepository users = new UserRepository();
             UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            NewCommentModel newComment = new NewCommentModel();
+            //Wylaczone komentowanie
+            if (!album.CommentsAllow)
+            {
+                newComment.Message = "You can't comment this album";
+                return Json(newComment);
+            }
+
             CommentModel model = new CommentModel();
             model.Album = album;
             model.Body = comment;
             model.Date = DateTime.Now;
             model.User = user;
 
-            NewCommentModel newComment = new NewCommentModel();
+            //Komentarze wlasciciela albumu sa automatycznie akceptowane, komentarze innego uzytkownika sa akceptowane 
+            //jesli wylaczono opcje autoryzacji
+            model.Accepted = (album.User.Id == user.Id) || !album.CommentsAuth;
             newComment.Body = comment;
             newComment.Date = model.Date.ToString("dd/MM/yyyy HH:mm:ss");
             newComment.UserName = user.Login;
@@ -440,6 +451,7 @@ namespace PhotoHistory.Controllers
                 {
                     newComment.Id = model.Id ?? 1;
                     newComment.Message = "Your comment has been saved.";
+                    //funkcja automatycznie sprawdza czy wyslac powiadomienie
                     Helpers.NotifyCommentObserver(model);
                 }
                 else

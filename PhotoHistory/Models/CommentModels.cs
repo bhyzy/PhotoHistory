@@ -11,6 +11,7 @@ namespace PhotoHistory.Models
         public virtual UserModel User { get; set; }
         public virtual DateTime Date { get; set; }
         public virtual String Body { get; set; }
+        public virtual bool? Accepted { get; set; }
     }
 
     public class NewCommentModel
@@ -21,5 +22,6 @@ namespace PhotoHistory.Models
         public String UserName { get; set; }
         public String Link { get; set; }
         public int Id { get; set; }
+        public bool Accepted { get; set; }
     }
 }
