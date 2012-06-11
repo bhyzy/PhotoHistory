@@ -115,7 +115,7 @@ namespace PhotoHistory.Controllers
                 return RedirectToAction("PasswordForAlbum", new { id = album.Id});
 
             // if user is not authorized
-            if (!albums.IsUserAuthorizedToViewAlbum(album, user))
+            if (!albums.IsUserAuthorizedToViewAlbum(album, user, true))
                 return View("NotAuthorized");
 
             if (user == null || user.Id != album.User.Id) //if not logged in or not an author
@@ -132,7 +132,33 @@ namespace PhotoHistory.Controllers
         [Authorize]
         public ActionResult PasswordForAlbum(int id)
         {
-            return View();
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            return View(album);
+        }
+
+        /// <summary>
+        /// receives password from a form, saves it in session and grants (or not) access to album
+        /// </summary>
+        /// <param name="password">password from form</param>
+        /// <param name="id">id of an album</param>
+        /// <returns>redirect to show album if access granted, else show error</returns>
+        [Authorize]
+        [HttpPost]
+        public ActionResult PasswordForAlbum(int id, string password)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            if (password.HashMD5() == album.Password)
+            {
+                Session["Album" + album.Id.ToString()] = password.HashMD5();
+                return RedirectToAction("Show", new { id = album.Id });
+            }
+            else
+            {
+                ViewBag.MyErrorMsg = "Wrong password";
+                return View(album);
+            }
         }
 
 

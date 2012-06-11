@@ -331,7 +331,15 @@ namespace PhotoHistory.Data
             }
         }
 
-        public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user)
+        /// <summary>
+        /// access to album
+        /// </summary>
+        /// <param name="album"></param>
+        /// <param name="user"></param>
+        /// <param name="passwordChecked">pass true if authorizeWithPassword(...) was called before (then it will allow access to album with password). 
+        /// if set to false, method will refuse access to album with password.</param>
+        /// <returns>true if user has right to view the album</returns>
+        public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user, bool passwordChecked)
         {
             if (album == null)
                 throw new ArgumentException("album");
@@ -348,12 +356,16 @@ namespace PhotoHistory.Data
             if (album.TrustedUsers != null && album.TrustedUsers.Contains(user))
                 return true;
 
+            // album has password access - allow if password was checked before
+            if (album.Password != null)
+                return passwordChecked;
+
             return false;
         }
 
 
         /// <summary>
-        /// handles access to albums with password, returns true if user can see the album
+        /// handles access to albums with password, returns true if user can see the album. should be called before IsUserAuthorizedToViewAlbum(...)
         /// </summary>
         /// <param name="album">album</param>
         /// <param name="user">user trying to access the album</param>

@@ -27,7 +27,7 @@ namespace PhotoHistory.API.Controllers
 				throw new Exception( "album not found" );
 
 			// check if the caller can access the album
-			if ( !albums.IsUserAuthorizedToViewAlbum( album, authUser ) )
+			if ( !albums.IsUserAuthorizedToViewAlbum( album, authUser, false ) )
 				throw new Exception( "user not authorized to view this album" );
 
 			// prepare photos list
