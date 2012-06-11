@@ -113,7 +113,6 @@ namespace PhotoHistory.Models
 					  }
 				  }
 			  }
-
               // update ranking
               Rating = (int)getRating();
               AlbumRepository albums = new AlbumRepository();

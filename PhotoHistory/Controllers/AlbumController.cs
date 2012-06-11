@@ -109,6 +109,11 @@ namespace PhotoHistory.Controllers
 
             UserRepository users = new UserRepository();
             var user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            // if user is not authorized
+            if (!albums.IsUserAuthorizedToViewAlbum(album, user))
+                return View("NotAuthorized");
+
             if (user == null || user.Id != album.User.Id) //if not logged in or not an author
             {
                 //increment views
@@ -129,7 +134,6 @@ namespace PhotoHistory.Controllers
         }
 
         [Authorize]
-
         public ActionResult AddPhoto(int? albumId)
         {
             ViewBag.Albums = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name).Albums;
@@ -317,7 +321,6 @@ namespace PhotoHistory.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            //CategoryModel.EnsureStartingData();
             PrepareCategories();
             return View();
         }
