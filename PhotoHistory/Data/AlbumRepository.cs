@@ -277,6 +277,7 @@ namespace PhotoHistory.Data
                 var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                 album.TrustedUsers.ToList();
                 album.Category.ToString();
+                album.User.ToString();
                 return album;
             }
         }
@@ -289,6 +290,7 @@ namespace PhotoHistory.Data
                 album.Category.ToString();
                 album.TrustedUsers.ToString();
                 album.Photos.ToString();
+                album.User.ToString();
                 return album;
             }
         }
@@ -397,6 +399,16 @@ namespace PhotoHistory.Data
             }
         }
 
+
+        // remember to fetch user with album, otherwise you get exception 
+        public bool isUserAuthorizedToEditAlbum(AlbumModel album, UserModel user)
+        {
+            // given user is the owner of the album
+            if (album.User == user)
+                return true;
+            else
+                return false;
+        }
 
     }
 }

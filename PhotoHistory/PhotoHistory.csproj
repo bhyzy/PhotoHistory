@@ -225,6 +225,7 @@
     <Content Include="Views\Album\Charts.cshtml" />
     <Content Include="Views\Album\Browse.cshtml" />
     <Content Include="Views\Album\PasswordForAlbum.cshtml" />
+    <Content Include="Views\Album\NotAuthorizedEdit.cshtml" />
     <None Include="Views\Album\Show.cshtml" />
     <None Include="Views\Album\Manage.cshtml" />
     <None Include="Views\Album\ManageAlbum.cshtml" />

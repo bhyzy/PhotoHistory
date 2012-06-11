@@ -275,10 +275,18 @@ namespace PhotoHistory.Controllers
             return View(photo);
         }
 
+        [Authorize]
         public ActionResult ManageAlbum(int id)
         {
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForManage(id);
+            UserRepository users = new UserRepository();
+            var user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            //access control
+            if(!albums.isUserAuthorizedToEditAlbum(album,user))
+                return View("NotAuthorizedEdit");
+
             return View(album);
         }
 
@@ -318,6 +326,15 @@ namespace PhotoHistory.Controllers
         {
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForEdit(id);
+
+            UserRepository users = new UserRepository();
+            var user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            //access control
+            if (!albums.isUserAuthorizedToEditAlbum(album, user))
+                return View("NotAuthorizedEdit");
+
+
             PrepareCategories();
             ViewData["usersList"] = string.Join(", ", album.TrustedUsers.Select(u => u.Login));
             return View(album);
@@ -510,6 +527,8 @@ namespace PhotoHistory.Controllers
 
             return Json(newComment);
         }
+
+
 
         // ------------ PRIVATE METHODS ------------------
 
