@@ -110,6 +110,10 @@ namespace PhotoHistory.Controllers
             UserRepository users = new UserRepository();
             var user = users.GetByUsername(HttpContext.User.Identity.Name);
 
+            // check if album has a password, if it does, authorize
+            if(!albums.authorizeWithPassword(album, user, (string)Session["Album" + album.Id.ToString()]))
+                return RedirectToAction("PasswordForAlbum", new { id = album.Id});
+
             // if user is not authorized
             if (!albums.IsUserAuthorizedToViewAlbum(album, user))
                 return View("NotAuthorized");
@@ -123,6 +127,14 @@ namespace PhotoHistory.Controllers
             @ViewBag.user = user;
             return View(album);
         }
+
+
+        [Authorize]
+        public ActionResult PasswordForAlbum(int id)
+        {
+            return View();
+        }
+
 
         [Authorize]
         public ActionResult Manage()

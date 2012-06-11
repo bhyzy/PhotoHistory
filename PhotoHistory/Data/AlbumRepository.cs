@@ -350,5 +350,41 @@ namespace PhotoHistory.Data
 
             return false;
         }
+
+
+        /// <summary>
+        /// handles access to albums with password, returns true if user can see the album
+        /// </summary>
+        /// <param name="album">album</param>
+        /// <param name="user">user trying to access the album</param>
+        /// <param name="passwordHash">hash from password which user provided, kept in session</param>
+        /// <returns>
+        /// true - if album has no password, or passwordHash equals password hash from album, or user is an owner
+        /// false - if album has password and passwordHash doesn't equal password hash from album
+        /// </returns>
+        public bool authorizeWithPassword(AlbumModel album, UserModel user, string passwordHash)
+        {
+            if (album.User.Id == user.Id)
+            {
+                //user is an owner
+                return true;
+            }
+            if (album.Password == null)
+            {
+                // no password
+                return true;
+            }
+            else
+            {
+                if (passwordHash == album.Password)
+                    //correct password
+                    return true;
+                else
+                    // incorrect password
+                    return false;
+            }
+        }
+
+
     }
 }
