@@ -41,7 +41,7 @@ namespace PhotoHistory.API.Common
 
 			// Convert byte[] to Image
 			ms.Write( imageBytes, 0, imageBytes.Length );
-			Image image = Image.FromStream( ms, true );
+			Image image = Image.FromStream( ms, false, true );
 			return image;
 		}
 	}

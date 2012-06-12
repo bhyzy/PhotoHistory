@@ -50,7 +50,7 @@ public class PastExplorerActivity extends Activity implements OnClickListener {
        //_passwordEditBox.setText("");
        _loginEditBox.requestFocus();
        
-       startActivity(new Intent(this, UploadPhotoActivity.class)); // TODO: tmp
+       //startActivity(new Intent(this, UploadPhotoActivity.class)); // TODO: tmp
     }
 
 	public void onClick(View v) {
