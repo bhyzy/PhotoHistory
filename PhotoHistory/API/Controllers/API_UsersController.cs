@@ -50,7 +50,7 @@ namespace PhotoHistory.API.Controllers
 			List<string> albums = new List<string>();
 			foreach ( AlbumModel album in user.Albums )
 			{
-				if ( albumRepository.IsUserAuthorizedToViewAlbum( album, authUser ) )
+				if ( albumRepository.IsUserAuthorizedToViewAlbum( album, authUser, false ) )
 				{
 					albums.Add( string.Format( "{0}/api/albums/{1}", Helpers.BaseURL(), album.Id ) );
 				}

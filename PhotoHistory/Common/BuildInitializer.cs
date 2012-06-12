@@ -32,21 +32,8 @@ namespace PhotoHistory.Common
                 category=session.CreateQuery("from CategoryModel where Name =:name").SetParameter("name","People").UniqueResult<CategoryModel>();
             }
 
+            
             AlbumModel album = new AlbumModel()
-            {
-                Category = category,
-                CommentsAllow = true,
-                CommentsAuth = false,
-                Description = "Jak zmieniałem się w czasie",
-                Name = "Moja twarz",
-                Public = true,
-                Rating = 0,
-                User = user,
-                Views = 1234
-            };
-
-
-            album = new AlbumModel()
             {
                 Category = category,
                 CommentsAllow = true,
@@ -61,7 +48,6 @@ namespace PhotoHistory.Common
             albums.Create(album);
             
 
-            //Zdjecia byly tworzone bez linku, usuniecie kodu
             LinkedList<PhotoModel> list = new LinkedList<PhotoModel>();
             PhotoModel photo = new PhotoModel()
             {
@@ -120,9 +106,6 @@ namespace PhotoHistory.Common
             };
             list.AddLast(photo);
             
-            
-
-            albums.Create(album);
 
             album = new AlbumModel()
             {
@@ -201,23 +184,21 @@ namespace PhotoHistory.Common
             };
             list.AddLast(photo);
 
+
             /*
             album = new AlbumModel()
             {
                 Category = category,
                 CommentsAllow = true,
                 CommentsAuth = false,
-                Description = "Opis super fajnego albumu nr 4. heh",
-                Name = "Super fajny album nr.4444444444444444",
-                Public = false,
-                Password = "abc",
-                Rating = 44,
+                Description = "Jak zmieniałem się w czasie",
+                Name = "Moja twarz",
+                Public = true,
+                Rating = 0,
                 User = user,
-                Views = 4444
+                Views = 1234
             };
-            albums.Create(album);
             */
-
 
             using(var session= SessionProvider.SessionFactory.OpenSession())
             using (var trans = session.BeginTransaction())

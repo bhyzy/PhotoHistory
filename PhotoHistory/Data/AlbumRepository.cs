@@ -277,6 +277,7 @@ namespace PhotoHistory.Data
                 var album = session.CreateQuery("from AlbumModel where Id = :id").SetParameter("id", id).UniqueResult<AlbumModel>();
                 album.TrustedUsers.ToList();
                 album.Category.ToString();
+                album.User.ToString();
                 return album;
             }
         }
@@ -289,6 +290,7 @@ namespace PhotoHistory.Data
                 album.Category.ToString();
                 album.TrustedUsers.ToString();
                 album.Photos.ToString();
+                album.User.ToString();
                 return album;
             }
         }
@@ -331,7 +333,15 @@ namespace PhotoHistory.Data
             }
         }
 
-        public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user)
+        /// <summary>
+        /// access to album
+        /// </summary>
+        /// <param name="album"></param>
+        /// <param name="user"></param>
+        /// <param name="passwordChecked">pass true if authorizeWithPassword(...) was called before (then it will allow access to album with password). 
+        /// if set to false, method will refuse access to album with password.</param>
+        /// <returns>true if user has right to view the album</returns>
+        public bool IsUserAuthorizedToViewAlbum(AlbumModel album, UserModel user, bool passwordChecked)
         {
             if (album == null)
                 throw new ArgumentException("album");
@@ -348,7 +358,57 @@ namespace PhotoHistory.Data
             if (album.TrustedUsers != null && album.TrustedUsers.Contains(user))
                 return true;
 
+            // album has password access - allow if password was checked before
+            if (album.Password != null)
+                return passwordChecked;
+
             return false;
         }
+
+
+        /// <summary>
+        /// handles access to albums with password, returns true if user can see the album. should be called before IsUserAuthorizedToViewAlbum(...)
+        /// </summary>
+        /// <param name="album">album</param>
+        /// <param name="user">user trying to access the album</param>
+        /// <param name="passwordHash">hash from password which user provided, kept in session</param>
+        /// <returns>
+        /// true - if album has no password, or passwordHash equals password hash from album, or user is an owner
+        /// false - if album has password and passwordHash doesn't equal password hash from album
+        /// </returns>
+        public bool authorizeWithPassword(AlbumModel album, UserModel user, string passwordHash)
+        {
+            if (album.User.Id == user.Id)
+            {
+                //user is an owner
+                return true;
+            }
+            if (album.Password == null)
+            {
+                // no password
+                return true;
+            }
+            else
+            {
+                if (passwordHash == album.Password)
+                    //correct password
+                    return true;
+                else
+                    // incorrect password
+                    return false;
+            }
+        }
+
+
+        // remember to fetch user with album, otherwise you get exception 
+        public bool isUserAuthorizedToEditAlbum(AlbumModel album, UserModel user)
+        {
+            // given user is the owner of the album
+            if (album.User == user)
+                return true;
+            else
+                return false;
+        }
+
     }
 }

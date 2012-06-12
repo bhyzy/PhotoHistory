@@ -109,6 +109,15 @@ namespace PhotoHistory.Controllers
 
             UserRepository users = new UserRepository();
             var user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            // check if album has a password, if it does, authorize
+            if(!albums.authorizeWithPassword(album, user, (string)Session["Album" + album.Id.ToString()]))
+                return RedirectToAction("PasswordForAlbum", new { id = album.Id});
+
+            // if user is not authorized
+            if (!albums.IsUserAuthorizedToViewAlbum(album, user, true))
+                return View("NotAuthorized");
+
             if (user == null || user.Id != album.User.Id) //if not logged in or not an author
             {
                 //increment views
@@ -118,6 +127,40 @@ namespace PhotoHistory.Controllers
             @ViewBag.user = user;
             return View(album);
         }
+
+
+        [Authorize]
+        public ActionResult PasswordForAlbum(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            return View(album);
+        }
+
+        /// <summary>
+        /// receives password from a form, saves it in session and grants (or not) access to album
+        /// </summary>
+        /// <param name="password">password from form</param>
+        /// <param name="id">id of an album</param>
+        /// <returns>redirect to show album if access granted, else show error</returns>
+        [Authorize]
+        [HttpPost]
+        public ActionResult PasswordForAlbum(int id, string password)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            AlbumModel album = albums.GetById(id);
+            if (password.HashMD5() == album.Password)
+            {
+                Session["Album" + album.Id.ToString()] = password.HashMD5();
+                return RedirectToAction("Show", new { id = album.Id });
+            }
+            else
+            {
+                ViewBag.MyErrorMsg = "Wrong password";
+                return View(album);
+            }
+        }
+
 
         [Authorize]
         public ActionResult Manage()
@@ -129,7 +172,6 @@ namespace PhotoHistory.Controllers
         }
 
         [Authorize]
-
         public ActionResult AddPhoto(int? albumId)
         {
             ViewBag.Albums = new UserRepository().GetByUsernameWithAlbums(HttpContext.User.Identity.Name).Albums;
@@ -233,10 +275,18 @@ namespace PhotoHistory.Controllers
             return View(photo);
         }
 
+        [Authorize]
         public ActionResult ManageAlbum(int id)
         {
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForManage(id);
+            UserRepository users = new UserRepository();
+            var user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            //access control
+            if(!albums.isUserAuthorizedToEditAlbum(album,user))
+                return View("NotAuthorizedEdit");
+
             return View(album);
         }
 
@@ -276,6 +326,15 @@ namespace PhotoHistory.Controllers
         {
             AlbumRepository albums = new AlbumRepository();
             AlbumModel album = albums.GetByIdForEdit(id);
+
+            UserRepository users = new UserRepository();
+            var user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            //access control
+            if (!albums.isUserAuthorizedToEditAlbum(album, user))
+                return View("NotAuthorizedEdit");
+
+
             PrepareCategories();
             ViewData["usersList"] = string.Join(", ", album.TrustedUsers.Select(u => u.Login));
             return View(album);
@@ -317,7 +376,6 @@ namespace PhotoHistory.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            //CategoryModel.EnsureStartingData();
             PrepareCategories();
             return View();
         }
@@ -417,16 +475,27 @@ namespace PhotoHistory.Controllers
         public ActionResult Comment(int id, String comment)
         {
             AlbumRepository albums = new AlbumRepository();
-            AlbumModel album = albums.GetById(id);
+            AlbumModel album = albums.GetById(id,withUser:true);
             UserRepository users = new UserRepository();
             UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+
+            NewCommentModel newComment = new NewCommentModel();
+            //Wylaczone komentowanie
+            if (!album.CommentsAllow)
+            {
+                newComment.Message = "You can't comment this album";
+                return Json(newComment);
+            }
+
             CommentModel model = new CommentModel();
             model.Album = album;
             model.Body = comment;
             model.Date = DateTime.Now;
             model.User = user;
 
-            NewCommentModel newComment = new NewCommentModel();
+            //Komentarze wlasciciela albumu sa automatycznie akceptowane, komentarze innego uzytkownika sa akceptowane 
+            //jesli wylaczono opcje autoryzacji
+            model.Accepted = (album.User.Id == user.Id) || !album.CommentsAuth;
             newComment.Body = comment;
             newComment.Date = model.Date.ToString("dd/MM/yyyy HH:mm:ss");
             newComment.UserName = user.Login;
@@ -440,6 +509,7 @@ namespace PhotoHistory.Controllers
                 {
                     newComment.Id = model.Id ?? 1;
                     newComment.Message = "Your comment has been saved.";
+                    //funkcja automatycznie sprawdza czy wyslac powiadomienie
                     Helpers.NotifyCommentObserver(model);
                 }
                 else
@@ -457,6 +527,8 @@ namespace PhotoHistory.Controllers
 
             return Json(newComment);
         }
+
+
 
         // ------------ PRIVATE METHODS ------------------
 

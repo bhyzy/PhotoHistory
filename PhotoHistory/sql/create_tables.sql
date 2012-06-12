@@ -82,7 +82,8 @@ CREATE TABLE Comments
 	album_id integer NOT NULL REFERENCES Albums,
 	user_id integer NOT NULL REFERENCES Users,
 	date_posted timestamp NOT NULL,
-	"body" varchar(1000) NOT NULL 	
+	"body" varchar(1000) NOT NULL,
+	accepted boolean NOT NULL 	
 );
 
 CREATE INDEX comment_user_idx on Comments (user_id);

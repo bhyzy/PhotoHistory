@@ -480,13 +480,44 @@ h1.page-title, .page-title a, h2.album-author, h2.page-section {
 #album-comments {
 	/* background: hsl(100,50%,90%); */
 	margin-top: 10px;
+
 }
+
+#comments
+{
+    /* background: hsl(100,50%,90%); */
+    border-style: solid;
+    border-width: thin;
+    max-height: 400px;
+    width: 450px;
+    overflow: auto;
+    background-color: #E0E0FE;
+    padding: 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.comment-control
+{
+    /* background: hsl(100,50%,90%); */
+    margin-left:10px;
+    width:100px;
+    padding: 2px 2px 2px 2px;
+    float:right;
+   
+}
+
+.comment-admin
+{
+    margin-left:2px;
+}
+
 div.album-comment {
 	/* background: hsl(140,50%,90%); */
 	margin-top: 15px;
-	width: 100%;
+	width: 95%;
 	padding: 0px 10px 5px 10px;
 }
+
 div.album-comment h1 {
 	/* background: hsl(140,50%,90%); */
 	font-weight:bold;
@@ -501,6 +532,29 @@ div.album-comment:hover {
 	padding: 0px 10px 5px 10px;
 	border-radius:5px 5px 5px 5px;
 }
+
+.comments-disabled
+{
+    font-size: 15px;
+    margin-left:25px;
+    color:Red;   
+    
+}
+
+div.comment-pending-moderation
+{
+    background-color: #FED3D5;
+    padding: 0px 10px 5px 10px;
+	border-radius:5px 5px 5px 5px;
+}
+
+div.comment-pending-moderation:hover
+{
+    background-color: #FD999B;
+    padding: 0px 10px 5px 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+
 h2.album-author {
 	font-size: 14px;
 }

@@ -30,7 +30,7 @@ namespace PhotoHistory.API.Controllers
 			// check if the caller can access the album containing the photo
 			AlbumRepository albums = new AlbumRepository();
 			AlbumModel album = albums.GetById( photo.Album.Id, withUser: true, withTrustedUsers: true );
-			if ( !albums.IsUserAuthorizedToViewAlbum( album, authUser ) )
+			if ( !albums.IsUserAuthorizedToViewAlbum( album, authUser, false ) )
 				throw new Exception( "user not authorized to view this photo/album" );
 
 			// send back the photo information

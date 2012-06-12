@@ -43,7 +43,11 @@ namespace PhotoHistory.Data
                 map.Column("body");
                 map.NotNullable(false);
             });
-
+            Property(x => x.Accepted, map =>
+            {
+                map.Column("accepted");
+                map.NotNullable(false);
+            });
         }
     }
 }
