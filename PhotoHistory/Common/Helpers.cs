@@ -230,7 +230,9 @@ namespace PhotoHistory
                     StartDate = start,
                     EndDate = end,
                     Views = album.Views,
-                    Comments = album.Comments.Count,
+                    Comments = album.Comments.Count(delegate (CommentModel comment){
+                        return comment.Accepted??false;
+                    }),
                     Rating = album.Rating
                 };
                 list.Add(profileAlbum);

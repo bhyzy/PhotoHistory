@@ -161,6 +161,7 @@
                                         <span class="comment-admin label label-important" action="delete" comment="@comment.Id">
                                          <i class="icon-remove icon-white"></i> </span>
                                     }
+                                    
                                     @if (ViewBag.User.Id == Model.User.Id && !comment.Accepted)
                                     {
                                         <span class="comment-admin label label-success" action="accept" comment="@comment.Id">
@@ -225,6 +226,7 @@
 
         //moderacja komentarza
         $(document).ready(function() {
+            $('span[action="delete"]').click(deleteCommentFunction);
             $('span[action="accept"]').click(function() {
                 var commentId = $(this).attr("comment");
                 $.post("/Album/AcceptComment", { "id": commentId},
@@ -242,6 +244,22 @@
             });
         
         });
+
+        function deleteCommentFunction(){
+            var commentId = $(this).attr("comment");
+                $.post("/Album/DeleteComment", { "id": commentId},
+                    function (data) {
+                        if(data[0]!="error"){
+                            $('#comment'+commentId).remove();
+                        } 
+                        else
+                        {
+                            alert(data[1]);
+                        }
+                    });
+          
+        }
+
 
         //komentarze
         $(document).ready(function () {
@@ -273,7 +291,7 @@
                       $("#comments").prepend(commentNode);
                       //  $("#comments").prepend('<div class="album-comment">\n<h1><a name=comment'+data.Id+' href ="'+ data.Link + '" > ' + data.UserName + ' </a>'
                       //  +data.Date+'</h1>\n'+  data.Body+'</div>');
-                      
+                       commentNode.find('span[action="delete"]').click(deleteCommentFunction);
                         $("#submit").attr("class","btn btn-primary");
                         $("#submit").removeAttr("disabled");
                         $("#submit").html("Add comment");

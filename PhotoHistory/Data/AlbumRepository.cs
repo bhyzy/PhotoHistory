@@ -54,17 +54,32 @@ namespace PhotoHistory.Data
             catch (Exception ex) { }
         }
 
-        public CommentModel GetComment(int id)
+        public CommentModel GetComment(int id, bool withAlbum = false, bool withUser=false)
         {
             using (var session = GetSession())
             {
                 CommentModel comment = session.CreateQuery("from CommentModel where Id = :id").SetParameter("id",id).UniqueResult<CommentModel>();
                 if (comment != null)
                 {
-                    comment.Album.User.ToString();
+                    if(withAlbum)
+                        comment.Album.User.ToString();
+                    if (withUser)
+                        comment.User.ToString();
                 }
                     
                 return comment;
+            }
+        }
+
+        public void deleteComment(CommentModel obj)
+        {
+            using (var session = GetSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(obj);
+                    transaction.Commit();
+                }
             }
         }
 

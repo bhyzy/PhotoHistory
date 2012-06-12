@@ -49,6 +49,8 @@ namespace PhotoHistory.Controllers
             AlbumRepository albumRepo = new AlbumRepository();
             AlbumModel[] albums = albumRepo.GetByCategory(catRepo.GetById(catId ?? model.Categories.First().Id), true, true, true, true, false).ToArray();
             model.PageCount = (int)Math.Ceiling(albums.Length / (double)maxItemsPerPage);
+            if (model.PageCount < 1)
+                model.PageCount = 1;
             if (nbr > model.PageCount)
                 nbr = model.PageCount;
             int start = (nbr - 1) * maxItemsPerPage;
@@ -475,7 +477,7 @@ namespace PhotoHistory.Controllers
         public ActionResult AcceptComment(int id)
         {
             AlbumRepository albums = new AlbumRepository();
-            CommentModel comment = albums.GetComment(id);
+            CommentModel comment = albums.GetComment(id,true);
             UserRepository users = new UserRepository();
             UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
             string[] response = new string[2];
@@ -498,12 +500,45 @@ namespace PhotoHistory.Controllers
             else
             {
                 response[0] = "error";
-                response[1] = "You need to be logged in to comment";
+                response[1] = "You need to be logged in to accept comments";
             }
 
             return Json(response);
         }
 
+
+        // AJAX: /Album/DeleteComment
+        [HttpPost]
+        public ActionResult DeleteComment(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            CommentModel comment = albums.GetComment(id,true,true);
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            string[] response = new string[2];
+
+            if (user != null)
+            {
+                if (comment.User.Id == user.Id || comment.Album.User.Id == user.Id) //usuwac moze wlasciciel albumu lub komentarza
+                {
+                    response[0] = "ok";
+                    response[1] = "";
+                    albums.deleteComment(comment);
+                }
+                else
+                {
+                    response[0] = "error";
+                    response[1] = "You are not allowed to delete this comment.";
+                }
+            }
+            else
+            {
+                response[0] = "error";
+                response[1] = "You need to be logged in to delete comments";
+            }
+
+            return Json(response);
+        }
 
         // AJAX: /Album/Comment
         [HttpPost]
