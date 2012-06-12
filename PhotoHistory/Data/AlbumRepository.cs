@@ -54,6 +54,20 @@ namespace PhotoHistory.Data
             catch (Exception ex) { }
         }
 
+        public CommentModel GetComment(int id)
+        {
+            using (var session = GetSession())
+            {
+                CommentModel comment = session.CreateQuery("from CommentModel where Id = :id").SetParameter("id",id).UniqueResult<CommentModel>();
+                if (comment != null)
+                {
+                    comment.Album.User.ToString();
+                }
+                    
+                return comment;
+            }
+        }
+
         public bool AddComment(CommentModel comment)
         {
             if (string.IsNullOrEmpty(comment.Body))
@@ -307,6 +321,18 @@ namespace PhotoHistory.Data
             return GetById(id, true, true, true, true, true, true);
             // return album;
             //}
+        }
+
+        public void Update(CommentModel obj)
+        {
+            using (var session = GetSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(obj);
+                    transaction.Commit();
+                }
+            }
         }
 
         public override void Update(AlbumModel obj)

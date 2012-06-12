@@ -223,6 +223,26 @@
             });
         });
 
+        //moderacja komentarza
+        $(document).ready(function() {
+            $('span[action="accept"]').click(function() {
+                var commentId = $(this).attr("comment");
+                $.post("/Album/AcceptComment", { "id": commentId},
+                    function (data) {
+                        if(data[0]!="error"){
+                            $('#comment'+commentId).removeClass("comment-pending-moderation");
+                            var span= $('span[comment="'+commentId+'"]').filter('span[action="accept"]');
+                            span.remove();
+                        } 
+                        else
+                        {
+                            alert(data[1]);
+                        }
+                    });
+            });
+        
+        });
+
         //komentarze
         $(document).ready(function () {
             $("#submit").click(function () {
@@ -231,18 +251,29 @@
                         alert("Your comment can't be empty");
                         return false;
                     }
-                    // Perform the ajax post
+                    
                     $("#submit").attr("class","btn btn-primary disabled");
                     $("#submit").attr("disabled","disabled");
                     $("#submit").html("Please wait");
-
+                    // Perform the ajax post
                     $.post("/Album/Comment", { "id": @Model.Id, "comment" :val },
                     function (data) {
                         if(data.Body!=null){
                         $("#empty").remove();
                         $("#comment-body").val('');
-                        $("#comments").prepend('<div class="album-comment">\n<h1><a name=comment'+data.Id+' href ="'+ data.Link + '" > ' + data.UserName + ' </a>'
-                        +data.Date+'</h1>\n'+  data.Body+'</div>');
+
+                        var commentNode = $('<div></div>').addClass('album-comment').attr('id','comment'+data.Id);
+                        if(!data.Accepted)
+                            commentNode.addClass('comment-pending-moderation');
+                        commentNode.prepend('<h1><a name="comment'+data.Id+'" href ="'+ data.Link + '"> ' + data.UserName + ' </a>' + data.Date +'<span class="comment-control">'+
+                        
+                        ' <span class="comment-admin label label-important" action="delete" comment="'+ data.Id + '" >'+
+                                         '<i class="icon-remove icon-white"></i> </span></span></h1>\n'+data.Body);
+ 
+                      $("#comments").prepend(commentNode);
+                      //  $("#comments").prepend('<div class="album-comment">\n<h1><a name=comment'+data.Id+' href ="'+ data.Link + '" > ' + data.UserName + ' </a>'
+                      //  +data.Date+'</h1>\n'+  data.Body+'</div>');
+                      
                         $("#submit").attr("class","btn btn-primary");
                         $("#submit").removeAttr("disabled");
                         $("#submit").html("Add comment");

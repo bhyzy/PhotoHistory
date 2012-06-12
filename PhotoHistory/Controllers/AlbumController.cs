@@ -470,6 +470,41 @@ namespace PhotoHistory.Controllers
             return Json(response);
         }
 
+        // AJAX: /Album/AcceptComment
+        [HttpPost]
+        public ActionResult AcceptComment(int id)
+        {
+            AlbumRepository albums = new AlbumRepository();
+            CommentModel comment = albums.GetComment(id);
+            UserRepository users = new UserRepository();
+            UserModel user = users.GetByUsername(HttpContext.User.Identity.Name);
+            string[] response = new string[2];
+
+            if (user != null)
+            {
+                if (comment.Album.User.Id == user.Id) //ok
+                {
+                    response[0] = "ok";
+                    response[1] = "";
+                    comment.Accepted = true;
+                    albums.Update(comment);
+                }
+                else 
+                {
+                    response[0] = "error";
+                    response[1] = "You are not allowed to accept this comment.";
+                }
+            }
+            else
+            {
+                response[0] = "error";
+                response[1] = "You need to be logged in to comment";
+            }
+
+            return Json(response);
+        }
+
+
         // AJAX: /Album/Comment
         [HttpPost]
         public ActionResult Comment(int id, String comment)
@@ -495,16 +530,15 @@ namespace PhotoHistory.Controllers
 
             //Komentarze wlasciciela albumu sa automatycznie akceptowane, komentarze innego uzytkownika sa akceptowane 
             //jesli wylaczono opcje autoryzacji
-            model.Accepted = (album.User.Id == user.Id) || !album.CommentsAuth;
+            newComment.Accepted  = (album.User.Id == user.Id) || !album.CommentsAuth; 
             newComment.Body = comment;
             newComment.Date = model.Date.ToString("dd/MM/yyyy HH:mm:ss");
             newComment.UserName = user.Login;
-
             newComment.Link = @Url.Action("ViewProfile", "User", new { userName = model.User.Login });
 
+            model.Accepted = newComment.Accepted;
             if (user != null)
             {
-                //create vote if the user is logged in
                 if (albums.AddComment(model))
                 {
                     newComment.Id = model.Id ?? 1;
