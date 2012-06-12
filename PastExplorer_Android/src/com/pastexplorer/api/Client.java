@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,8 +24,8 @@ public class Client {
 	private String _password;
 	
 	public static final String API_SERVICE_HOST_HEADER = "localhost:3518";
-	//public static final String API_SERVICE_HOST_REAL = "192.168.1.13:5000";
-	public static final String API_SERVICE_HOST_REAL = "10.0.2.2:3518";
+	public static final String API_SERVICE_HOST_REAL = "172.16.1.2:5050";
+	//public static final String API_SERVICE_HOST_REAL = "10.0.2.2:3333";
 	public static final String API_SERVICE_URI = "http://" + API_SERVICE_HOST_REAL + "/api";
 	public static final String DEBUG_TAG = "PE Client";
 
@@ -117,7 +118,10 @@ public class Client {
 			query.put("AlbumID", albumId);
 			query.put("Date", date.toGMTString());	
 			query.put("Description", description);
+			Log.d(DEBUG_TAG, "encoding photo bytes with Base64");
 			query.put("Image", Base64.encodeToString(photoData, Base64.DEFAULT));
+			//query.put("Image", Base64.encodeToString(new byte[] { 1, 2, 3, 4, 5 }, Base64.DEFAULT));
+			Log.d(DEBUG_TAG, "encoded");
 			
 			// prepare query string
 			String queryString = query.toString();
@@ -154,8 +158,8 @@ public class Client {
 	private String buildServiceQuery(String resource, String action, String id) throws Exception {
 		if (resource == null)
 			throw new NullPointerException("resource is missing");
-		if (action == null && id == null)
-			throw new Exception("either action or id has to be specified");
+		//if (action == null && id == null)
+		//	throw new Exception("either action or id has to be specified");
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(API_SERVICE_URI);
@@ -188,22 +192,35 @@ public class Client {
 		
 		// make and configure connection
 		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		connection.setRequestProperty("Connection", "Close");
 		connection.setUseCaches(false); 
 		connection.setConnectTimeout(5000);
 		connection.setAllowUserInteraction(false);
 		connection.setRequestProperty("User-Agent", "PastExplorer Android Application");
-		connection.setRequestProperty("Accept", "*/*");
+		//connection.setRequestProperty("Accept", "*/*");
 		connection.setRequestProperty("Host", API_SERVICE_HOST_HEADER);
-		connection.setRequestProperty("Authorization",
-				"Basic "+ Base64.encodeToString((_userName+":"+_password).getBytes(), Base64.DEFAULT));
+		connection.setRequestProperty("Authorization", 
+				"Basic "+ Base64.encodeToString((_userName + ":" + _password).getBytes(), Base64.DEFAULT).trim() );
 		
 		// send POST data if any
 		if (postData != null) {
 			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+			//connection.setRequestProperty("Accept-Encoding", "gzip");
+			connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+			connection.setRequestProperty("Content-Length", Integer.toString(postData.length()));
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 			writer.write(postData);
 			writer.flush();
+			writer.close();
 		}
+		
+//		for (Map.Entry<String, List<String> > entry : connection.getRequestProperties().entrySet()) {
+//			Log.d(DEBUG_TAG, entry.getKey());
+//			for (String keyVal : entry.getValue()) {
+//				Log.d(DEBUG_TAG, keyVal);
+//			}
+//		}
 
 		// establish connection
 		Log.d(DEBUG_TAG, "connecting...");
@@ -225,8 +242,7 @@ public class Client {
 			}
 
 			// retrieve result
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					connection.getInputStream(), "UTF-8"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = br.readLine()) != null) {

@@ -77,7 +77,7 @@ namespace PhotoHistory.API.Controllers
 			// photo.Date: can't be set in the future
 			if ( photo.Date == null )
 				throw new Exception( "date of the photo hasn't been specified" );
-			if ( photo.Date > DateTime.Today )
+			if ( photo.Date > DateTime.Now )
 				throw new Exception( "date of the photo can't be set in the future" );
 
 			// photo.Description: can't be longer than 1000 characters
@@ -88,7 +88,7 @@ namespace PhotoHistory.API.Controllers
 			Image image;
 			try
 			{
-				image = ApiHelpers.Base64ToImage( photo.Image );
+				image = ApiHelpers.Base64ToImage( photo.Image.Replace("\n", "") );
 			}
 			catch (System.Exception ex)
 			{
