@@ -56,7 +56,7 @@ namespace PhotoHistory
             UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
             Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
             string link = string.Format( "{0}://{1}", requestUrl.Scheme, requestUrl.Authority);
-            //Scheduler.SchedulerManager.InitScheduler(link); scheduler wylaczony
+            Scheduler.SchedulerManager.InitScheduler(link); //scheduler wylaczony
         }
 	}
 }

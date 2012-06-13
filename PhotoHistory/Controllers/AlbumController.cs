@@ -263,7 +263,7 @@ namespace PhotoHistory.Controllers
                     session.Dispose();
                 ModelState.AddModelError("FileInput", ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 if (transaction != null)
                 {

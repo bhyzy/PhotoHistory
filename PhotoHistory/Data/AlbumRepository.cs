@@ -51,7 +51,7 @@ namespace PhotoHistory.Data
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
 
         public CommentModel GetComment(int id, bool withAlbum = false, bool withUser=false)
@@ -99,7 +99,7 @@ namespace PhotoHistory.Data
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return false;
             }

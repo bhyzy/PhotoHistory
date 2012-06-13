@@ -43,7 +43,6 @@ namespace PhotoHistory.Scheduler
                         string body = string.Format("Hello {0},</br>It's time to add new photo to your album <a href='{1}'>{2}</a>",
                             album.User.Login,link,album.Name);
                         Helpers.SendEmailContextFree(album.User.Email, "Photo notification", body);
-                        System.Diagnostics.Debug.WriteLine("Sending email");
                     }
                 
                 }

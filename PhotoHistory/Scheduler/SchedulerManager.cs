@@ -12,31 +12,37 @@ namespace PhotoHistory.Scheduler
 {
     public static class SchedulerManager
     {
-        private static IScheduler Scheduler {get; set; }
+        private static IScheduler Scheduler { get; set; }
         private static String rootPath;
 
-
-
-        public static void InitScheduler(String link){
+        public static void InitScheduler(String link)
+        {
             if (rootPath != null)
                 return;
             rootPath = link;
-          ISchedulerFactory schedFact = new StdSchedulerFactory();
+            ISchedulerFactory schedFact = new StdSchedulerFactory();
             Scheduler = schedFact.GetScheduler();
             Scheduler.Start();
             IJobDetail jobDetail = JobBuilder.Create<PhotoNotifyJob>().WithIdentity("PhotoNotificationJob").Build();
             jobDetail.JobDataMap.Add("path", rootPath);
+            //Wystartuj jak najwczesniej, o godzinie 2:00 rano
+            DateTime startAt = DateTime.Today;
+
+            startAt = startAt.AddHours(2);
+            if (startAt < DateTime.Now) //jesli juz minela godzina 2, wystartuj nastepnego dnia
+                startAt = startAt.AddDays(1);
+
             ITrigger trigger2 = (ISimpleTrigger)TriggerBuilder.Create()
                                            .WithIdentity("trigger")
-                                           .StartAt(DateTime.Now.AddSeconds(10)) // wystartuj scheduler 10s
-                                           //.WithSimpleSchedule(x => x.WithIntervalInSeconds(30).RepeatForever())
-                                           .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()) //dla testow interwal 1h, ma byc 24
+                                           .StartAt(startAt) // wystartuj scheduler o zadanej godzinie
+                                           .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()) //odpalaj notyfikacje co 24h, bez limitu powtorzen
                                            .Build();
             DateTimeOffset ft = Scheduler.ScheduleJob(jobDetail, trigger2);
             System.Diagnostics.Debug.WriteLine(jobDetail.Key + " has been scheduled to run at: " + ft);
         }
 
-        public static IScheduler getScheduler(){
+        public static IScheduler getScheduler()
+        {
             return Scheduler;
         }
 
