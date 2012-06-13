@@ -468,7 +468,7 @@ h1.page-title, .page-title a, h2.album-author, h2.page-section {
 #album-footer {
 	/* background: hsl(100,50%,90%); */
 	margin-top: 10px;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 #album-desc {
 	/* background: hsl(140,50%,90%); */
@@ -557,6 +557,12 @@ div.comment-pending-moderation:hover
 
 h2.album-author {
 	font-size: 14px;
+}
+
+h2.followers
+{
+    font-size: 18px;
+    color: #000000;
 }
 .input-xxlarge {
   width: 430px;

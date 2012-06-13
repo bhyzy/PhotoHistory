@@ -39,6 +39,7 @@
             by <a href="@Url.Action("ViewProfile", "User", new { userName = Model.User.Login })">@Model.User.Login</a></h2>
     </div>
 
+
     <!-- SLIDESHOW -->
     @if (Model.Photos.Count() >= 3)
     {
@@ -116,7 +117,17 @@
                 Rating: <span class="album-rating">@Model.getRating()</span> <a class="vote" data-up="true"
                     href="#"><span class="label label-success">+1</span></a> <a class="vote" data-up="false"
                         href="#"><span class="label label-important">-1</span></a>
-            </div>
+            </div></br>
+                <div class="album-followers">
+        @if (Model.Followers.Count > 0)
+        {
+            <h2 class="followers">Followers:</h2>
+                foreach (PhotoHistory.Models.UserModel user in Model.Followers)
+                {
+                <a href="@Url.Action("ViewProfile", "User", new { userName = user.Login }) ">@user.Login</a><span>, </span>
+                }
+        }
+    </div>
         </div>
         <div id="album-comments">
             
