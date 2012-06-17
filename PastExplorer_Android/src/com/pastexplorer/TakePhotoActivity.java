@@ -1,10 +1,9 @@
 package com.pastexplorer;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import pastexplorer.util.StackTraceUtil;
+import pastexplorer.util.StorageUtil;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +29,7 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 	
 	private PowerManager.WakeLock mWakeLock;
 	
-   private PhotoPreview mPreview;
+	private PhotoPreview mPreview;
     Camera mCamera;
     int numberOfCameras;
     int cameraCurrentlyLocked;
@@ -45,10 +44,15 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
     private Bitmap mTakenPhoto = null;
     
     private boolean mTakingPhoto;
+    
+    private int mAlbumId;
+    private Bitmap mLastPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        mAlbumId = getIntent().getExtras().getInt("album_id");
 
         // Hide the window title.
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -91,6 +95,18 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
         mWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
         
         mTakingPhoto = true;
+        
+        // read last photo thumbnail bitmap
+        if (getIntent().getExtras().containsKey("last_photo")) {
+            try {
+				mLastPhoto = StorageUtil.loadBitmapFromPrivateStorage(this, getIntent().getExtras().getString("last_photo"));
+			} catch (IOException e) {
+				Log.e(DEBUG_TAG, "failed to load last photo bitmap from private storage: " + e);
+			}
+        }
+        else {
+        	mLastPhoto = null;
+        }
     }
 
     @Override
@@ -141,11 +157,12 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 		case R.id.confirm_photo:
 			Intent intent = new Intent(this, UploadPhotoActivity.class);
 			try {
-				intent.putExtra("photo", saveBitmapToPrivateStorage(mTakenPhoto));
+				intent.putExtra("photo", StorageUtil.saveBitmapToPrivateStorage(this, mTakenPhoto));
 			} catch (IOException e) {
 				Log.e(DEBUG_TAG, "failed to save photo bitmap to private internal storage: " 
 						+ StackTraceUtil.getStackTrace(e));
 			}
+			intent.putExtra("album_id", mAlbumId);
 			startActivity(intent);
 			break;
 		case R.id.retake_photo:
@@ -155,24 +172,19 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 		}
 	};
 	
-	private String saveBitmapToPrivateStorage(Bitmap bitmap) throws IOException {
-		final String FILENAME = "tmp";
-		FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
-		fos.flush();
-		fos.close();
-		return FILENAME;
-	}
-	
 	private void prepareToTakePhoto() {
 		mTakePhotoButton.setVisibility(View.VISIBLE);
 		mConfirmPhotoButton.setVisibility(View.GONE);
 		mRetakePhotoButton.setVisibility(View.GONE);
 		
 		if (mImage != null) {
-			// TODO: set last photo overlay
-			mImage.setImageResource(R.drawable.photo);
-	    	mImage.setAlpha(130);
+			if (mLastPhoto != null) {
+				mImage.setImageBitmap(mLastPhoto);
+	    		mImage.setAlpha(130);
+			}
+			else {
+				mImage.setImageBitmap(null);
+			}
 		}
 
         mWakeLock.acquire();
@@ -210,83 +222,6 @@ public class TakePhotoActivity extends Activity implements OnClickListener {
 			}
 		});	
 	}
-	
-//	  private class SavePhotoTask extends AsyncTask<byte[], String, String> {
-//	    @Override
-//	    protected String doInBackground(byte[]... jpeg) {
-//	    	Log.d(DEBUG_TAG, "Storing photo...");
-//	    	
-//	      File photo=
-//	          new File(Environment.getExternalStorageDirectory(), "photo.jpg");
-//
-//	      if (photo.exists()) {
-//	    	  Log.d(DEBUG_TAG, "Deleting existing photo");
-//	        photo.delete();
-//	      }
-//
-//	      try {
-//	        FileOutputStream fos=new FileOutputStream(photo.getPath());
-//
-//	        fos.write(jpeg[0]);
-//	        fos.close();
-//	        Log.d(DEBUG_TAG, "Photo saved");
-//	      }
-//	      catch (java.io.IOException e) {
-//	        Log.e(DEBUG_TAG, "Exception in photoCallback", e);
-//	      }
-//
-//	      return(null);
-//	    }
-//	  }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        // Inflate our menu which can gather user input for switching camera
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.camera_menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        switch (item.getItemId()) {
-//        case R.id.switch_cam:
-//            // check for availability of multiple cameras
-//            if (numberOfCameras == 1) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                builder.setMessage(this.getString(R.string.camera_alert))
-//                       .setNeutralButton("Close", null);
-//                AlertDialog alert = builder.create();
-//                alert.show();
-//                return true;
-//            }
-//
-//            // OK, we have multiple cameras.
-//            // Release this camera -> cameraCurrentlyLocked
-//            if (mCamera != null) {
-//                mCamera.stopPreview();
-//                mPreview.setCamera(null);
-//                mCamera.release();
-//                mCamera = null;
-//            }
-//
-//            // Acquire the next camera and request Preview to reconfigure
-//            // parameters.
-//            mCamera = Camera
-//                    .open((cameraCurrentlyLocked + 1) % numberOfCameras);
-//            cameraCurrentlyLocked = (cameraCurrentlyLocked + 1)
-//                    % numberOfCameras;
-//            mPreview.switchCamera(mCamera);
-//
-//            // Start the preview
-//            mCamera.startPreview();
-//            return true;
-//        default:
-//            return super.onOptionsItemSelected(item);
-//        }
-//    }
 	
 
 }

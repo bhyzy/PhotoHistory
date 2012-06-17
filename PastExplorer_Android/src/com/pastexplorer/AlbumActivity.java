@@ -1,9 +1,11 @@
 package com.pastexplorer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import pastexplorer.util.HttpUtil;
 import pastexplorer.util.StackTraceUtil;
+import pastexplorer.util.StorageUtil;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,8 +14,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -69,6 +71,15 @@ public class AlbumActivity extends Activity implements OnClickListener {
     	case R.id.add_photo:
     		Log.d(DEBUG_TAG, "onClick add_photo");
     		Intent intent = new Intent(this, TakePhotoActivity.class);
+    		intent.putExtra("album_id", _albumID);
+    		if (!_photos.isEmpty()) {
+    			try {
+					intent.putExtra("last_photo", 
+							StorageUtil.saveBitmapToPrivateStorage(this, _photos.get(_photos.size() - 1).thumbnail));
+				} catch (IOException e) {
+					Log.e(DEBUG_TAG, "failed to send last photo thumbnail to TakePhotoActivity: " + e);
+				}
+    		}
     		startActivity(intent);
     		break;
     	}

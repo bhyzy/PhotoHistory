@@ -22,5 +22,8 @@
     <string name="add_photo">Add photo</string>
     <string name="take_photo">Take photo!</string>
     <string name="retake_photo">Retake photo</string>
+    <string name="upload_ok">Upload successful</string>
+    <string name="upload_error">Upload error</string>
+    <string name="upload_ok_msg">Photo has been uploaded successfully!</string>
 
 </resources>
