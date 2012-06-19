@@ -9,3 +9,5 @@ PhotoHistory.Data/[Oo]bj/
 PhotoHistory/Users
 PastExplorer_Android/bin
 PastExplorer_Android/gen
+*.tmp
+~$*.docx
