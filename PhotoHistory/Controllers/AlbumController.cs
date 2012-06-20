@@ -657,10 +657,9 @@ namespace PhotoHistory.Controllers
                 System.DateTime today = System.DateTime.Now;
                 try
                 {
-                    int tmp = Int32.Parse(Request["MyNotificationPeriod"]);
+                    int tmp = Int32.Parse(Request["NotificationPeriod"]);
                     System.DateTime answer = today.AddDays(tmp);
                     album.NextNotification = answer;
-                    album.NotificationPeriod = tmp;
                 }
                 catch (Exception)
                 {
@@ -671,7 +670,8 @@ namespace PhotoHistory.Controllers
             {
                 album.NextNotification = null;
                 album.NotificationPeriod = null;
-                
+                ModelState.Clear(); //clear errors
+                TryValidateModel(album); //revalidate
             }
         }
 
