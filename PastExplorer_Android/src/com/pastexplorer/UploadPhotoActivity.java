@@ -167,38 +167,12 @@ public class UploadPhotoActivity extends Activity {
 			photoData = null;
 		}
 
-		// final int bufferSize = mPhoto.getRowBytes() * mPhoto.getHeight();
-		// Log.d(DEBUG_TAG, "allocating buffer of size " + bufferSize);
-		// ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
-		// Log.d(DEBUG_TAG, "allocated, copying...");
-		// mPhoto.copyPixelsToBuffer(buffer);
-		// Log.d(DEBUG_TAG, "copied");
-		// photoData = buffer.array();
-
-		//
-		File photo = new File(Environment.getExternalStorageDirectory(),
-				"test.jpg");
-
-		if (photo.exists()) {
-			Log.d(DEBUG_TAG, "Deleting existing photo");
-			photo.delete();
-		}
-
-		try {
-			FileOutputStream fos = new FileOutputStream(photo.getPath());
-			fos.write(photoData);
-			fos.close();
-			Log.d(DEBUG_TAG, "Photo saved");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		if (photoData != null) {
 			// upload photo
 			try {
 				Client client = User.createClient();
 				Log.d(DEBUG_TAG, "uploading photo");
-				client.uploadPhoto(photoData, mAlbumId, mPhotoDescription, mPhotoDate);
+				client.uploadPhoto(photoData, mAlbumId, mPhotoDescription, mPhotoDate, LocationProvider.instance().getBestLocation());
 				Log.d(DEBUG_TAG, "photo uploaded");
 				mUploadSuccessful = true;
 			} catch (APIException e) {

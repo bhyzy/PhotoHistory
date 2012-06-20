@@ -9,12 +9,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.location.Location;
 import android.util.Base64;
 import android.util.Log;
 
@@ -26,6 +26,7 @@ public class Client {
 	public static final String API_SERVICE_HOST_HEADER = "localhost:3518";
 	//public static final String API_SERVICE_HOST_REAL = "192.168.1.13:5000";
 	public static final String API_SERVICE_HOST_REAL = "172.16.1.2:5000";
+	//public static final String API_SERVICE_HOST_REAL = "91.189.20.232:5550";
 	//public static final String API_SERVICE_HOST_REAL = "10.0.2.2:3333";
 	public static final String API_SERVICE_URI = "http://" + API_SERVICE_HOST_REAL + "/api";
 	public static final String DEBUG_TAG = "PE Client";
@@ -112,7 +113,7 @@ public class Client {
 		}	
 	}
 	
-	public int uploadPhoto(byte[] photoData, int albumId, String description, Date date) throws APIException {
+	public int uploadPhoto(byte[] photoData, int albumId, String description, Date date, Location location) throws APIException {
 		try {
 			Log.d(DEBUG_TAG, "uploadPhoto date: " + date.toGMTString());
 			
@@ -121,6 +122,11 @@ public class Client {
 			query.put("AlbumID", albumId);
 			query.put("Date", date.toGMTString());	
 			query.put("Description", description);
+			if (location != null) {
+				query.put("LocationLatitude", Double.toString(location.getLatitude()));
+				query.put("LocationLongitude", Double.toString(location.getLongitude()));
+			}
+			Log.d(DEBUG_TAG, "uploadPhoto query string: " + query.toString());
 			Log.d(DEBUG_TAG, "encoding photo bytes with Base64");
 			query.put("Image", Base64.encodeToString(photoData, Base64.DEFAULT));
 			//query.put("Image", Base64.encodeToString(new byte[] { 1, 2, 3, 4, 5 }, Base64.DEFAULT));

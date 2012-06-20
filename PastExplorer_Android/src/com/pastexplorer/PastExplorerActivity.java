@@ -34,6 +34,9 @@ public class PastExplorerActivity extends Activity implements OnClickListener {
         
         _loginEditBox = (EditText)findViewById(R.id.login);
         _passwordEditBox = (EditText)findViewById(R.id.password);
+        
+        LocationProvider.createInstance(this);
+		LocationProvider.instance().startListening();
     }
     
     @Override
