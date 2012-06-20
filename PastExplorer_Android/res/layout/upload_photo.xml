@@ -38,7 +38,6 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="30dip"
-		        android:text="14-05-2012"
 		        android:textColor="#222222" />
 		    <Button
 		        android:id="@+id/dateChange"
@@ -64,7 +63,6 @@
 	        android:layout_marginTop="5dip"
 	        android:layout_weight="1"
 	        android:ems="10" 
-	        android:text="To jest tylko testowy opis. Ala ma kota Filemona :)"
 	        android:gravity="top" />
 	
 	    <Button

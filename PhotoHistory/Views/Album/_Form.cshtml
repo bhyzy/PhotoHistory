@@ -47,8 +47,8 @@
         </label>
         <!-- to nizej widoczne tylko jesli wybrano ENABLED (reminder aktywny) -->
         <div class="well" style="@( Model != null && Model.NotificationPeriod != null ? "" : "display:none;")" id="number_of_days"  >
-            Remind me every            
-            <input id="MyNotificationPeriod" name="MyNotificationPeriod" type="text" autocomplete="off">
+            Remind me every                        
+            @Html.TextBox("NotificationPeriod", null, new { autocomplete = "off" })
             days
         </div>
         @Html.MyValidationMessage("NotificationPeriod")

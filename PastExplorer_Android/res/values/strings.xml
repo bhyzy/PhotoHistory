@@ -26,5 +26,6 @@
     <string name="upload_error">Upload error</string>
     <string name="upload_ok_msg">Photo has been uploaded successfully!</string>
     <string name="dashboard_header">Your albums</string>
+    <string name="signing_in">Signing in &#8230;</string>
 
 </resources>

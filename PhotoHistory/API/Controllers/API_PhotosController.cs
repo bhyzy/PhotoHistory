@@ -68,7 +68,7 @@ namespace PhotoHistory.API.Controllers
 
 			// photo.AlbumID: album has to exist, has to be owned by authenticated user
 			AlbumRepository albums = new AlbumRepository();
-			AlbumModel album = albums.GetById( photo.AlbumID, withUser: true );
+			AlbumModel album = albums.GetById( photo.AlbumID, withUser: true, withFollowers: true );
 			if ( album == null )
 				throw new Exception( "album with specified ID not found" );
 			if ( album.User != authUser )
@@ -126,8 +126,16 @@ namespace PhotoHistory.API.Controllers
 					throw new Exception( "failed to save the image to the file system" );
 
 				// try to read GPS localization data
-				locLatitude = image.GPSLatitude();
-				locLongitude = image.GPSLongitude();
+                if (photo.LocationLatitude.HasValue && photo.LocationLongitude.HasValue)
+                {
+                    locLatitude = photo.LocationLatitude;
+                    locLongitude = photo.LocationLongitude;
+                }
+                else
+                {
+                    locLatitude = image.GPSLatitude();
+                    locLongitude = image.GPSLongitude();
+                }
 			}
 
 			// create photo entity
@@ -154,6 +162,8 @@ namespace PhotoHistory.API.Controllers
 				// TODO: delete both the image and its thumbnail from the file system
 				throw new Exception( "failed to save the photo to the database: " + ex.Message );
 			}
+
+            Helpers.NotifyAlbumObservers(newPhoto.Album);
 			
 			// return result
 			return Json( new

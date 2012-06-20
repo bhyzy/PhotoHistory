@@ -43,6 +43,11 @@ public class DashboardActivity extends ListActivity {
 		_albums = new ArrayList<AlbumWithThumbnail>();
 		_adapter = new AlbumAdapter(this, R.layout.album_item, _albums);
 		setListAdapter(_adapter);
+	}
+	
+	@Override 
+	protected void onResume() {
+		super.onResume();
 		
         Thread thread = new Thread(null, new Runnable() {
 			public void run() {
@@ -53,7 +58,7 @@ public class DashboardActivity extends ListActivity {
 		_progressDialog = ProgressDialog.show(this,
 				getString(R.string.pleaseWait),
 				getString(R.string.retrievingAlbums), 
-				true, true);
+				true, true);		
 	}
 
 	@Override
@@ -123,6 +128,7 @@ public class DashboardActivity extends ListActivity {
 		public void run() {
 			if (_albums != null && _albums.size() > 0) {
 				_adapter.notifyDataSetChanged();
+				_adapter.clear();
 				for (AlbumWithThumbnail album : _albums)
 					_adapter.add(album);
 			}
