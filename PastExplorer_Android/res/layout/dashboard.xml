@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:orientation="vertical"
-   android:layout_width="fill_parent"
-   android:layout_height="fill_parent" >
-   
-	<ListView
-	    android:id="@+id/android:list"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent" />
-	<TextView
-	    android:id="@+id/android:empty"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:text="@string/dashboardNoAlbums" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+ 
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="horizontal"
+		android:background="@drawable/bgtile" />
 	
-</LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	   android:orientation="vertical"
+	   android:layout_width="fill_parent"
+	   android:layout_height="fill_parent" >
+	   
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/dashboard_header"
+	        android:textColor="#ffffff"
+	        android:padding="10dip"
+	        android:textSize="30sp"
+	        android:typeface="normal"
+	        android:shadowColor="#000000"
+	        android:shadowDx="1.2"
+	        android:shadowDy="1.2"
+	        android:shadowRadius="2.0" />
+	   
+		<ListView
+		    android:id="@+id/android:list"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" 
+		    android:background="#00000000"
+			android:cacheColorHint="#00000000" />
+		<TextView
+		    android:id="@+id/android:empty"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:text="@string/dashboardNoAlbums"
+		    android:padding="10dip"
+		    android:textSize="20dip" />	
+		
+	</LinearLayout>    
+    
+</FrameLayout>

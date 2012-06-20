@@ -48,7 +48,17 @@ public class AlbumActivity extends Activity implements OnClickListener {
         
     	Bundle extras = getIntent().getExtras();
     	_albumID = extras.getInt("album_id");
-        
+    	
+    	Client client;
+		try {
+			client = User.createClient();
+			_albumInfo = client.getAlbum(_albumID);
+			updateAlbumData();
+		} catch (APIException e) {
+			Log.d(DEBUG_TAG, "failed to get album info for album " + _albumID + ": " + e);
+			_albumInfo = null;
+		}
+    	    
     	_photos = new ArrayList<PhotoWithThumbnail>();
     	_adapter = new PhotoAdapter(this, _photos);
 		GridView photosGridView = (GridView) findViewById(R.id.photos);
@@ -64,6 +74,7 @@ public class AlbumActivity extends Activity implements OnClickListener {
 				getString(R.string.pleaseWait),
 				getString(R.string.retrievingPhotos), 
 				true, true);
+		_progressDialog.setCancelable(false);
     }
     
     public void onClick(View v) {
@@ -91,8 +102,7 @@ public class AlbumActivity extends Activity implements OnClickListener {
 			_photos.clear();
 			
 			Client client = User.createClient();
-			_albumInfo = client.getAlbum(_albumID);
-			
+				
 			for (int photoId : _albumInfo.photos) {
 				PhotoWithThumbnail photoItem = new PhotoWithThumbnail();
 				photoItem.photo = client.getPhoto(photoId);
@@ -118,29 +128,33 @@ public class AlbumActivity extends Activity implements OnClickListener {
 		runOnUiThread(_updateAlbumContent);
 	}
 	
+	private void updateAlbumData() {
+		TextView nameLabel = (TextView)findViewById(R.id.name);
+		TextView descriptionLabel = (TextView)findViewById(R.id.description);
+		TextView photosLabel = (TextView)findViewById(R.id.noPhotos);
+		TextView viewsLabel = (TextView)findViewById(R.id.views);
+		TextView ratingLabel = (TextView)findViewById(R.id.rating);
+		
+		if (nameLabel != null) {
+			nameLabel.setText(_albumInfo.name);
+		}
+		if (descriptionLabel != null) {
+			descriptionLabel.setText(_albumInfo.description);
+		}
+		if (photosLabel != null) {
+			photosLabel.setText( _albumInfo.photos.size() + " " + getString(R.string.albumItemPhotos) );
+		}
+		if (viewsLabel != null) {
+			viewsLabel.setText( getString(R.string.albumItemViews) + " " + _albumInfo.views );
+		}
+		if (ratingLabel != null) {
+			ratingLabel.setText( getString(R.string.albumItemRating) + " " + _albumInfo.rating );
+		}
+	}
+
 	private Runnable _updateAlbumContent = new Runnable() {
 		public void run() {
-			TextView nameLabel = (TextView)findViewById(R.id.name);
-			TextView descriptionLabel = (TextView)findViewById(R.id.description);
-			TextView photosLabel = (TextView)findViewById(R.id.noPhotos);
-			TextView viewsLabel = (TextView)findViewById(R.id.views);
-			TextView ratingLabel = (TextView)findViewById(R.id.rating);
-			
-			if (nameLabel != null) {
-				nameLabel.setText(_albumInfo.name);
-			}
-			if (descriptionLabel != null) {
-				descriptionLabel.setText(_albumInfo.description);
-			}
-			if (photosLabel != null) {
-				photosLabel.setText( getString(R.string.albumItemPhotos) + " " + _albumInfo.photos.size() );
-			}
-			if (viewsLabel != null) {
-				viewsLabel.setText( getString(R.string.albumItemViews) + " " + _albumInfo.views );
-			}
-			if (ratingLabel != null) {
-				ratingLabel.setText( getString(R.string.albumItemRating) + " " + _albumInfo.rating );
-			}
+			updateAlbumData();
 			
 			_adapter.notifyDataSetChanged();
 			_progressDialog.dismiss();
@@ -172,8 +186,8 @@ public class AlbumActivity extends Activity implements OnClickListener {
             ImageView imageView;
             if (convertView == null) {
                 imageView = new ImageView(_context);
-                //imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+               // imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //imageView.setPadding(8, 8, 8, 8);
             } else {
                 imageView = (ImageView) convertView;

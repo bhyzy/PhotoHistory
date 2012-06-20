@@ -46,8 +46,8 @@ public class PastExplorerActivity extends Activity implements OnClickListener {
 			Log.e(DEBUG_TAG, StackTraceUtil.getStackTrace(e));
 		}
        }
-       _loginEditBox.setText("");
-       _passwordEditBox.setText("");
+       _loginEditBox.setText("BH");
+       _passwordEditBox.setText("qwe");
        _loginEditBox.requestFocus();
     }
 

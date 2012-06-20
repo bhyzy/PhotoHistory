@@ -224,6 +224,7 @@ public class UploadPhotoActivity extends Activity {
 				   }
 				});
 				alertDialog.setIcon( mUploadSuccessful ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert );
+				alertDialog.setCancelable(false);
 				alertDialog.show();
 			}
 		});

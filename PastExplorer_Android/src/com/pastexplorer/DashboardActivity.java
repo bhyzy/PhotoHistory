@@ -70,6 +70,7 @@ public class DashboardActivity extends ListActivity {
 							}
 						})
 				.setNegativeButton(android.R.string.no, null)
+				.setCancelable(false)
 				.show();
 	}
 	
@@ -150,26 +151,14 @@ public class DashboardActivity extends ListActivity {
 			if (a != null) {
 				
 				TextView nameLabel = (TextView) v.findViewById(R.id.name);
-				TextView descriptionLabel = (TextView) v.findViewById(R.id.description);
 				TextView photosLabel = (TextView) v.findViewById(R.id.noPhotos);
-				TextView viewsLabel = (TextView) v.findViewById(R.id.views);
-				TextView ratingLabel = (TextView) v.findViewById(R.id.rating);
 				ImageView thumbnailImage = (ImageView) v.findViewById(R.id.thumbnail);
 				
 				if (nameLabel != null) {
 					nameLabel.setText(a.album.name);
 				}
-				if (descriptionLabel != null) {
-					descriptionLabel.setText(a.album.description);
-				}
 				if (photosLabel != null) {
-					photosLabel.setText( getString(R.string.albumItemPhotos) + " " + a.album.photos.size() );
-				}
-				if (viewsLabel != null) {
-					viewsLabel.setText( getString(R.string.albumItemViews) + " " + a.album.views );
-				}
-				if (ratingLabel != null) {
-					ratingLabel.setText( getString(R.string.albumItemRating) + " " + a.album.rating );
+					photosLabel.setText( a.album.photos.size() + " " + getString(R.string.albumItemPhotos) );
 				}
 				if (thumbnailImage != null && a.thumbnail != null) {
 					thumbnailImage.setImageBitmap(a.thumbnail);

@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="5dip" >
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Album name" />
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Album description. To jest tylko test. Elo elo. Album description. To jest tylko test. dkqwpo dkqwpod kqwpod kqwpod qwk. Elo elo. Album description. To jest tylko test. Elo elo."
-        android:singleLine="false" />
-        
-    <TextView android:id="@+id/noPhotos"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/albumItemPhotos" />
-    <TextView android:id="@+id/views"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/albumItemViews" />
-    <TextView android:id="@+id/rating"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/albumItemRating" />
+    android:layout_height="fill_parent" >
     
-    <Button android:id="@+id/add_photo"
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="horizontal"
+		android:background="@drawable/bgtile" />
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical"
+	    android:padding="5dip" >
+	
+	    <TextView
+	        android:id="@+id/name"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="@string/add_photo" />
-    
-    <GridView android:id="@+id/photos"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="fill_parent"
-	    android:columnWidth="100dip"
-	    android:numColumns="auto_fit"
-	    android:verticalSpacing="0dip"
-	    android:horizontalSpacing="0dip"
-	    android:stretchMode="columnWidth"
-	    android:gravity="center" />
-    
-</LinearLayout>
+	        android:text=""
+	        android:textSize="20sp"
+	        android:textColor="#ffffff" />
+	
+	    <TextView
+	        android:id="@+id/description"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:singleLine="false"
+	        android:textColor="#eeeeee" />
+	        
+	    <TextView android:id="@+id/noPhotos"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#dddddd"
+	        android:layout_marginTop="5dip" />
+	    <TextView android:id="@+id/views"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#dddddd" />
+	    <TextView android:id="@+id/rating"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#dddddd" />
+	    
+	    <Button android:id="@+id/add_photo"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/add_photo"
+		        android:layout_marginTop="5dip" />
+	    
+	    <GridView android:id="@+id/photos"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="fill_parent"
+		    android:columnWidth="100dip"
+		    android:numColumns="auto_fit"
+		    android:verticalSpacing="0dip"
+		    android:horizontalSpacing="0dip"
+		    android:stretchMode="columnWidth"
+		    android:gravity="center"
+			android:background="#00000000"
+			android:cacheColorHint="#00000000" />
+	    
+	</LinearLayout>
+	
+</FrameLayout>
