@@ -47,8 +47,8 @@
         </label>
         <!-- to nizej widoczne tylko jesli wybrano ENABLED (reminder aktywny) -->
         <div class="well" style="@( Model != null && Model.NotificationPeriod != null ? "" : "display:none;")" id="number_of_days"  >
-            Remind me every
-            @Html.TextBox("NotificationPeriod")
+            Remind me every                        
+            @Html.TextBox("NotificationPeriod", null, new { autocomplete = "off" })
             days
         </div>
         @Html.MyValidationMessage("NotificationPeriod")
@@ -74,7 +74,7 @@
                     <input name="privateMode" value="password" @(( (Model!=null &&Model.Password != null) || Request["privateMode"] == "password") ? "checked=\"checked\"" : "")  type="radio">
                     Protect by password
                 </label>
-                @Html.PasswordFor(model => Model.Password)
+                <input id="Password" name="Password" type="password" autocomplete="off" >
                 @Html.MyValidationMessage("Password")
             </div>
             <!-- to nizej widoczne tylko jesli wybrano dostep przez liste uztywkonikow -->
