@@ -14,10 +14,10 @@ namespace PhotoHistory.Common
     {
         public static void InitializeBuild()
         {
-			  //ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
-			  //CreateUsers();
-			  //CreateCategories();
-			  //CreateAlbums();
+			 // ExecuteSQLFile( "PhotoHistory.sql.create_tables.sql" );
+			 // CreateUsers();
+			 // CreateCategories();
+			 //CreateAlbums();
         }
 
         private static void CreateAlbums()
@@ -245,7 +245,7 @@ namespace PhotoHistory.Common
                 Email = "qbajas@gmail.com",
                 ActivationCode = null,
                 DateOfBirth = new DateTime(1989,5,5),
-                About = " ksadjolkrewjof jlksajflkjrwelkfmslk ajfsaljm lkmaslfj lmflkajlos jmlwema jslafmawl",
+                About = "Lubię koksować z ziomkami z koksowni, moim idolem jest hardcorowy koksu.",
                 NotifyComment = true,
                 NotifyPhoto = true,
                 NotifySubscription = true
@@ -259,10 +259,10 @@ namespace PhotoHistory.Common
                 Email = "pierogmichal@gmail.com",
                 ActivationCode = null,
                 DateOfBirth = new DateTime(1989, 10, 15),
-                About = "Lubię placki.",
-                NotifyComment = false,
-                NotifyPhoto = false,
-                NotifySubscription = false
+                About = "Brak inwencji twórczej na wymyślenie jakiegoś konstruktywnego opisu mojej osoby.",
+                NotifyComment = true,
+                NotifyPhoto = true,
+                NotifySubscription = true
             };
             users.Create(user);
 
@@ -273,7 +273,7 @@ namespace PhotoHistory.Common
                 Email = "hyzy.bartlomiej@gmail.com",
                 ActivationCode = null,
                 DateOfBirth = new DateTime(1989, 3, 1),
-                About = "klfasflsal ajlfdja lj flajsorweajoifj lsadjflwejoifjlsa lasdfl jlasjfl jlkasfdlewjlfas ",
+                About = "Jestem studentem AGH i lubię placki. ",
                 NotifyComment = true,
                 NotifyPhoto = true,
                 NotifySubscription = true
