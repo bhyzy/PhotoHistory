@@ -194,6 +194,7 @@ public class UploadPhotoActivity extends Activity {
 				   public void onClick(DialogInterface dialog, int which) {
 					   Intent intent = new Intent(UploadPhotoActivity.this, AlbumActivity.class);
 					   intent.putExtra("album_id", mAlbumId);
+					   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					   startActivity(intent);
 				   }
 				});
