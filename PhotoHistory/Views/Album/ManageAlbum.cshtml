@@ -100,7 +100,7 @@
         <form action="/Album/DeletePhotos" method="post" id="photos_form"  onsubmit="if(!confirm('Are you sure you want to delete selected photos?')){return false;}">
         @Html.Hidden("albumId", Model.Id)
         <div class="actions right">
-            <a href="@Url.Action("AddPhoto")">
+            <a href="@Url.Action("AddPhoto", new { albumId = Model.Id })">
                 <button class="btn btn-success" type=button>
                     <i class="icon-camera icon-white"></i>Add photo</button>
             </a>
